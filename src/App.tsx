@@ -1,25 +1,101 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import AppHeader from './components/appHeader/AppHeader';
+import BurgerConstructor from './components/burgerConstructor/BurgerConstructor';
+import BurgerIngredients from './components/burgerIngredients/BurgerIngredients';
+import styles from "./main.module.css"
+import { data } from './utils/data';
+import { IIngredient } from './utils/ingredientType';
+
+export interface IIngredientsInCart {
+  ingredients: {
+    [id: string]: {
+      count: number,
+      ingredient: IIngredient
+    }
+  };
+  bunIngredients: IIngredient[];
+}
 
 function App() {
+
+  const [ingredientsInCart, setIngredientsInCart] = useState<IIngredientsInCart>({
+    ingredients: {},
+    bunIngredients: []
+  });
+
+  const addIngredient = (ingredient: IIngredient) => {
+    const type = ingredient.type;
+    const newIngredients = structuredClone(ingredientsInCart);
+    if (type === "bun") {
+      if (newIngredients["bunIngredients"].length < 2) {
+        newIngredients["bunIngredients"].push(ingredient);
+      }
+    } else {
+      const id = ingredient._id;
+      if (!newIngredients.ingredients[id]) {
+        newIngredients.ingredients[id] = {count: 1, ingredient: ingredient};
+      } else {
+        newIngredients.ingredients[id].count++;
+      }
+    }
+    setIngredientsInCart(newIngredients);
+  }
+
+  const removeIngredient = (ingredient: IIngredient) => {
+    const id = ingredient._id;
+    const newIngredients = structuredClone(ingredientsInCart);
+    const categorie = newIngredients.ingredients[id];
+    categorie.count--;
+    if (categorie.count === 0) {
+      delete newIngredients.ingredients[id];
+    }
+    setIngredientsInCart(newIngredients);
+  }
+
+  const categoriesData: any = {};
+  for (let key in data) {
+      let item = data[key];
+      if (!categoriesData[item.type]) {
+          categoriesData[item.type] = [];
+      }
+      categoriesData[item.type].push(item);
+  }
+
+  const getTotalPrice = () => {
+    const ingredients = ingredientsInCart.ingredients;
+    const bunIngredients = ingredientsInCart.bunIngredients;
+    let price = 0;
+    Object.keys(ingredients).forEach( id => {
+      const ingredient = ingredients[id];
+      price += ingredient.ingredient.price * ingredient.count;
+    });
+    bunIngredients.forEach( bun => {
+      price += bun.price;
+    });
+    return price;
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AppHeader />
+      <main className={styles.contentWrapper}>
+        <section className={styles.mainContainer}>
+          <BurgerIngredients
+            addIngredient={addIngredient}
+            categoriesData={categoriesData}
+            ingredientsInCart={ingredientsInCart}
+          />
+          <BurgerConstructor
+            ingredientsInCart={ingredientsInCart}
+            removeIngredient={removeIngredient}
+            totalPrice={getTotalPrice()}
+          />
+        </section>
+
+      </main>
+    </>
+
   );
 }
 

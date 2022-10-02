@@ -1,0 +1,38 @@
+
+.constructorCard {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;;
+    height: 80px;
+    width: 568px;
+    justify-content: space-between;
+}
+
+.ingredientBox {
+    height: 80px;
+    width: 536px;
+}
+
+.dragAndDropIcon {
+    height: 22px;
+    width: 22px;
+}
+
+.buySectionWrapper {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    height: 64px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.priceSection {
+    display: flex;
+}
+
+.priceIcon {
+    width: 33px;
+    height: 33px;
+    margin-left: 9.5px
+}

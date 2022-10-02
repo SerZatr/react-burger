@@ -1,0 +1,38 @@
+.secondaryTxt {
+    color: #8585AD;
+}
+
+.contentWrapper {
+    width: 100%;
+    min-width: 1240px;
+    display: flex;
+    justify-content: center;
+}
+
+.mainContainer {
+    display: flex;
+    width: 1240px;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.customScrollbar{
+    overflow: auto;
+}
+
+.customScrollbar::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2F2F37;   
+  }
+
+  .customScrollbar::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 600px;
+}

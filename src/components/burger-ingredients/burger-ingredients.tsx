@@ -43,7 +43,7 @@ export default function BurgerIngredients(props: IburgerIngredientsProps) {
     };
 
     return (
-            <section className={`mt-10 ${mainStyles.section}`} style={{height: "calc(100vh - 160px)"}}>
+            <section className={`mt-10 ${styles.ingredientsSection} ${mainStyles.section}`}>
                 <h1 className = {`text text_type_main-large mb-5 ${styles.header}`}>
                     Соберите бургер
                 </h1>
@@ -55,9 +55,9 @@ export default function BurgerIngredients(props: IburgerIngredientsProps) {
                         callback={ () => setCurrent(current) }
                     />
                 </nav>
-                <div className={mainStyles.customScrollbar} style={{height: "100%"}}>
+                <section className={`${styles.categories} ${mainStyles.customScrollbar}`}>
                     { getCategorieElements() }
-                </div>
+                </section>
 
             </section>
 

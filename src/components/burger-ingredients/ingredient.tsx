@@ -23,7 +23,7 @@ export function Ingredient(props: IIngredientProps) {
                 <p className="mr-2"> {props.price} </p>
                 <img src={subtractImgPath} alt="Кристаллы" />
             </div>
-            <div className={styles.nameContainer} style={{verticalAlign: "top"}}>
+            <div className={styles.nameContainer}>
                 <p> {props.name} </p>
             </div>
         </section>

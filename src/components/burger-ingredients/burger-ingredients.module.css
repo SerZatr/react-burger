@@ -1,3 +1,11 @@
+.ingredientsSection {
+    height: calc(100vh - 160px)
+}
+
+.categories {
+    height: 100%;
+}
+
 .tabs {
     width: 100%;
     display: flex;
@@ -31,7 +39,6 @@
     display: flex;
     align-items: flex-start;
     height: 48px;
-    vertical-align: top;
     text-align: center;
     font-family: JetBrains Mono, arial, sans-serif;
     font-style: normal;

@@ -14,7 +14,7 @@ interface IConstructorProps {
 
 export default function BurgerConstructor(props: IConstructorProps) {
     return (
-            <section className={`mt-25  ${mainStyles.section}`} style={{height: "calc(100vh - 220px)"}}>
+            <section className={`mt-25 ${styles.constructorSection}  ${mainStyles.section}`}>
                 <section className={`mb-6 ${mainStyles.customScrollbar}`}>
                     <Items
                         ingredientsInCart={props.ingredientsInCart}

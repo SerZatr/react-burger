@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./burger-ingredients.module.css"
-import mainStyles from "../../main.module.css"
+import mainStyles from "../app/app.module.css"
 import { Category } from "./category";
 import { categories } from "../../utils/categories";
 import { IIngredient } from "../../utils/ingredient-type";

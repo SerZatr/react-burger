@@ -1,6 +1,6 @@
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css"
-import mainStyles from "../../main.module.css"
+import mainStyles from "../app/app.module.css"
 import { Items } from "./items";
 import { IIngredient } from "../../utils/ingredient-type";
 import { IIngredientsInCart } from "../app/app";

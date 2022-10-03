@@ -1,5 +1,5 @@
 import styles from "./app-header.module.css"
-import mainStyles from "../../main.module.css"
+import mainStyles from "../app/app.module.css"
 
 interface navItemProps {
     icon: JSX.Element;

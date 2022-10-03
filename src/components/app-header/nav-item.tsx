@@ -1,4 +1,4 @@
-import styles from "./appHeader.module.css"
+import styles from "./app-header.module.css"
 import mainStyles from "../../main.module.css"
 
 interface navItemProps {

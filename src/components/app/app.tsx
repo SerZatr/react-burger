@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import './App.css';
-import AppHeader from './components/appHeader/AppHeader';
-import BurgerConstructor from './components/burgerConstructor/BurgerConstructor';
-import BurgerIngredients from './components/burgerIngredients/BurgerIngredients';
-import styles from "./main.module.css"
-import { data } from './utils/data';
-import { IIngredient } from './utils/ingredientType';
+import AppHeader from '../app-header/app-header';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import styles from "../../main.module.css"
+import { data } from '../../utils/data';
+import { IIngredient } from '../../utils/ingredient-type';
 
 export interface IIngredientsInCart {
   ingredients: {

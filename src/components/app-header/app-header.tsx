@@ -1,8 +1,8 @@
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./appHeader.module.css"
+import styles from "./app-header.module.css"
 import { useState } from "react";
-import NavItem from "./NavItem"
+import NavItem from "./nav-item"
 
 enum links {
     constructor,

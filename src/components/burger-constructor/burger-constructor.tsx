@@ -1,9 +1,9 @@
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burgerConstructor.module.css"
+import styles from "./burger-constructor.module.css"
 import mainStyles from "../../main.module.css"
-import { Items } from "./Items";
-import { IIngredient } from "../../utils/ingredientType";
-import { IIngredientsInCart } from "../../App";
+import { Items } from "./items";
+import { IIngredient } from "../../utils/ingredient-type";
+import { IIngredientsInCart } from "../app/app";
 import subtractImgPath from "../../images/subtract.svg";
 
 interface IConstructorProps {

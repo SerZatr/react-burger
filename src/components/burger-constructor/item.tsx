@@ -1,8 +1,8 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IIngredient } from "../../utils/ingredientType";
-import styles from "./burgerConstructor.module.css"
-import { itemType } from "./Items";
-import dragAndDrop from "../../images/dragAndDrop.svg"
+import { IIngredient } from "../../utils/ingredient-type";
+import styles from "./burger-constructor.module.css"
+import { itemType } from "./items";
+import dragAndDrop from "../../images/drag-and-drop.svg"
 
 interface IItemProps {
     ingredient: IIngredient,

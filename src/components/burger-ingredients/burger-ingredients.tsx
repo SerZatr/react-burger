@@ -1,11 +1,11 @@
 import { useState } from "react";
-import styles from "./burgerIngredients.module.css"
+import styles from "./burger-ingredients.module.css"
 import mainStyles from "../../main.module.css"
-import { Category } from "./Category";
+import { Category } from "./category";
 import { categories } from "../../utils/categories";
-import { IIngredient } from "../../utils/ingredientType";
-import { IIngredientsInCart } from "../../App";
-import { Tabs } from "./Tabs";
+import { IIngredient } from "../../utils/ingredient-type";
+import { IIngredientsInCart } from "../app/app";
+import { Tabs } from "./tabs";
 
 interface IburgerIngredientsProps {
     addIngredient: (ingredient: IIngredient) => void;

@@ -1,4 +1,4 @@
-import styles from "./burgerIngredients.module.css";
+import styles from "./burger-ingredients.module.css";
 import subtractImgPath from "../../images/subtract.svg";
 
 export interface IIngredientProps {

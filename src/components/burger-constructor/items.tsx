@@ -1,6 +1,6 @@
-import { IIngredientsInCart } from "../../App";
-import { IIngredient } from "../../utils/ingredientType";
-import { Item } from "./Item";
+import { IIngredientsInCart } from "../app/app";
+import { IIngredient } from "../../utils/ingredient-type";
+import { Item } from "./item";
 
 interface IItemsProps {
     ingredientsInCart: IIngredientsInCart;

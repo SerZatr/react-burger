@@ -1,8 +1,7 @@
-import { Element } from "react-scroll";
-import { IIngredientsInCart } from "../../App";
-import { IIngredient } from "../../utils/ingredientType";
-import styles from "./burgerIngredients.module.css";
-import { Ingredient } from "./Ingredient";
+import { IIngredientsInCart } from "../app/app";
+import { IIngredient } from "../../utils/ingredient-type";
+import styles from "./burger-ingredients.module.css";
+import { Ingredient } from "./ingredient";
 
 export interface ICategory {
     title: string;
@@ -33,7 +32,7 @@ export function Category(props: ICategory) {
                     price={ingredient.price}
                     countInCart={count}
                     addIngredient={ () => props.addIngredient(ingredient) }
-                    key={i + ingredient._id}
+                    key={ingredient._id}
                 />
             );
         }
@@ -41,17 +40,14 @@ export function Category(props: ICategory) {
     }
 
     return (
-        <Element name={props.title}>
-            <section>
-                <p className = {`text text_type_main-medium mb-6`}>
-                    {props.title}
-                </p>
-                <section className={`pl-4 mb-2 ${styles.categoryItems}`}>
-                    { getIngredients() }
-                </section>
+        <section>
+            <p className = {`text text_type_main-medium mb-6`}>
+                {props.title}
+            </p>
+            <section className={`pl-4 mb-2 ${styles.categoryItems}`}>
+                { getIngredients() }
             </section>
-        </Element>
-
+        </section>
     )
 
 }

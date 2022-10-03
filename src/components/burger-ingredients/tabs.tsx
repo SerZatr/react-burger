@@ -1,5 +1,5 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burgerIngredients.module.css"
+import styles from "./burger-ingredients.module.css"
 
 interface ITabsProps {
     tabNames: string[];

@@ -11,9 +11,23 @@
     justify-content: space-between;
 }
 
+.ingredientsContainer {
+    height: 100%;
+}
+
 .ingredientBox {
     height: 80px;
     width: 536px;
+}
+
+.ingredientsAndBunsContainer {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.bun {
+    flex-shrink: 0;
 }
 
 .dragAndDropIcon {
@@ -21,7 +35,7 @@
     width: 22px;
 }
 
-.buySectionWrapper {
+.buyContainer {
     display: flex;
     box-sizing: border-box;
     width: 100%;
@@ -30,7 +44,7 @@
     justify-content: flex-end;
 }
 
-.priceSection {
+.priceContainer {
     display: flex;
 }
 

@@ -21,15 +21,11 @@ export function Category(props: ICategory) {
             if (ingredient.type !== "bun") {
                 count = props.ingredientsInCart.ingredients?.[id]?.count ?? 0;
             } else {
-                const buns = props.ingredientsInCart.bunIngredients;
-                const bunsInCart = buns.filter( b => b._id === ingredient._id );
-                count = bunsInCart?.length ?? 0;
+                count = props.ingredientsInCart.bunIngredients?.[id]?.count ?? 0;
             }
             ingredients.push(
                 <Ingredient
-                    name={ingredient.name}
-                    image={ingredient.image}
-                    price={ingredient.price}
+                    ingredient={ingredient}
                     countInCart={count}
                     addIngredient={ () => props.addIngredient(ingredient) }
                     key={ingredient._id}

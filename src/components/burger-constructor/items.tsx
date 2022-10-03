@@ -1,10 +1,10 @@
-import { IIngredientsInCart } from "../app/app";
+import { IIngredientsCountedById } from "../app/app";
 import { IIngredient } from "../../utils/ingredient-type";
 import { Item } from "./item";
 
 interface IItemsProps {
-    ingredientsInCart: IIngredientsInCart;
-    removeIngredient: (ingredient: IIngredient) => void;
+    ingredients: IIngredientsCountedById;
+    removeIngredient?: (ingredient: IIngredient) => void;
 }
 
  export enum itemType {
@@ -13,10 +13,11 @@ interface IItemsProps {
 };
 
 export function Items(props: IItemsProps) {
-    const getItemsOfCategorie = (
+    const getItemsByType = (
         ingredient: IIngredient,
         count: number,
-        type?: itemType
+        type?: itemType,
+        isLast?: boolean
     ) => {
         let itemElements: JSX.Element[] = [];
         for (let i=0; i<count; i++) {
@@ -26,6 +27,7 @@ export function Items(props: IItemsProps) {
                     type={type}
                     removeIngredient={props.removeIngredient}
                     key={i + ingredient._id + type}
+                    isLast={isLast && i+1 === count}
                 />
             );
         }
@@ -34,25 +36,16 @@ export function Items(props: IItemsProps) {
 
     const getAllItems = () => {
         let itemElements: JSX.Element[] = [];
-        const buns = props.ingredientsInCart.bunIngredients;
-        if (buns[0]) {
-            itemElements = getItemsOfCategorie(buns[0], 1, itemType.top);
-        }
-
-        const categories = props.ingredientsInCart.ingredients;
-        Object.keys(categories).forEach( key => {
-            const ingredient = categories[key].ingredient;
-            const count = categories[key].count;
-            const categorieItems = getItemsOfCategorie(ingredient, count);
+        const ingredients = props.ingredients;
+        for (let i=0; i<Object.keys(ingredients).length; i++) {
+            const key = Object.keys(ingredients)[i];
+            const ingredient = ingredients[key].ingredient;
+            const count = ingredients[key].count;
+            const isLast = i+1 === Object.keys(ingredients).length;
+            const categorieItems = getItemsByType(ingredient, count, undefined, isLast);
             itemElements = itemElements.concat(categorieItems);
-        })
-
-        if (buns[1]) {
-            const bottomBun = getItemsOfCategorie(buns[1], 1, itemType.bottom);
-            itemElements = itemElements.concat(bottomBun);
         }
         return itemElements;
-
     }
 
     return (

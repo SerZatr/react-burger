@@ -19,8 +19,8 @@ export default function BurgerIngredients(props: IburgerIngredientsProps) {
     const getCategorieElements = () => {
         let categorieElements: JSX.Element[] = [];
         for (let k in Object.keys(props.categoriesData)) {
-            let categorieName = Object.keys(props.categoriesData)[k];
-            let categorie = props.categoriesData[categorieName];
+            const categorieName = Object.keys(props.categoriesData)[k];
+            const categorie = props.categoriesData[categorieName];
             let ingredients = [];
             for (let key in categorie) {
                 const ingredient = categorie[key];

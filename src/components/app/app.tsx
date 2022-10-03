@@ -6,37 +6,47 @@ import styles from "../app/app.module.css"
 import { data } from '../../utils/data';
 import { IIngredient } from '../../utils/ingredient-type';
 
+export interface IIngredientCounted {
+  count: number,
+  ingredient: IIngredient
+}
+
+export interface IIngredientsCountedById {
+  [id: string]: IIngredientCounted;
+}
+
 export interface IIngredientsInCart {
-  ingredients: {
-    [id: string]: {
-      count: number,
-      ingredient: IIngredient
-    }
-  };
-  bunIngredients: IIngredient[];
+  ingredients: IIngredientsCountedById;
+  bunIngredients: IIngredientsCountedById;
 }
 
 function App() {
 
   const [ingredientsInCart, setIngredientsInCart] = useState<IIngredientsInCart>({
     ingredients: {},
-    bunIngredients: []
+    bunIngredients: {}
   });
 
   const addIngredient = (ingredient: IIngredient) => {
-    const type = ingredient.type;
     const newIngredients = structuredClone(ingredientsInCart);
-    if (type === "bun") {
-      if (newIngredients["bunIngredients"].length < 2) {
-        newIngredients["bunIngredients"].push(ingredient);
-      }
-    } else {
-      const id = ingredient._id;
-      if (!newIngredients.ingredients[id]) {
-        newIngredients.ingredients[id] = {count: 1, ingredient: ingredient};
+    const id = ingredient._id;
+    const add = (ingrObj: IIngredientsCountedById) => {
+      if (!ingrObj[id]) {
+        ingrObj[id] = {count: 1, ingredient: ingredient};
       } else {
-        newIngredients.ingredients[id].count++;
+        ingrObj[id].count++;
       }
+    }
+
+    const bunId = Object.keys(newIngredients["bunIngredients"])[0];
+    const bunsCount = newIngredients["bunIngredients"][bunId]?.count ?? 0;
+
+    const checkId = bunId === id || !bunId;
+    const type = ingredient.type;
+    if (type === "bun" && bunsCount < 2 && checkId) {
+        add(newIngredients.bunIngredients);
+    } else if (type !== "bun") {
+      add(newIngredients.ingredients);
     }
     setIngredientsInCart(newIngredients);
   }
@@ -69,8 +79,9 @@ function App() {
       const ingredient = ingredients[id];
       price += ingredient.ingredient.price * ingredient.count;
     });
-    bunIngredients.forEach( bun => {
-      price += bun.price;
+    Object.keys(bunIngredients).forEach( id => {
+      const ingredient = bunIngredients[id];
+      price += ingredient.ingredient.price * ingredient.count;
     });
     return price;
   }

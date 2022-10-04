@@ -23,12 +23,11 @@ export function Items(props: IItemsProps) {
         let itemElements: JSX.Element[] = [];
         for (let i=0; i<count; i++) {
             itemElements.push(
-                <li>
+                <li key={i + ingredient._id}>
                     <Item
                         ingredient={ingredient}
                         type={type}
                         removeIngredient={props.removeIngredient}
-                        key={i + ingredient._id + type}
                         isLast={isLast && i+1 === count}
                     />
                 </li>

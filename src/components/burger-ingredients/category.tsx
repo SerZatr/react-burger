@@ -36,14 +36,14 @@ export function Category(props: ICategory) {
     }
 
     return (
-        <section>
+        <article>
             <p className = {`text text_type_main-medium mb-6`}>
                 {props.title}
             </p>
-            <section className={`pl-4 mb-2 ${styles.categoryItems}`}>
+            <div className={`pl-4 mb-2 ${styles.categoryItems}`}>
                 { getIngredients() }
-            </section>
-        </section>
+            </div>
+        </article>
     )
 
 }

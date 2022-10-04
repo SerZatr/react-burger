@@ -1,6 +1,7 @@
 import { IIngredientsCountedById } from "../app/app";
 import { IIngredient } from "../../utils/ingredient-type";
 import { Item } from "./item";
+import styles from "./burger-constructor.module.css"
 
 interface IItemsProps {
     ingredients: IIngredientsCountedById;
@@ -22,13 +23,15 @@ export function Items(props: IItemsProps) {
         let itemElements: JSX.Element[] = [];
         for (let i=0; i<count; i++) {
             itemElements.push(
-                <Item
-                    ingredient={ingredient}
-                    type={type}
-                    removeIngredient={props.removeIngredient}
-                    key={i + ingredient._id + type}
-                    isLast={isLast && i+1 === count}
-                />
+                <li>
+                    <Item
+                        ingredient={ingredient}
+                        type={type}
+                        removeIngredient={props.removeIngredient}
+                        key={i + ingredient._id + type}
+                        isLast={isLast && i+1 === count}
+                    />
+                </li>
             );
         }
         return itemElements;
@@ -49,8 +52,8 @@ export function Items(props: IItemsProps) {
     }
 
     return (
-        <>
+        <ul className={styles.unMarkedList}>
             {getAllItems()}
-        </>
+        </ul>
     )
 }

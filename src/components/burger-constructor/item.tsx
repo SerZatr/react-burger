@@ -17,7 +17,7 @@ export function Item(props: IItemProps) {
     className = props.isLast ? className : className + " mb-4";
     text = props.type ? `${text} (${ruType[props.type]})` : text;
     return (
-        <section className={className}>
+        <article className={className}>
             <div className={styles.ingredientBox}>
                 <ConstructorElement
                     type={props.type}
@@ -31,7 +31,7 @@ export function Item(props: IItemProps) {
             {!props.type
                 && <DragIcon type={"primary"} />
             }
-        </section>
+        </article>
     )
 }
 

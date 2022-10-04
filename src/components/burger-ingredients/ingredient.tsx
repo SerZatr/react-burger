@@ -11,7 +11,7 @@ interface IIngredientProps {
 export function Ingredient(props: IIngredientProps) {
     const ingredient = props.ingredient;
     return (
-        <section
+        <article
             className={`mb-2 ${styles.card}`}
             onClick={props.addIngredient}
         >
@@ -26,6 +26,6 @@ export function Ingredient(props: IIngredientProps) {
             <div className={styles.nameContainer}>
                 <p> {ingredient.name} </p>
             </div>
-        </section>
+        </article>
     )
 }

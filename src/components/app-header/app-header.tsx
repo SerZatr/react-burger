@@ -19,16 +19,18 @@ export default function AppHeader () {
         <header className={`${styles.panel}`}>
             <div className={styles.content}>
                 <nav className={styles.navigation + " pt-4 pb-4"}>
-                    <NavItem
-                        icon={<BurgerIcon type={isConstrorActive ? "primary" : "secondary"} />}
-                        text="Конструктор"
-                        isActive={isConstrorActive}
-                    />
-                    <NavItem
-                        icon={<ListIcon type={isListActive ? "primary" : "secondary"} />}
-                        text="Лента заказов"
-                        isActive={isListActive}
-                    />
+                    <ul>
+                        <NavItem
+                            icon={<BurgerIcon type={isConstrorActive ? "primary" : "secondary"} />}
+                            text="Конструктор"
+                            isActive={isConstrorActive}
+                        />
+                        <NavItem
+                            icon={<ListIcon type={isListActive ? "primary" : "secondary"} />}
+                            text="Лента заказов"
+                            isActive={isListActive}
+                        />
+                    </ul>
                 </nav>
 
                 <div className={styles.logoWrapper}>
@@ -36,11 +38,13 @@ export default function AppHeader () {
                 </div>
 
                 <nav className={styles.navigation + " pt-4 pb-4"}>
-                    <NavItem
-                        icon={<ProfileIcon type={isProfileActive ? "primary" : "secondary"} />}
-                        text="Личный кабинет"
-                        isActive={isProfileActive}
-                    />
+                    <ul>
+                        <NavItem
+                            icon={<ProfileIcon type={isProfileActive ? "primary" : "secondary"} />}
+                            text="Личный кабинет"
+                            isActive={isProfileActive}
+                        />
+                    </ul>
                 </nav>
             </div>
         </header>

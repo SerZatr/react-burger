@@ -18,17 +18,23 @@ export default function BurgerConstructor(props: IConstructorProps) {
     const bunId = Object.keys(bunIngredients)[0];
     const bunsCount = bunIngredients?.[bunId]?.count;
     const bun = bunIngredients?.[bunId]?.ingredient;
-
+    const isBottomButton = bunsCount && bunsCount > 1;
     const bunTop = <Item ingredient={bun} type={itemType.top} />
     const bunBottom = <Item ingredient={bun} type={itemType.bottom} isLast />
-    let ingredientsContainerClass = `${styles.ingredientsContainer} ${mainStyles.customScrollbar}`;
-    ingredientsContainerClass = Object.keys(props.ingredientsInCart.ingredients).length > 0
-        ? ingredientsContainerClass + " mb-4 "
-        : ingredientsContainerClass;
+
+    const isListEmpty = Object.keys(props.ingredientsInCart.ingredients).length === 0;
+    let ingredientsContainerClass = `${mainStyles.customScrollbar}`;
+    ingredientsContainerClass += isListEmpty
+        ? ` ${styles.ingredientsContainerEmpty}`
+        : ` ${styles.ingredientsContainer}`;
+        
+    if (isBottomButton && !isListEmpty) {
+        ingredientsContainerClass += " mb-4";
+    }
 
     return (
         <section className={`mt-25 ${styles.constructorSection} ${mainStyles.section}`}>
-            <article className={`mb-10 ${styles.ingredientsAndBunsContainer}`}>
+            <article className={`mb-10 ${styles.ingredientsAndBunsContainer}` }>
                 <div className={styles.bun}>
                     {bunsCount && bunTop}
                 </div>
@@ -39,7 +45,7 @@ export default function BurgerConstructor(props: IConstructorProps) {
                     />
                 </div>
                 <div className={styles.bun}>
-                    {(bunsCount && bunsCount > 1) && bunBottom}
+                    {isBottomButton && bunBottom}
                 </div>
             </article>
             <article className={`pr-4 pl-4 ${styles.buyContainer}`}>

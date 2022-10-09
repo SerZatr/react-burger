@@ -1,8 +1,6 @@
 import { useState } from "react";
 import styles from "./burger-ingredients.module.css"
-import mainStyles from "../app/app.module.css"
 import { Category } from "./category";
-import { categories } from "../../utils/categories";
 import { IIngredient } from "../../utils/ingredient-type";
 import { IIngredientsInCart } from "../app/app";
 import { Tabs } from "./tabs";
@@ -11,6 +9,12 @@ interface IburgerIngredientsProps {
     addIngredient: (ingredient: IIngredient) => void;
     categoriesData: {[key: string]: IIngredient[]}
     ingredientsInCart: IIngredientsInCart;
+}
+
+const categories: {[key: string]: string} = {
+    bun: "Булки",
+    sauce: "Соусы",
+    main: "Начинка"
 }
 
 export default function BurgerIngredients(props: IburgerIngredientsProps) {
@@ -43,7 +47,7 @@ export default function BurgerIngredients(props: IburgerIngredientsProps) {
     };
 
     return (
-            <section className={`mt-10 ${styles.ingredientsSection} ${mainStyles.section}`}>
+            <section className={`mt-10 ${styles.ingredientsSection} section`}>
                 <h1 className = {`text text_type_main-large mb-5 ${styles.header}`}>
                     Соберите бургер
                 </h1>
@@ -55,7 +59,7 @@ export default function BurgerIngredients(props: IburgerIngredientsProps) {
                         callback={ () => setCurrent(current) }
                     />
                 </nav>
-                <section className={`${styles.categories} ${mainStyles.customScrollbar}`}>
+                <section className={`${styles.categories} customScrollbar`}>
                     { getCategorieElements() }
                 </section>
 

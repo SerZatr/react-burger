@@ -1,5 +1,4 @@
-import styles from "./app-header.module.css"
-import mainStyles from "../app/app.module.css"
+import styles from "./app-header.module.css";
 
 interface navItemProps {
     icon: JSX.Element;
@@ -9,7 +8,7 @@ interface navItemProps {
 
 export default function NavItem(props: navItemProps) {
     let pClass = "text text_type_main-default m-1";
-    pClass = props.isActive ? pClass : `${pClass} ${mainStyles.secondaryTxt}`;
+    pClass = props.isActive ? pClass : `${pClass} text_color_inactive`;
     return (
         <li className={styles.item + " mr-1 pr-5 pl-5 pt-4 pb-4"}>
             <div className="m-1">

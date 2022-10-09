@@ -1,0 +1,27 @@
+.orderDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    padding-left: 60px;
+    padding-right: 60px;
+    width: 100%;
+    height: 100%;
+}
+
+.title {
+    text-align: center;
+}
+
+.description {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    height: 56px;
+    text-align: center;
+}
+
+.order {
+    text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}

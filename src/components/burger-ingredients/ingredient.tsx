@@ -23,7 +23,7 @@ export function Ingredient(props: IIngredientProps) {
                 <p className="mr-2"> {ingredient.price} </p>
                 <img src={subtractImgPath} alt="Кристаллы" />
             </div>
-            <div className={styles.nameContainer}>
+            <div className={`${styles.nameContainer} text text_type_main-default`}>
                 <p> {ingredient.name} </p>
             </div>
         </article>

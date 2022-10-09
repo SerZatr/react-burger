@@ -36,6 +36,10 @@
     width: 536px;
 }
 
+.ingredientBox img {
+    cursor: pointer;
+}
+
 .ingredientsAndBunsContainer {
     display: flex;
     flex-direction: column;

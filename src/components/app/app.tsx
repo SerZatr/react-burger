@@ -3,8 +3,10 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from "../app/app.module.css"
-import { data } from '../../utils/data';
 import { IIngredient } from '../../utils/ingredient-type';
+import React from 'react';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderDetails from '../order-details/order-details';
 
 export interface IIngredientCounted {
   count: number,
@@ -22,10 +24,31 @@ export interface IIngredientsInCart {
 
 function App() {
 
+  const [data, setData] = useState<IIngredient[]>([]);
+  
+
+  const getData = async () => {
+    try {
+      const url = "https://norma.nomoreparties.space/api/ingredients "
+      const response = await fetch(url);
+      const json = await response.json();
+      setData(json.data);
+    } catch (error) {
+      console.log(`Не удаось загрузить данные. Попробуйте открыть страницу позже. ${error}`);
+    }
+    };
+  
+
+  React.useEffect(() => {
+    getData();
+  }, [])
+
   const [ingredientsInCart, setIngredientsInCart] = useState<IIngredientsInCart>({
     ingredients: {},
     bunIngredients: {}
   });
+  const [selectedIngredientDetails, setSelectedIngredientDetails] = useState<IIngredient | undefined>();
+  const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState(false);
 
   const addIngredient = (ingredient: IIngredient) => {
     const newIngredients = structuredClone(ingredientsInCart);
@@ -99,10 +122,22 @@ function App() {
           <BurgerConstructor
             ingredientsInCart={ingredientsInCart}
             removeIngredient={removeIngredient}
+            openIngredientModal={(ingredient: IIngredient) => setSelectedIngredientDetails(ingredient)}
             totalPrice={getTotalPrice()}
+            buyHandler={() => setIsOrderDetailsVisible(true)}
           />
         </section>
-
+        {selectedIngredientDetails
+          && <IngredientDetails
+            ingredient={selectedIngredientDetails}
+            closeHandler={() => setSelectedIngredientDetails(undefined)}
+          />
+        }
+        {isOrderDetailsVisible
+          && <OrderDetails
+            closeHandler={() => setIsOrderDetailsVisible(false)}
+          />
+        }
       </main>
     </>
 

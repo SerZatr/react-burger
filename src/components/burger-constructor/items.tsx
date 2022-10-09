@@ -5,7 +5,6 @@ import styles from "./burger-constructor.module.css"
 
 interface IItemsProps {
     ingredients: IIngredientsCountedById;
-    openIngredientModal: (ingredient: IIngredient) => void;
     removeIngredient?: (ingredient: IIngredient) => void;
 }
 
@@ -18,7 +17,6 @@ export function Items(props: IItemsProps) {
     const getItemsByType = (
         ingredient: IIngredient,
         count: number,
-        openIngredientModal: (ingredient: IIngredient) => void,
         type?: itemType,
         isLast?: boolean
     ) => {
@@ -31,7 +29,6 @@ export function Items(props: IItemsProps) {
                         type={type}
                         removeIngredient={props.removeIngredient}
                         isLast={isLast && i+1 === count}
-                        openIngredientModal={openIngredientModal}
                     />
                 </li>
             );
@@ -47,7 +44,7 @@ export function Items(props: IItemsProps) {
             const ingredient = ingredients[key].ingredient;
             const count = ingredients[key].count;
             const isLast = i+1 === Object.keys(ingredients).length;
-            const categorieItems = getItemsByType(ingredient, count, props.openIngredientModal, undefined, isLast);
+            const categorieItems = getItemsByType(ingredient, count, undefined, isLast);
             itemElements = itemElements.concat(categorieItems);
         }
         return itemElements;

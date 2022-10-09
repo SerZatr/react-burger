@@ -5,7 +5,6 @@ import { itemType } from "./items";
 
 interface IItemProps {
     ingredient: IIngredient,
-    openIngredientModal: (ingredient: IIngredient) => void,
     type?: itemType,
     removeIngredient?: (ingredient: IIngredient) => void,
     isLast?: boolean
@@ -22,11 +21,6 @@ export function Item(props: IItemProps) {
         <article className={className}>
             <div
                 className={styles.ingredientBox}
-                onClick={(event) => {
-                    if ((event.target as HTMLElement).classList.contains("constructor-element__image")) {
-                        props.openIngredientModal(props.ingredient);
-                    }
-                }}
             >
                 <ConstructorElement
                     type={props.type}

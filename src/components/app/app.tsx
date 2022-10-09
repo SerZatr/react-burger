@@ -7,6 +7,7 @@ import { IIngredient } from '../../utils/ingredient-type';
 import React from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+import Modal from '../modal/modal';
 
 export interface IIngredientCounted {
   count: number,
@@ -36,41 +37,34 @@ function App() {
     try {
       const url = "https://norma.nomoreparties.space/api/ingredients "
       const response = await fetch(url);
-      const json = await response.json();
-      setData(json.data);
+      console.log(response);
+      if(response.ok) {
+        const json = await response.json();
+        const data: IIngredient[] = json.data as IIngredient[];
+        setData(data);
+        // temporary desicions. Puts default ingredients to card
+        console.log(json.data);
+        const defaultIngredients: IIngredientsInCart = {
+          ingredients: {
+            ["60d3b41abdacab0026a733ce"]: {count:1, ingredient: data[8] },
+            ["60d3b41abdacab0026a733c9"]: {count:1, ingredient: data[3] },
+            ["60d3b41abdacab0026a733d1"]: {count: 1, ingredient: data[11]},
+            ["60d3b41abdacab0026a733d0"]: {count: 10, ingredient: data[10]},
+          },
+          bunIngredients: {["60d3b41abdacab0026a733c6"]: {count: 2, ingredient: data[0] }}
+        }
+        setIngredientsInCart(defaultIngredients);
+      } else {
+        throw new Error("Не удаось загрузить данные. Попробуйте открыть страницу позже.");
+      }
     } catch (error) {
-      console.log(`Не удаось загрузить данные. Попробуйте открыть страницу позже. ${error}`);
+      console.log(`${error}`);
     }
   };
 
   React.useEffect(() => {
     getData();
   }, []);
-
-
-
-  const addIngredient = (ingredient: IIngredient) => {
-    const newIngredients = structuredClone(ingredientsInCart);
-    const id = ingredient._id;
-    const add = (ingrObj: IIngredientsCountedById) => {
-      if (!ingrObj[id]) {
-        ingrObj[id] = {count: 1, ingredient: ingredient};
-      } else {
-        ingrObj[id].count++;
-      }
-    }
-
-    const bunId = Object.keys(newIngredients["bunIngredients"])[0];
-    const bunsCount = newIngredients["bunIngredients"][bunId]?.count ?? 0;
-    const checkId = bunId === id || !bunId;
-    const type = ingredient.type;
-    if (type === "bun" && bunsCount < 2 && checkId) {
-        add(newIngredients.bunIngredients);
-    } else if (type !== "bun") {
-      add(newIngredients.ingredients);
-    }
-    setIngredientsInCart(newIngredients);
-  };
 
   const removeIngredient = (ingredient: IIngredient) => {
     const id = ingredient._id;
@@ -106,6 +100,14 @@ function App() {
     });
     return price;
   };
+
+  const closeIngredientDetailsModal = () => {
+    setSelectedIngredientDetails(undefined);
+  };
+
+  const closeOrderDetailsModal = () => {
+    setIsOrderDetailsVisible(false);
+  }
   
   return (
     <>
@@ -113,28 +115,37 @@ function App() {
       <main className={styles.contentWrapper}>
         <section className={styles.mainContainer}>
           <BurgerIngredients
-            addIngredient={addIngredient}
             categoriesData={categoriesData}
             ingredientsInCart={ingredientsInCart}
+            openIngredientModal={(ingredient: IIngredient) => setSelectedIngredientDetails(ingredient)}
           />
           <BurgerConstructor
             ingredientsInCart={ingredientsInCart}
             removeIngredient={removeIngredient}
-            openIngredientModal={(ingredient: IIngredient) => setSelectedIngredientDetails(ingredient)}
             totalPrice={getTotalPrice()}
             buyHandler={() => setIsOrderDetailsVisible(true)}
           />
         </section>
         {selectedIngredientDetails
-          && <IngredientDetails
-            ingredient={selectedIngredientDetails}
-            closeHandler={() => setSelectedIngredientDetails(undefined)}
-          />
+          && <Modal
+            title="Детали ингредиента"
+            closeHandler={closeIngredientDetailsModal}
+          >
+            <IngredientDetails
+              ingredient={selectedIngredientDetails}
+              closeHandler={closeIngredientDetailsModal}
+            />
+          </Modal>
+
         }
         {isOrderDetailsVisible
-          && <OrderDetails
-            closeHandler={() => setIsOrderDetailsVisible(false)}
-          />
+          && <Modal
+            closeHandler={closeOrderDetailsModal}
+          >
+            <OrderDetails
+              closeHandler={closeOrderDetailsModal}
+            />
+          </Modal>
         }
       </main>
     </>

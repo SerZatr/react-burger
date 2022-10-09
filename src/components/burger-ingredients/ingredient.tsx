@@ -3,8 +3,8 @@ import subtractImgPath from "../../images/subtract.svg";
 import { IIngredient } from "../../utils/ingredient-type";
 
 interface IIngredientProps {
-    ingredient: IIngredient
-    addIngredient: () => void;
+    ingredient: IIngredient;
+    openIngredientModal: (ingredient: IIngredient) => void;
     countInCart: number;
 }
 
@@ -13,7 +13,7 @@ export function Ingredient(props: IIngredientProps) {
     return (
         <article
             className={`mb-2 ${styles.card}`}
-            onClick={props.addIngredient}
+            onClick={() => props.openIngredientModal(ingredient)}
         >
             {props.countInCart > 0 &&
                 <div className={styles.count}> {props.countInCart} </div>

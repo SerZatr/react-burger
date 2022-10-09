@@ -6,9 +6,9 @@ import { IIngredientsInCart } from "../app/app";
 import { Tabs } from "./tabs";
 
 interface IburgerIngredientsProps {
-    addIngredient: (ingredient: IIngredient) => void;
-    categoriesData: {[key: string]: IIngredient[]}
+    categoriesData: {[key: string]: IIngredient[]};
     ingredientsInCart: IIngredientsInCart;
+    openIngredientModal: (ingredient: IIngredient) => void;
 }
 
 const categories: {[key: string]: string} = {
@@ -38,7 +38,7 @@ export default function BurgerIngredients(props: IburgerIngredientsProps) {
                         ingredients={ingredients}
                         ingredientsInCart={props.ingredientsInCart}
                         key={k + "category"}
-                        addIngredient={props.addIngredient}
+                        openIngredientModal={props.openIngredientModal}
                     />
                 );
             }

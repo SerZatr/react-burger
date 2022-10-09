@@ -10,7 +10,6 @@ interface IConstructorProps {
     ingredientsInCart: IIngredientsInCart;
     removeIngredient: (ingredient: IIngredient) => void;
     totalPrice: number;
-    openIngredientModal: (ingredient: IIngredient) => void;
     buyHandler: () => void;
 }
 
@@ -23,12 +22,10 @@ export default function BurgerConstructor(props: IConstructorProps) {
     const bunTop = <Item
         ingredient={bun}
         type={itemType.top}
-        openIngredientModal={() => props.openIngredientModal(bun)}
     />
     const bunBottom = <Item
         ingredient={bun}
         type={itemType.bottom}
-        openIngredientModal={() => props.openIngredientModal(bun)}
         isLast
     />
 
@@ -52,7 +49,6 @@ export default function BurgerConstructor(props: IConstructorProps) {
                     <Items
                         ingredients={props.ingredientsInCart.ingredients}
                         removeIngredient={props.removeIngredient}
-                        openIngredientModal={(ingredient: IIngredient) => props.openIngredientModal(ingredient)}
                     />
                 </div>
                 <div className={styles.bun}>

@@ -1,13 +1,14 @@
 import styles from "./modal.module.css";
-import closeImgPath from "../../images/close.svg";
+
 import { ReactNode, useEffect } from "react";
+import ModalOverlay from "../modal-overlay/modal-overlay";
+import { createPortal } from "react-dom";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 interface IModalProps {
-    children: ReactNode;
+    children?: ReactNode;
     closeHandler: () => void;
     title?: string;
-    height?: string;
-    width?: string;
 }
 
 export default function Modal(props: IModalProps) {
@@ -24,24 +25,22 @@ export default function Modal(props: IModalProps) {
         return () => document.removeEventListener("keyup", closeModalByKey);
     }, [closeHandler]);
     
-    return (
-        <article className={`${styles.modal} p-10`} style={{width: props.width, height: props.height}}>
-            <div className={`${styles.header} text text_type_main-large`}>
-                <p>
-                    {props.title ?? ""}
-                </p>
-                <div className={styles.closeIcon} onClick={props.closeHandler}>
-                    <img src={closeImgPath} alt="Закрыть" />
+    return createPortal (
+        <ModalOverlay closeHandler={props.closeHandler}>
+            <article className={`${styles.modal} p-10`}>
+                <div className={`${styles.header} text text_type_main-large`}>
+                    <p>
+                        {props.title ?? ""}
+                    </p>
+                    <div className={styles.closeIcon} onClick={props.closeHandler}>
+                        <CloseIcon type={"primary"} />
+                    </div>
                 </div>
-            </div>
-            <div>
-                {props.children}
-            </div>
-        </article>
+                <div>
+                    {props.children ?? ""}
+                </div>
+            </article>
+        </ModalOverlay>,
+        document.getElementById("modal") as HTMLElement
     );
-}
-
-Modal.defaultProps = {
-    width: "500px",
-    height: "500px"
 }

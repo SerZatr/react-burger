@@ -62,8 +62,6 @@ export default function BurgerIngredients(props: IburgerIngredientsProps) {
                 <section className={`${styles.categories} customScrollbar`}>
                     { getCategorieElements() }
                 </section>
-
             </section>
-
     );
 }

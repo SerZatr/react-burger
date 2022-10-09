@@ -25,7 +25,12 @@ export interface IIngredientsInCart {
 function App() {
 
   const [data, setData] = useState<IIngredient[]>([]);
-  
+  const [ingredientsInCart, setIngredientsInCart] = useState<IIngredientsInCart>({
+    ingredients: {},
+    bunIngredients: {}
+  });
+  const [selectedIngredientDetails, setSelectedIngredientDetails] = useState<IIngredient | undefined>();
+  const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState(false);
 
   const getData = async () => {
     try {
@@ -36,19 +41,13 @@ function App() {
     } catch (error) {
       console.log(`Не удаось загрузить данные. Попробуйте открыть страницу позже. ${error}`);
     }
-    };
-  
+  };
 
   React.useEffect(() => {
     getData();
-  }, [])
+  }, []);
 
-  const [ingredientsInCart, setIngredientsInCart] = useState<IIngredientsInCart>({
-    ingredients: {},
-    bunIngredients: {}
-  });
-  const [selectedIngredientDetails, setSelectedIngredientDetails] = useState<IIngredient | undefined>();
-  const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState(false);
+
 
   const addIngredient = (ingredient: IIngredient) => {
     const newIngredients = structuredClone(ingredientsInCart);
@@ -63,7 +62,6 @@ function App() {
 
     const bunId = Object.keys(newIngredients["bunIngredients"])[0];
     const bunsCount = newIngredients["bunIngredients"][bunId]?.count ?? 0;
-
     const checkId = bunId === id || !bunId;
     const type = ingredient.type;
     if (type === "bun" && bunsCount < 2 && checkId) {
@@ -72,7 +70,7 @@ function App() {
       add(newIngredients.ingredients);
     }
     setIngredientsInCart(newIngredients);
-  }
+  };
 
   const removeIngredient = (ingredient: IIngredient) => {
     const id = ingredient._id;
@@ -83,7 +81,7 @@ function App() {
       delete newIngredients.ingredients[id];
     }
     setIngredientsInCart(newIngredients);
-  }
+  };
 
   const categoriesData: any = {};
   for (let key in data) {
@@ -92,7 +90,7 @@ function App() {
           categoriesData[item.type] = [];
       }
       categoriesData[item.type].push(item);
-  }
+  };
 
   const getTotalPrice = () => {
     const ingredients = ingredientsInCart.ingredients;
@@ -107,7 +105,7 @@ function App() {
       price += ingredient.ingredient.price * ingredient.count;
     });
     return price;
-  }
+  };
   
   return (
     <>
@@ -140,7 +138,6 @@ function App() {
         }
       </main>
     </>
-
   );
 }
 

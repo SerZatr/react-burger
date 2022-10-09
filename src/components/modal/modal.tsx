@@ -38,7 +38,7 @@ export default function Modal(props: IModalProps) {
                 {props.children}
             </div>
         </article>
-    )
+    );
 }
 
 Modal.defaultProps = {

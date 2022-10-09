@@ -18,5 +18,5 @@ export default function ModalOverlay(props: IModalOverlayProps) {
         <div className={styles.modalOverlay} onMouseDown={closeModalByClick}>
             {props.children}
         </div>
-    )
+    );
 }

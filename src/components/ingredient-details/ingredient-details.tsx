@@ -37,5 +37,5 @@ export default function IngredientDetails(props: IModalProps) {
             </ModalOverlay>
         </section>,
         document.getElementById("modal") as HTMLElement
-    )
+    );
 }

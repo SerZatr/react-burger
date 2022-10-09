@@ -24,8 +24,7 @@ export function Item(props: IItemProps) {
                 className={styles.ingredientBox}
                 onClick={(event) => {
                     if ((event.target as HTMLElement).classList.contains("constructor-element__image")) {
-                        props.openIngredientModal(props.ingredient)
-                        console.log(props.ingredient);
+                        props.openIngredientModal(props.ingredient);
                     }
                 }}
             >
@@ -44,6 +43,5 @@ export function Item(props: IItemProps) {
                 && <DragIcon type={"primary"} />
             }
         </article>
-    )
+    );
 }
-

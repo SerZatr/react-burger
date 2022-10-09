@@ -37,7 +37,7 @@ export function Items(props: IItemsProps) {
             );
         }
         return itemElements;
-    }
+    };
 
     const getAllItems = () => {
         let itemElements: JSX.Element[] = [];
@@ -51,11 +51,11 @@ export function Items(props: IItemsProps) {
             itemElements = itemElements.concat(categorieItems);
         }
         return itemElements;
-    }
+    };
 
     return (
         <ul className={styles.unMarkedList}>
             {getAllItems()}
         </ul>
-    )
+    );
 }

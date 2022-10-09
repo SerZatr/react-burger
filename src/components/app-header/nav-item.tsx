@@ -18,5 +18,5 @@ export default function NavItem(props: navItemProps) {
                 {props.text}
             </p>
         </li>
-    )
+    );
 }

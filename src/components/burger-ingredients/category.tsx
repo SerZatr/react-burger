@@ -33,7 +33,7 @@ export function Category(props: ICategory) {
             );
         }
         return ingredients;
-    }
+    };
 
     return (
         <article>
@@ -44,6 +44,5 @@ export function Category(props: ICategory) {
                 { getIngredients() }
             </div>
         </article>
-    )
-
+    );
 }

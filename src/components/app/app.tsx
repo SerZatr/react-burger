@@ -46,12 +46,12 @@ function App() {
         console.log(json.data);
         const defaultIngredients: IIngredientsInCart = {
           ingredients: {
-            ["60d3b41abdacab0026a733ce"]: {count:1, ingredient: data[8] },
-            ["60d3b41abdacab0026a733c9"]: {count:1, ingredient: data[3] },
-            ["60d3b41abdacab0026a733d1"]: {count: 1, ingredient: data[11]},
-            ["60d3b41abdacab0026a733d0"]: {count: 10, ingredient: data[10]},
+            "60d3b41abdacab0026a733ce": {count:1, ingredient: data[8] },
+            "60d3b41abdacab0026a733c9": {count:1, ingredient: data[3] },
+            "60d3b41abdacab0026a733d1": {count: 1, ingredient: data[11]},
+            "60d3b41abdacab0026a733d0": {count: 10, ingredient: data[10]},
           },
-          bunIngredients: {["60d3b41abdacab0026a733c6"]: {count: 2, ingredient: data[0] }}
+          bunIngredients: {"60d3b41abdacab0026a733c6": {count: 2, ingredient: data[0] }}
         }
         setIngredientsInCart(defaultIngredients);
       } else {
@@ -133,18 +133,13 @@ function App() {
           >
             <IngredientDetails
               ingredient={selectedIngredientDetails}
-              closeHandler={closeIngredientDetailsModal}
             />
           </Modal>
 
         }
         {isOrderDetailsVisible
-          && <Modal
-            closeHandler={closeOrderDetailsModal}
-          >
-            <OrderDetails
-              closeHandler={closeOrderDetailsModal}
-            />
+          && <Modal closeHandler={closeOrderDetailsModal}>
+            <OrderDetails />
           </Modal>
         }
       </main>

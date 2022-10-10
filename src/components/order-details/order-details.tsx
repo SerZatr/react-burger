@@ -1,12 +1,7 @@
-import Modal from "../modal/modal";
 import styles from "./order-details.module.css";
 import acceptImgPath from "../../images/accept-order.svg";
 
-interface IModalProps {
-    closeHandler: () => void;
-}
-
-export default function OrderDetails(props: IModalProps) {
+export default function OrderDetails() {
     return (
         <section>
             <article className={`${styles.orderDetails} mb-20 mt-4`}>

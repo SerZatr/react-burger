@@ -5,7 +5,6 @@ import DescriptionItem from "./description-item";
 
 interface IModalProps {
     ingredient: IIngredient;
-    closeHandler: () => void;
 }
 
 export default function IngredientDetails(props: IModalProps) {

@@ -1,12 +1,15 @@
 import styles from "./order-details.module.css";
 import acceptImgPath from "../../images/accept-order.svg";
+import { useContext } from "react";
+import { OrderContext } from "../../services/order-context";
 
 export default function OrderDetails() {
+    const {order} = useContext(OrderContext);
     return (
         <section>
             <article className={`${styles.orderDetails} mb-20 mt-4`}>
                 <p className={`${styles.order} text text_type_digits-large mb-8`}>
-                    034536
+                    {order}
                 </p>
                 <p className="text text_type_main-medium mb-15">
                     идентификатор заказа

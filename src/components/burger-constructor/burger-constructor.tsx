@@ -1,35 +1,37 @@
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import { Items, itemType } from "./items";
-import { IIngredient } from "../../utils/ingredient-type";
-import { IIngredientsInCart } from "../app/app";
 import subtractImgPath from "../../images/subtract.svg";
 import { Item } from "./item";
+import { IngredientsInCart } from "../../services/ingredients-in-cart-context";
+import { useContext } from "react";
 
 interface IConstructorProps {
-    ingredientsInCart: IIngredientsInCart;
-    removeIngredient: (ingredient: IIngredient) => void;
     totalPrice: number;
     buyHandler: () => void;
 }
 
 export default function BurgerConstructor(props: IConstructorProps) {
-    const bunIngredients = props.ingredientsInCart.bunIngredients;
-    const bunId = Object.keys(bunIngredients)[0];
-    const bunsCount = bunIngredients?.[bunId]?.count;
-    const bun = bunIngredients?.[bunId]?.ingredient;
+    const {ingredientsInCart} = useContext(IngredientsInCart);
+    const bunIngredients = ingredientsInCart?.bunIngredients;
+    const bunId = bunIngredients ? Object.keys(bunIngredients)[0] : "";
+    const bunsCount = bunIngredients?.[bunId];
     const isBottomButton = bunsCount && bunsCount > 1;
+    const ingredientsIds: string[] = [];
+    Object.keys(ingredientsInCart?.ingredients ?? {}).forEach( i => {
+        ingredientsIds.push(i);
+    });
     const bunTop = <Item
-        ingredient={bun}
+        ingredientId={bunId}
         type={itemType.top}
-    />
+    />;
     const bunBottom = <Item
-        ingredient={bun}
+        ingredientId={bunId}
         type={itemType.bottom}
         isLast
-    />
+    />;
 
-    const isListEmpty = Object.keys(props.ingredientsInCart.ingredients).length === 0;
+    const isListEmpty = Object.keys(ingredientsInCart?.ingredients ?? []).length === 0;
     let ingredientsContainerClass = "customScrollbar";
     ingredientsContainerClass += isListEmpty
         ? ` ${styles.ingredientsContainerEmpty}`
@@ -46,10 +48,7 @@ export default function BurgerConstructor(props: IConstructorProps) {
                     {bunsCount && bunTop}
                 </div>
                 <div className={ingredientsContainerClass}>
-                    <Items
-                        ingredients={props.ingredientsInCart.ingredients}
-                        removeIngredient={props.removeIngredient}
-                    />
+                    <Items ingredientsIds={ingredientsIds} />
                 </div>
                 <div className={styles.bun}>
                     {isBottomButton && bunBottom}

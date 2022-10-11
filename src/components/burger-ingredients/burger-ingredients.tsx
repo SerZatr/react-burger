@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./burger-ingredients.module.css"
 import { Category } from "./category";
 import { IIngredient } from "../../utils/ingredient-type";
-import { IIngredientsInCart } from "../app/app";
 import { Tabs } from "./tabs";
+import { DataContext } from "../../services/data-context";
 
 interface IburgerIngredientsProps {
-    categoriesData: {[key: string]: IIngredient[]};
-    ingredientsInCart: IIngredientsInCart;
     openIngredientModal: (ingredient: IIngredient) => void;
 }
 
@@ -19,24 +17,37 @@ const categories: {[key: string]: string} = {
 
 export default function BurgerIngredients(props: IburgerIngredientsProps) {
     const [current, setCurrent] = useState(categories.bun);
+    const {data} = useContext(DataContext);
+
+    const getDataByCategorie = () => {
+        const dataByCategories: {[categoryName: string]: IIngredient[]} = {};
+        for (let key in data) {
+            let item = data[+key];
+            if (!dataByCategories[item.type]) {
+                dataByCategories[item.type] = [];
+            }
+            dataByCategories[item.type].push(item);
+        };
+        return dataByCategories;
+    }
 
     const getCategorieElements = () => {
+        const dataByCategorie = getDataByCategorie();
         let categorieElements: JSX.Element[] = [];
-        for (let k in Object.keys(props.categoriesData)) {
-            const categorieName = Object.keys(props.categoriesData)[k];
-            const categorie = props.categoriesData[categorieName];
-            let ingredients = [];
+        for (let k in Object.keys(dataByCategorie)) {
+            const categorieName = Object.keys(dataByCategorie)[k];
+            const categorie = dataByCategorie[categorieName];
+            let ingredientsIds: string[] = [];
             for (let key in categorie) {
                 const ingredient = categorie[key];
-                ingredients.push(ingredient);
+                ingredientsIds.push(ingredient._id);
             }
-            if (ingredients.length > 0) {
+            if (ingredientsIds.length > 0) {
                 categorieElements.push(
                     <Category
-                        categorieName={categorieName}
+                        categoryName={categorieName}
                         title={categories[categorieName]}
-                        ingredients={ingredients}
-                        ingredientsInCart={props.ingredientsInCart}
+                        ingredientsIds={ingredientsIds}
                         key={k + "category"}
                         openIngredientModal={props.openIngredientModal}
                     />

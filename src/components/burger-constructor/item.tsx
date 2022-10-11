@@ -1,41 +1,58 @@
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IIngredient } from "../../utils/ingredient-type";
+import { useContext } from "react";
+import { DataContext } from "../../services/data-context";
+import { IngredientsInCart } from "../../services/ingredients-in-cart-context";
 import styles from "./burger-constructor.module.css"
 import { itemType } from "./items";
 
 interface IItemProps {
-    ingredient: IIngredient,
+    ingredientId: string,
     type?: itemType,
-    removeIngredient?: (ingredient: IIngredient) => void,
     isLast?: boolean
 }
 
 export function Item(props: IItemProps) {
-
-    let text = props.ingredient.name;
+    const {data} = useContext(DataContext);
+    const {ingredientsInCart, setIngredientsInCart} = useContext(IngredientsInCart);
+    const ingredient = data?.filter( i => i._id === props.ingredientId)[0];
+    let text = ingredient?.name ?? "";
     const ruType = {top: "верх", bottom: "низ"};
     let className = `ml-4 mr-4 ${styles.constructorCard}`;
     className = props.isLast ? className : className + " mb-4";
     text = props.type ? `${text} (${ruType[props.type]})` : text;
-    return (
-        <article className={className}>
-            <div
-                className={styles.ingredientBox}
-            >
-                <ConstructorElement
-                    type={props.type}
-                    isLocked={!!props.type}
-                    text={text}
-                    price={props.ingredient.price}
-                    thumbnail={props.ingredient.image}
-                    handleClose={ () => {
-                        props.removeIngredient?.(props.ingredient);
-                    }}
-                />
-            </div>
-            {!props.type
-                && <DragIcon type={"primary"} />
-            }
-        </article>
-    );
+
+    const removeIngredient = (id: string) => {
+        const newIngredients = structuredClone(ingredientsInCart);
+        let ingredientCount = newIngredients.ingredients[id];
+        newIngredients.ingredients[id] -= 1;
+        if (ingredientCount === 0) {
+          delete newIngredients.ingredients[id];
+        }
+        setIngredientsInCart?.(newIngredients);
+      };
+
+    if (ingredient) {
+        return (
+            <article className={className}>
+                <div className={styles.ingredientBox}>
+                    <ConstructorElement
+                        type={props.type}
+                        isLocked={!!props.type}
+                        text={text}
+                        price={ingredient.price}
+                        thumbnail={ingredient.image}
+                        handleClose={ () => {
+                            removeIngredient(props.ingredientId);
+                        }}
+                        
+                    />
+                </div>
+                {!props.type
+                    && <DragIcon type={"primary"} />
+                }
+            </article>
+        );
+    } else {
+        return (<></>);
+    }
 }

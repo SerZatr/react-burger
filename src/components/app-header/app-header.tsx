@@ -48,5 +48,5 @@ export default function AppHeader () {
                 </nav>
             </div>
         </header>
-    )
+    );
 }

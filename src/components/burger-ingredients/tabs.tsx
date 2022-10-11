@@ -25,7 +25,7 @@ export function Tabs(props: ITabsProps) {
         return tabElements;
     }
     return (
-        <nav className={`mb-10 ${styles.tabs}`}>
+        <nav className={`mb-10 ${styles.tabs} text text_type_main-default`}>
             {getTabs()}
         </nav>
     );

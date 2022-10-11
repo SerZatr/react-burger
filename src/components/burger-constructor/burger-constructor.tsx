@@ -1,6 +1,5 @@
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burger-constructor.module.css"
-import mainStyles from "../app/app.module.css"
+import styles from "./burger-constructor.module.css";
 import { Items, itemType } from "./items";
 import { IIngredient } from "../../utils/ingredient-type";
 import { IIngredientsInCart } from "../app/app";
@@ -11,6 +10,7 @@ interface IConstructorProps {
     ingredientsInCart: IIngredientsInCart;
     removeIngredient: (ingredient: IIngredient) => void;
     totalPrice: number;
+    buyHandler: () => void;
 }
 
 export default function BurgerConstructor(props: IConstructorProps) {
@@ -19,11 +19,18 @@ export default function BurgerConstructor(props: IConstructorProps) {
     const bunsCount = bunIngredients?.[bunId]?.count;
     const bun = bunIngredients?.[bunId]?.ingredient;
     const isBottomButton = bunsCount && bunsCount > 1;
-    const bunTop = <Item ingredient={bun} type={itemType.top} />
-    const bunBottom = <Item ingredient={bun} type={itemType.bottom} isLast />
+    const bunTop = <Item
+        ingredient={bun}
+        type={itemType.top}
+    />
+    const bunBottom = <Item
+        ingredient={bun}
+        type={itemType.bottom}
+        isLast
+    />
 
     const isListEmpty = Object.keys(props.ingredientsInCart.ingredients).length === 0;
-    let ingredientsContainerClass = `${mainStyles.customScrollbar}`;
+    let ingredientsContainerClass = "customScrollbar";
     ingredientsContainerClass += isListEmpty
         ? ` ${styles.ingredientsContainerEmpty}`
         : ` ${styles.ingredientsContainer}`;
@@ -33,7 +40,7 @@ export default function BurgerConstructor(props: IConstructorProps) {
     }
 
     return (
-        <section className={`mt-25 ${styles.constructorSection} ${mainStyles.section}`}>
+        <section className={`mt-25 ${styles.constructorSection} section`}>
             <article className={`mb-10 ${styles.ingredientsAndBunsContainer}` }>
                 <div className={styles.bun}>
                     {bunsCount && bunTop}
@@ -55,7 +62,7 @@ export default function BurgerConstructor(props: IConstructorProps) {
                         </p>
                         <img src={subtractImgPath} className={styles.priceIcon} alt="Кристаллы" />
                 </div> 
-                    <Button type="primary" size="large" htmlType={"button"}>
+                    <Button type="primary" size="large" htmlType={"button"} onClick={props.buyHandler}>
                         Оформить заказ
                     </Button>
             </article>

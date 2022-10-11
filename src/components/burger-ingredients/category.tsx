@@ -6,9 +6,9 @@ import { Ingredient } from "./ingredient";
 export interface ICategory {
     title: string;
     ingredients: IIngredient[];
-    addIngredient: (ingredient: IIngredient) => void;
     ingredientsInCart: IIngredientsInCart;
     categorieName: string;
+    openIngredientModal: (ingredient: IIngredient) => void;
 }
 
 export function Category(props: ICategory) {
@@ -27,13 +27,13 @@ export function Category(props: ICategory) {
                 <Ingredient
                     ingredient={ingredient}
                     countInCart={count}
-                    addIngredient={ () => props.addIngredient(ingredient) }
+                    openIngredientModal={props.openIngredientModal}
                     key={ingredient._id}
                 />
             );
         }
         return ingredients;
-    }
+    };
 
     return (
         <article>
@@ -44,6 +44,5 @@ export function Category(props: ICategory) {
                 { getIngredients() }
             </div>
         </article>
-    )
-
+    );
 }

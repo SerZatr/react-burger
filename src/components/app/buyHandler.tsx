@@ -32,18 +32,19 @@ export default async function buyHandler(
             },
             body: JSON.stringify({ingredients: ingredientsIds})
         };
-        const response = await fetch(url, options);
-        if(response.ok) {
-            const json = await response.json();
-            const number: number = json.order.number as number;
-            setOrder?.(number);
+        if (ingredientsIds.length === 0) {
+            throw new Error("Заказ не может быть пустым");
         } else {
-            if (ingredientsIds.length === 0) {
-                throw new Error("Заказ не может быть пустым");
+            const response = await fetch(url, options);
+            if(response.ok) {
+                const json = await response.json();
+                const number: number = json.order.number as number;
+                setOrder?.(number);
             } else {
                 throw new Error("Не удалось отправить заказ. Попробуйте повторить позже.");
             }
         }
+
     } catch (error) {
         console.log(`${error}`);
     }

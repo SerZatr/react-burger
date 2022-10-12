@@ -1,6 +1,6 @@
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useContext } from "react";
-import { DataContext } from "../../services/data-context";
+import { IngredientsDataContext } from "../../services/data-context";
 import { IngredientsInCart } from "../../services/ingredients-in-cart-context";
 import styles from "./burger-constructor.module.css"
 import { itemType } from "./items";
@@ -12,9 +12,9 @@ interface IItemProps {
 }
 
 export function Item(props: IItemProps) {
-    const {data} = useContext(DataContext);
+    const {ingredientsData} = useContext(IngredientsDataContext);
     const {ingredientsInCart, setIngredientsInCart} = useContext(IngredientsInCart);
-    const ingredient = data?.filter( i => i._id === props.ingredientId)[0];
+    const ingredient = ingredientsData?.filter( i => i._id === props.ingredientId)[0];
     let text = ingredient?.name ?? "";
     const ruType = {top: "верх", bottom: "низ"};
     let className = `ml-4 mr-4 ${styles.constructorCard}`;

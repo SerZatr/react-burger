@@ -3,7 +3,7 @@ import styles from "./burger-ingredients.module.css"
 import { Category } from "./category";
 import { IIngredient } from "../../utils/ingredient-type";
 import { Tabs } from "./tabs";
-import { DataContext } from "../../services/data-context";
+import { IngredientsDataContext } from "../../services/data-context";
 
 interface IburgerIngredientsProps {
     openIngredientModal: (ingredient: IIngredient) => void;
@@ -17,12 +17,12 @@ const categories: {[key: string]: string} = {
 
 export default function BurgerIngredients(props: IburgerIngredientsProps) {
     const [current, setCurrent] = useState(categories.bun);
-    const {data} = useContext(DataContext);
+    const {ingredientsData} = useContext(IngredientsDataContext);
 
     const getDataByCategorie = () => {
         const dataByCategories: {[categoryName: string]: IIngredient[]} = {};
-        for (let key in data) {
-            let item = data[+key];
+        for (let key in ingredientsData) {
+            let item = ingredientsData[+key];
             if (!dataByCategories[item.type]) {
                 dataByCategories[item.type] = [];
             }

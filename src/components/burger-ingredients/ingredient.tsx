@@ -3,7 +3,7 @@ import subtractImgPath from "../../images/subtract.svg";
 import { IIngredient } from "../../utils/ingredient-type";
 import { IngredientsInCart } from "../../services/ingredients-in-cart-context";
 import { useContext } from "react";
-import { DataContext } from "../../services/data-context";
+import { IngredientsDataContext } from "../../services/data-context";
 
 interface IIngredientProps {
     ingredientId: string;
@@ -12,8 +12,8 @@ interface IIngredientProps {
 
 export function Ingredient(props: IIngredientProps) {
     const {ingredientsInCart} = useContext(IngredientsInCart);
-    const {data} = useContext(DataContext);
-    const ingredient = (data ?? []).filter( i => i._id === props.ingredientId)[0];
+    const {ingredientsData} = useContext(IngredientsDataContext);
+    const ingredient = (ingredientsData ?? []).filter( i => i._id === props.ingredientId)[0];
     const inCart = ingredient.type === "bun" ? ingredientsInCart?.bunIngredients : ingredientsInCart?.ingredients;
 
     const count = inCart?.[props.ingredientId] ?? 0;

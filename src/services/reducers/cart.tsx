@@ -22,10 +22,6 @@ export const cart = createReducer(initialState, builder => {
         .addCase(changeIngredientPosition, (state, action) => {
             const ingredient = state.ingredients[action.payload.oldIndex];
             state.ingredients.splice(action.payload.oldIndex, 1);
-            if (action.payload.newIndex > action.payload.oldIndex) {
-                //action.payload.newIndex += 1;
-            }
-            console.log(1);
             state.ingredients.splice(action.payload.newIndex, 0, ingredient);
         })
         .addCase(addBun, (state, action) => {

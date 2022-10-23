@@ -76,7 +76,6 @@ export default function BurgerIngredients() {
 
     const setActiveTab = (event: React.UIEvent<HTMLDivElement>) => {
         const categorieHeights = heights ?? getHeights();
-        console.log(categorieHeights);
         const container = categoriesContainerRef.current as unknown as HTMLDivElement;
         const scrolled = container.scrollTop;
         let elementsHeight = 0;

@@ -7,7 +7,7 @@ import { rootReducer } from './services/reducers';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { IIngredient } from './utils/ingredient-type';
+import { IIngredient } from './utils/constants';
 
 const composeEnhancers =
   typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

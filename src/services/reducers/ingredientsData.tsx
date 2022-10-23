@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { IIngredient } from "../../utils/ingredient-type";
+import { IIngredient } from "../../utils/constants";
 import { getIngredientsRequest, getIngredientsError, getIngredientsSuccess  } from "../actions/ingredientsData";
 
 const initialState = {

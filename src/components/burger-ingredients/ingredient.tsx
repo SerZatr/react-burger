@@ -19,7 +19,7 @@ export function Ingredient(props: IIngredientProps) {
     const ingredientsInCart = useSelector((state: ICartState) => state.cart.ingredients);
     const bun = useSelector((state: ICartState) => state.cart.bun);
     const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
-    const ingredient = (ingredientsData ?? []).filter( (i: any) => i._id === id)[0];
+    const ingredient = (ingredientsData ?? []).filter( (i) => i._id === id)[0];
     const [, dragRef] = useDrag({
         type: ingredientDragType,
         item: ingredient
@@ -33,7 +33,7 @@ export function Ingredient(props: IIngredientProps) {
     if (ingredient?.type === "bun") {
         count = bun === id ? 2 : 0;
     } else {
-        count = ingredientsInCart.filter( ingredientId => ingredientId === id ).length;
+        count = ingredientsInCart.filter( i => i.ingredientId === id ).length;
     }
 
     return ( ingredient &&

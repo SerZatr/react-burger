@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { IIngredient } from "../../utils/ingredient-type";
+import { IIngredient } from "../../utils/constants";
 
 export const setIngredientDetails = createAction("ingredientDetails/set", (ingredient: IIngredient) => {
     return {

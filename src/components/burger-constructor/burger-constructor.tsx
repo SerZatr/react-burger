@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { ingredientDragType } from "../burger-ingredients/ingredient";
 import { addBun, addIngredient, replaceBun } from "../../services/actions/cart";
-import { IIngredient } from "../../utils/ingredient-type";
+import { IIngredient } from "../../utils/constants";
 import { ICartState } from "../../services/reducers/cart";
 
 interface IConstructorProps {
@@ -22,7 +22,7 @@ export default function BurgerConstructor(props: IConstructorProps) {
     const dispatch = useDispatch();
     const ingredientsIds: string[] = [];
     ingredientsInCart.forEach( i => {
-        ingredientsIds.push(i);
+        ingredientsIds.push(i.ingredientId);
     });
     const bunTop = <Item
         ingredientId={bunId}

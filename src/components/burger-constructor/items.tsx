@@ -1,4 +1,4 @@
-import {  Item } from "./item";
+import { Item } from "./item";
 import styles from "./burger-constructor.module.css";
 import { useSelector } from "react-redux";
 import { ICartState } from "../../services/reducers/cart";
@@ -10,10 +10,11 @@ export function Items() {
         let itemElements: JSX.Element[] = [];
         const length = ingredientsInCart.length;
         for (let i=0; i<length; i++) {
-            const id = ingredientsInCart[i];
+            const id = ingredientsInCart[i].ingredientId;
+            const uuid = ingredientsInCart[i].uuid;
             const isLast = i+1 === length;
             itemElements.push(
-                <li key={i + id}>
+                <li key={uuid}>
                     <Item
                         ingredientId={id}
                         type={undefined}

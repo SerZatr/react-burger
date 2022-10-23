@@ -3,7 +3,6 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from "../app/app.module.css"
-import { IIngredient } from '../../utils/ingredient-type';
 import React from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
@@ -17,12 +16,13 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { IOrderState } from '../../services/reducers/order';
 import { IIngredientsDataState } from '../../services/reducers/ingredientsData';
 import { IIngredientDetailsState } from '../../services/reducers/ingredientDetails';
+import { ICartState } from '../../services/reducers/cart';
 
 function App() {
-  const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data) as IIngredient[];
-  const ingredientsInCart = useSelector((state: any) => state.cart.ingredients) as string[];
+  const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
+  const ingredientsInCart = useSelector((state: ICartState) => state.cart.ingredients);
   const order = useSelector((state: IOrderState) => state.order);
-  const bun = useSelector((state: any) => state.cart.bun);
+  const bun = useSelector((state: ICartState) => state.cart.bun);
   const ingredientDetails = useSelector((state: IIngredientDetailsState) => state.ingredientDetails.ingredient);
   const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState(false);
   const dispatch = useDispatch();
@@ -33,14 +33,14 @@ function App() {
 
   const getTotalPrice = useCallback(() => {
       let price = 0;
-      ingredientsInCart.forEach( id => {
-        const ingredientData = ingredientsData.filter( (i) => i._id === id )[0];
+      ingredientsInCart.forEach( ingredientInCart => {
+        const ingredientData = ingredientsData.filter( (i) => i._id === ingredientInCart.ingredientId )[0];
         if (ingredientData) {
           price += ingredientData.price;
         }
       });
       if (bun) {
-        const bunData = ingredientsData?.filter( (i: any) => i._id === bun )[0];
+        const bunData = ingredientsData?.filter( (i) => i._id === bun )[0];
         if (bunData) {
           price += bunData.price * 2;
         }
@@ -57,7 +57,7 @@ function App() {
   };
 
   const buyHandler = () => {
-    let ingredients = structuredClone(ingredientsInCart);
+    const ingredients = structuredClone(ingredientsInCart);
     if (bun) {
       ingredients.push(bun);
       ingredients.push(bun);

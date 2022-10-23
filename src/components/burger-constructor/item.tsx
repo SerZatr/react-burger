@@ -21,7 +21,7 @@ interface IItemProps {
 
 export function Item(props: IItemProps) {
     const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
-    const ingredient = ingredientsData?.filter( (i: any) => i._id === props.ingredientId)[0];
+    const ingredient = ingredientsData?.filter( (i) => i._id === props.ingredientId)[0];
     const dispatch = useDispatch();
 
     const [{isDrag}, dragRef] = useDrag({

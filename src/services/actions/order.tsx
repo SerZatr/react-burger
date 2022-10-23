@@ -1,5 +1,6 @@
 import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
-import { IIngredient } from "../../utils/ingredient-type";
+import { BASE_URL, IIngredient } from "../../utils/constants";
+import { request } from "../../utils/request";
 
 export const postOrderRequest = createAction("order/post", (ingredients: IIngredient[]) => {
     return {
@@ -23,7 +24,7 @@ export function postOrder(ingredients: IIngredient[]) {
     return async function(dispatch: Dispatch) {
         dispatch(postOrderRequest(ingredients));
         try {
-            const url = "https://norma.nomoreparties.space/api/orders";
+            const url = BASE_URL + "/orders";
             const options = {
                 method: "POST",
                 headers: {
@@ -35,18 +36,14 @@ export function postOrder(ingredients: IIngredient[]) {
             if (ingredients.length === 0) {
                 throw new Error("Заказ не может быть пустым");
             } else {
-                const response = await fetch(url, options);
-                if(response.ok) {
-                    const json = await response.json();
-                    const orderId: number = json.order.number as number;
+                const response = (await request(url, options)).data;
+                if(response) {
+                    const orderId = response.number as number;
                     dispatch(postOrderSuccess(orderId));
-                } else {
-                    throw new Error("Не удалось отправить заказ. Попробуйте повторить позже.");
                 }
             }
         } catch (error) {
             dispatch(postOrderError());
-            console.log(`${error}`);
         }
-    } as unknown as AnyAction
+    } as unknown as AnyAction;
 };

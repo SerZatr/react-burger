@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import styles from "./burger-ingredients.module.css"
 import { Category } from "./category";
-import { IIngredient } from "../../utils/ingredient-type";
+import { IIngredient } from "../../utils/constants";
 import { Tabs } from "./tabs";
 import { useSelector } from 'react-redux';
 import { IIngredientsDataState } from "../../services/reducers/ingredientsData";
@@ -12,12 +12,16 @@ const categories: {[key: string]: string} = {
     sauce: "Соусы"
 }
 
+interface IHeights {
+    [category: string]: number
+};
+
 export default function BurgerIngredients() {
     const [current, setCurrent] = useState(categories.bun);
     const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
     const categorieElementsRefs: {element: HTMLDivElement , name: string}[] = [];
     const categoriesContainerRef = useRef(null);
-    const [heights, setHeights] = useState<any>();
+    const [heights, setHeights] = useState<IHeights>();
 
     const getDataByCategorie = () => {
         const dataByCategories: {[categoryName: string]: IIngredient[]} = {};
@@ -32,7 +36,7 @@ export default function BurgerIngredients() {
     };
 
     const getHeights = () => {
-        let heights: any = {};
+        let heights: IHeights = {};
         categorieElementsRefs.forEach( (obj, index) => {
             const {element} = obj;
             const bounds = element.getBoundingClientRect();

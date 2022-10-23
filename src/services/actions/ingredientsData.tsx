@@ -1,6 +1,6 @@
 import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
-import { IIngredient } from "../../utils/ingredient-type";
-
+import { BASE_URL, IIngredient } from "../../utils/constants";
+import { request } from "../../utils/request";
 
 export const getIngredientsRequest = createAction("ingredientsData/request");
 export const getIngredientsError = createAction("ingredientsData/error");
@@ -15,20 +15,15 @@ export const getIngredientsSuccess = createAction("ingredientsData/success", (in
 export function getIngredients() {
     return async function(dispatch: Dispatch) {
         dispatch(getIngredientsRequest());
-        const url = "https://norma.nomoreparties.space/api/ingredients "
+        const url = BASE_URL + "/ingredients";
         try {
-            const response = await fetch(url);
-            if(response.ok) {
-              const json = await response.json();
-              const ingredientsData: IIngredient[] = json.data as IIngredient[];
-              dispatch(getIngredientsSuccess(ingredientsData));
-            } else {
-              throw new Error("Не удаось загрузить данные. Попробуйте открыть страницу позже.");
+            const response = (await request(url)).data as unknown as IIngredient[] | undefined;
+            if (response) {
+              dispatch(getIngredientsSuccess(response));
             }
-          }
+        }
         catch (error) {
             dispatch(getIngredientsError());
-            console.log(`${error}`);
         }
-    } as unknown as AnyAction
+    } as unknown as AnyAction;
 };

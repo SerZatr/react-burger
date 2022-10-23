@@ -1,34 +1,24 @@
-import { IIngredientsInCart } from "../app/app";
 import { IIngredient } from "../../utils/ingredient-type";
 import styles from "./burger-ingredients.module.css";
 import { Ingredient } from "./ingredient";
 
 export interface ICategory {
     title: string;
-    ingredients: IIngredient[];
-    ingredientsInCart: IIngredientsInCart;
-    categorieName: string;
+    ingredientsIds: string[];
+    categoryName: string;
     openIngredientModal: (ingredient: IIngredient) => void;
 }
 
 export function Category(props: ICategory) {
     const getIngredients = () => {
         let ingredients = [];
-        for (let i=0; i<props.ingredients.length; i++) {
-            const ingredient = props.ingredients[i];
-            const id = ingredient._id;
-            let count = 0;
-            if (ingredient.type !== "bun") {
-                count = props.ingredientsInCart.ingredients?.[id]?.count ?? 0;
-            } else {
-                count = props.ingredientsInCart.bunIngredients?.[id]?.count ?? 0;
-            }
+        for (let i=0; i<props.ingredientsIds.length; i++) {
+            const id = props.ingredientsIds[i];
             ingredients.push(
                 <Ingredient
-                    ingredient={ingredient}
-                    countInCart={count}
+                    ingredientId={id}
                     openIngredientModal={props.openIngredientModal}
-                    key={ingredient._id}
+                    key={id}
                 />
             );
         }

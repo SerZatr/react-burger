@@ -8,52 +8,39 @@ import React from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import Modal from '../modal/modal';
+import buyHandler from './buyHandler';
+import { OrderContext } from '../../services/order-context';
+import { IngredientsDataContext } from '../../services/data-context';
+import { IngredientsInCart } from '../../services/ingredients-in-cart-context';
 
-export interface IIngredientCounted {
-  count: number,
-  ingredient: IIngredient
-}
-
-export interface IIngredientsCountedById {
-  [id: string]: IIngredientCounted;
+export interface IIngredientsCountById {
+  [id: string]: number;
 }
 
 export interface IIngredientsInCart {
-  ingredients: IIngredientsCountedById;
-  bunIngredients: IIngredientsCountedById;
+  ingredients: IIngredientsCountById;
+  bunIngredients: IIngredientsCountById;
 }
 
 function App() {
 
-  const [data, setData] = useState<IIngredient[]>([]);
+  const [ingredientsData, setIngredientsData] = useState<IIngredient[]>([]);
   const [ingredientsInCart, setIngredientsInCart] = useState<IIngredientsInCart>({
     ingredients: {},
     bunIngredients: {}
   });
   const [selectedIngredientDetails, setSelectedIngredientDetails] = useState<IIngredient | undefined>();
   const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState(false);
+  const [order, setOrder] = useState<number>();
 
   const getData = async () => {
     try {
       const url = "https://norma.nomoreparties.space/api/ingredients "
       const response = await fetch(url);
-      console.log(response);
       if(response.ok) {
         const json = await response.json();
-        const data: IIngredient[] = json.data as IIngredient[];
-        setData(data);
-        // temporary desicions. Puts default ingredients to card
-        console.log(json.data);
-        const defaultIngredients: IIngredientsInCart = {
-          ingredients: {
-            "60d3b41abdacab0026a733ce": {count:1, ingredient: data[8] },
-            "60d3b41abdacab0026a733c9": {count:1, ingredient: data[3] },
-            "60d3b41abdacab0026a733d1": {count: 1, ingredient: data[11]},
-            "60d3b41abdacab0026a733d0": {count: 10, ingredient: data[10]},
-          },
-          bunIngredients: {"60d3b41abdacab0026a733c6": {count: 2, ingredient: data[0] }}
-        }
-        setIngredientsInCart(defaultIngredients);
+        const ingredientsData: IIngredient[] = json.ingredientsData as IIngredient[];
+        setIngredientsData(ingredientsData);
       } else {
         throw new Error("Не удаось загрузить данные. Попробуйте открыть страницу позже.");
       }
@@ -66,37 +53,17 @@ function App() {
     getData();
   }, []);
 
-  const removeIngredient = (ingredient: IIngredient) => {
-    const id = ingredient._id;
-    const newIngredients = structuredClone(ingredientsInCart);
-    const categorie = newIngredients.ingredients[id];
-    categorie.count--;
-    if (categorie.count === 0) {
-      delete newIngredients.ingredients[id];
-    }
-    setIngredientsInCart(newIngredients);
-  };
-
-  const categoriesData: any = {};
-  for (let key in data) {
-      let item = data[key];
-      if (!categoriesData[item.type]) {
-          categoriesData[item.type] = [];
-      }
-      categoriesData[item.type].push(item);
-  };
-
   const getTotalPrice = () => {
-    const ingredients = ingredientsInCart.ingredients;
+    const ingredientsCount = ingredientsInCart.ingredients;
     const bunIngredients = ingredientsInCart.bunIngredients;
     let price = 0;
-    Object.keys(ingredients).forEach( id => {
-      const ingredient = ingredients[id];
-      price += ingredient.ingredient.price * ingredient.count;
+    Object.keys(ingredientsCount).forEach( id => {
+      const ingredient = ingredientsData.filter( i => i._id === id )[0];
+      price += ingredient.price * ingredientsCount[id];
     });
     Object.keys(bunIngredients).forEach( id => {
-      const ingredient = bunIngredients[id];
-      price += ingredient.ingredient.price * ingredient.count;
+      const ingredient = ingredientsData.filter( i => i._id === id )[0];
+      price += ingredient.price * ingredientsCount[id];
     });
     return price;
   };
@@ -107,42 +74,55 @@ function App() {
 
   const closeOrderDetailsModal = () => {
     setIsOrderDetailsVisible(false);
-  }
-  
-  return (
+  };
+
+  const openOrderModal = () => {
+    setIsOrderDetailsVisible(true);
+  };
+
+   return (
     <>
       <AppHeader />
-      <main className={styles.contentWrapper}>
-        <section className={styles.mainContainer}>
-          <BurgerIngredients
-            categoriesData={categoriesData}
-            ingredientsInCart={ingredientsInCart}
-            openIngredientModal={(ingredient: IIngredient) => setSelectedIngredientDetails(ingredient)}
-          />
-          <BurgerConstructor
-            ingredientsInCart={ingredientsInCart}
-            removeIngredient={removeIngredient}
-            totalPrice={getTotalPrice()}
-            buyHandler={() => setIsOrderDetailsVisible(true)}
-          />
-        </section>
-        {selectedIngredientDetails
-          && <Modal
-            title="Детали ингредиента"
-            closeHandler={closeIngredientDetailsModal}
-          >
-            <IngredientDetails
-              ingredient={selectedIngredientDetails}
-            />
-          </Modal>
 
-        }
-        {isOrderDetailsVisible
-          && <Modal closeHandler={closeOrderDetailsModal}>
-            <OrderDetails />
-          </Modal>
-        }
-      </main>
+
+          <main className={styles.contentWrapper}>
+
+            <section className={styles.mainContainer}>
+              <IngredientsDataContext.Provider value={{ingredientsData, setIngredientsData}}>
+                <IngredientsInCart.Provider value={{ingredientsInCart, setIngredientsInCart}}>
+                  <BurgerIngredients
+                    openIngredientModal={(ingredient: IIngredient) => setSelectedIngredientDetails(ingredient)}
+                  />
+                
+                  <BurgerConstructor
+                    totalPrice={getTotalPrice()}
+                    buyHandler={() => buyHandler(openOrderModal, ingredientsInCart, setOrder)}
+                  />
+
+                </IngredientsInCart.Provider>
+              </IngredientsDataContext.Provider>
+            </section>
+
+            {selectedIngredientDetails
+              && <Modal
+                title="Детали ингредиента"
+                closeHandler={closeIngredientDetailsModal}
+              >
+                <IngredientDetails
+                  ingredient={selectedIngredientDetails}
+                />
+            </Modal>}
+
+            <OrderContext.Provider value={{order, setOrder}}>
+              {isOrderDetailsVisible
+                && <Modal closeHandler={closeOrderDetailsModal}>
+                  <OrderDetails />
+                </Modal>
+              }
+            </OrderContext.Provider>
+          </main>
+
+        
     </>
   );
 }

@@ -1,40 +1,59 @@
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useContext } from "react";
-import { IngredientsDataContext } from "../../services/data-context";
-import { IngredientsInCart } from "../../services/ingredients-in-cart-context";
 import styles from "./burger-constructor.module.css"
-import { itemType } from "./items";
+import { useDispatch, useSelector } from 'react-redux';
+import { changeIngredientPosition, removeIngredient } from "../../services/actions/cart";
+import { useDrag, useDrop } from "react-dnd";
+import { IIngredientsDataState } from "../../services/reducers/ingredientsData";
+
+export enum itemType {
+    top = "top",
+    bottom = "bottom"
+};
+
+export const cartItemDragType = "cartItem";
 
 interface IItemProps {
     ingredientId: string,
+    index?: number,
     type?: itemType,
     isLast?: boolean
 }
 
 export function Item(props: IItemProps) {
-    const {ingredientsData} = useContext(IngredientsDataContext);
-    const {ingredientsInCart, setIngredientsInCart} = useContext(IngredientsInCart);
-    const ingredient = ingredientsData?.filter( i => i._id === props.ingredientId)[0];
+    const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
+    const ingredient = ingredientsData?.filter( (i: any) => i._id === props.ingredientId)[0];
+    const dispatch = useDispatch();
+
+    const [{isDrag}, dragRef] = useDrag({
+        type: cartItemDragType,
+        item: {index: props.index},
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+    });
+
+    const [{isHover}, dropTarget] = useDrop({
+        accept: cartItemDragType,
+        drop(item: {index: number}) {
+            dispatch(changeIngredientPosition(item.index, props.index || 0));
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        })
+    });
+
     let text = ingredient?.name ?? "";
     const ruType = {top: "верх", bottom: "низ"};
     let className = `ml-4 mr-4 ${styles.constructorCard}`;
     className = props.isLast ? className : className + " mb-4";
+    className = isDrag ? styles.dragging + " " + className : className;
+    let ingredienBoxclassName = isHover ? styles.itemHover + " " + styles.ingredientBox : styles.ingredientBox;
     text = props.type ? `${text} (${ruType[props.type]})` : text;
-
-    const removeIngredient = (id: string) => {
-        const newIngredients = structuredClone(ingredientsInCart);
-        let ingredientCount = newIngredients.ingredients[id];
-        newIngredients.ingredients[id] -= 1;
-        if (ingredientCount === 0) {
-          delete newIngredients.ingredients[id];
-        }
-        setIngredientsInCart?.(newIngredients);
-      };
 
     if (ingredient) {
         return (
-            <article className={className}>
-                <div className={styles.ingredientBox}>
+            <article className={className}  { ...ingredient.type !== "bun" && {ref: dropTarget}  }>
+                <div className={ingredienBoxclassName}>
                     <ConstructorElement
                         type={props.type}
                         isLocked={!!props.type}
@@ -42,13 +61,15 @@ export function Item(props: IItemProps) {
                         price={ingredient.price}
                         thumbnail={ingredient.image}
                         handleClose={ () => {
-                            removeIngredient(props.ingredientId);
+                            dispatch(removeIngredient(props.index || 0));
                         }}
                         
                     />
                 </div>
                 {!props.type
-                    && <DragIcon type={"primary"} />
+                    && <div ref={dragRef}>
+                        <DragIcon type={"primary"} />
+                    </div>
                 }
             </article>
         );

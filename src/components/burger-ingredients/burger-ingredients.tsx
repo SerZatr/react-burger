@@ -1,23 +1,23 @@
-import { useContext, useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./burger-ingredients.module.css"
 import { Category } from "./category";
 import { IIngredient } from "../../utils/ingredient-type";
 import { Tabs } from "./tabs";
-import { IngredientsDataContext } from "../../services/data-context";
-
-interface IburgerIngredientsProps {
-    openIngredientModal: (ingredient: IIngredient) => void;
-}
+import { useSelector } from 'react-redux';
+import { IIngredientsDataState } from "../../services/reducers/ingredientsData";
 
 const categories: {[key: string]: string} = {
     bun: "Булки",
-    sauce: "Соусы",
-    main: "Начинка"
+    main: "Начинка",
+    sauce: "Соусы"
 }
 
-export default function BurgerIngredients(props: IburgerIngredientsProps) {
+export default function BurgerIngredients() {
     const [current, setCurrent] = useState(categories.bun);
-    const {ingredientsData} = useContext(IngredientsDataContext);
+    const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
+    const categorieElementsRefs: {element: HTMLDivElement , name: string}[] = [];
+    const categoriesContainerRef = useRef(null);
+    const [heights, setHeights] = useState<any>();
 
     const getDataByCategorie = () => {
         const dataByCategories: {[categoryName: string]: IIngredient[]} = {};
@@ -29,7 +29,18 @@ export default function BurgerIngredients(props: IburgerIngredientsProps) {
             dataByCategories[item.type].push(item);
         };
         return dataByCategories;
-    }
+    };
+
+    const getHeights = () => {
+        let heights: any = {};
+        categorieElementsRefs.forEach( (obj, index) => {
+            const {element} = obj;
+            const bounds = element.getBoundingClientRect();
+            heights[index] = bounds.height;
+        });
+        setHeights(heights);
+        return heights;
+    };
 
     const getCategorieElements = () => {
         const dataByCategorie = getDataByCategorie();
@@ -44,17 +55,41 @@ export default function BurgerIngredients(props: IburgerIngredientsProps) {
             }
             if (ingredientsIds.length > 0) {
                 categorieElements.push(
+                    <div
+                        ref={((element: HTMLDivElement) => {
+                            categorieElementsRefs.push({element: element, name: categorieName});
+                        })}
+                        key={k + "category"}
+                    >
                     <Category
                         categoryName={categorieName}
                         title={categories[categorieName]}
                         ingredientsIds={ingredientsIds}
-                        key={k + "category"}
-                        openIngredientModal={props.openIngredientModal}
                     />
+                    </div>
+
                 );
             }
         }
         return categorieElements;
+    };
+
+    const setActiveTab = (event: React.UIEvent<HTMLDivElement>) => {
+        const categorieHeights = heights ?? getHeights();
+        console.log(categorieHeights);
+        const container = categoriesContainerRef.current as unknown as HTMLDivElement;
+        const scrolled = container.scrollTop;
+        let elementsHeight = 0;
+        for (let key in categorieHeights) {
+            elementsHeight += categorieHeights[key];
+            if (scrolled < elementsHeight) {
+                const name = categorieElementsRefs[+key].name;
+                if(current !== categories[name]) {
+                    setCurrent(categories[name]);
+                }
+                break;
+            }
+        }
     };
 
     return (
@@ -70,7 +105,7 @@ export default function BurgerIngredients(props: IburgerIngredientsProps) {
                         callback={ () => setCurrent(current) }
                     />
                 </nav>
-                <section className={`${styles.categories} customScrollbar`}>
+                <section className={`${styles.categories} customScrollbar`} onScroll={setActiveTab} ref={categoriesContainerRef}>
                     { getCategorieElements() }
                 </section>
             </section>

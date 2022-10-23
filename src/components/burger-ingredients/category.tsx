@@ -1,4 +1,3 @@
-import { IIngredient } from "../../utils/ingredient-type";
 import styles from "./burger-ingredients.module.css";
 import { Ingredient } from "./ingredient";
 
@@ -6,7 +5,6 @@ export interface ICategory {
     title: string;
     ingredientsIds: string[];
     categoryName: string;
-    openIngredientModal: (ingredient: IIngredient) => void;
 }
 
 export function Category(props: ICategory) {
@@ -17,7 +15,6 @@ export function Category(props: ICategory) {
             ingredients.push(
                 <Ingredient
                     ingredientId={id}
-                    openIngredientModal={props.openIngredientModal}
                     key={id}
                 />
             );

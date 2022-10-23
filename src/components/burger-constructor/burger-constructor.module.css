@@ -37,6 +37,8 @@
 }
 
 .ingredientsAndBunsContainer {
+    min-height: 40px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -67,5 +69,18 @@
 .priceIcon {
     width: 33px;
     height: 33px;
-    margin-left: 9.5px
+    margin-left: 9.5px;
+}
+
+.dragging {
+    opacity: 40%;
+}
+
+.itemHover {
+    opacity: 70%;
+}
+
+.constructorHover {
+    background-color: #212127;
+    border-radius: 16px;
 }

@@ -1,27 +1,46 @@
 import styles from "./burger-ingredients.module.css";
 import subtractImgPath from "../../images/subtract.svg";
-import { IIngredient } from "../../utils/ingredient-type";
-import { IngredientsInCart } from "../../services/ingredients-in-cart-context";
-import { useContext } from "react";
-import { IngredientsDataContext } from "../../services/data-context";
+import { useDispatch, useSelector } from 'react-redux';
+import { setIngredientDetails } from "../../services/actions/ingredientDetails";
+import { useDrag } from "react-dnd";
+import { ICartState } from "../../services/reducers/cart";
+import { IIngredientsDataState } from "../../services/reducers/ingredientsData";
 
 interface IIngredientProps {
     ingredientId: string;
-    openIngredientModal: (ingredient: IIngredient) => void;
 }
 
+export const ingredientDragType = "ingredient";
+
 export function Ingredient(props: IIngredientProps) {
-    const {ingredientsInCart} = useContext(IngredientsInCart);
-    const {ingredientsData} = useContext(IngredientsDataContext);
-    const ingredient = (ingredientsData ?? []).filter( i => i._id === props.ingredientId)[0];
-    const inCart = ingredient.type === "bun" ? ingredientsInCart?.bunIngredients : ingredientsInCart?.ingredients;
+    const dispatch = useDispatch();
+    const id = props.ingredientId;
 
-    const count = inCart?.[props.ingredientId] ?? 0;
+    const ingredientsInCart = useSelector((state: ICartState) => state.cart.ingredients);
+    const bun = useSelector((state: ICartState) => state.cart.bun);
+    const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
+    const ingredient = (ingredientsData ?? []).filter( (i: any) => i._id === id)[0];
+    const [, dragRef] = useDrag({
+        type: ingredientDragType,
+        item: ingredient
+    });
+    let count = 0;
 
-    return (
+    const openIngredientModal = () => {
+        dispatch(setIngredientDetails(ingredient));
+    };
+
+    if (ingredient?.type === "bun") {
+        count = bun === id ? 2 : 0;
+    } else {
+        count = ingredientsInCart.filter( ingredientId => ingredientId === id ).length;
+    }
+
+    return ( ingredient &&
         <article
             className={`mb-2 ${styles.card}`}
-            onClick={() => props.openIngredientModal(ingredient)}
+            onClick={openIngredientModal}
+            ref = {dragRef}
         >
             {count > 0 &&
                 <div className={styles.count}> {count} </div>

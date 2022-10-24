@@ -57,7 +57,7 @@ function App() {
   };
 
   const buyHandler = () => {
-    const ingredients = structuredClone(ingredientsInCart);
+    const ingredients = ingredientsInCart.map( i => i.ingredientId);
     if (bun) {
       ingredients.push(bun);
       ingredients.push(bun);

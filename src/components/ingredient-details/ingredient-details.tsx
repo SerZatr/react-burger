@@ -1,25 +1,23 @@
-import { IIngredient } from "../../utils/ingredient-type";
 import styles from "./ingredient-details.module.css";
 import mainStyles from "../app/app.module.css";
 import DescriptionItem from "./description-item";
+import { useSelector } from "react-redux";
+import { IIngredientDetailsState } from "../../services/reducers/ingredientDetails";
 
-interface IModalProps {
-    ingredient: IIngredient;
-}
-
-export default function IngredientDetails(props: IModalProps) {
+export default function IngredientDetails() {
+    const ingredientDetails = useSelector((state: IIngredientDetailsState) => state.ingredientDetails.ingredient);
     return (
         <section>
             <article className={`${styles.ingredientDetails} mb-5`}>
-                <img src={props.ingredient?.image_large} className="mb-4" alt={`${props.ingredient.name}`} />
+                <img src={ingredientDetails?.image_large} className="mb-4" alt={`${ingredientDetails?.name}`} />
                 <p className={`${styles.title} mb-8 text text_type_main-medium`}>
-                    {props.ingredient?.name}
+                    {ingredientDetails?.name}
                 </p>
                 <div className={`${styles.description} ${mainStyles.secondaryTxt}`}>
-                    <DescriptionItem name="Калории, ккал" property={props.ingredient?.calories} />
-                    <DescriptionItem name="Белки, г" property={props.ingredient?.proteins} />
-                    <DescriptionItem name="Жиры, г" property={props.ingredient?.fat} />
-                    <DescriptionItem name="Углеводы, г" property={props.ingredient?.proteins} />
+                    <DescriptionItem name="Калории, ккал" property={ingredientDetails?.calories ?? 0} />
+                    <DescriptionItem name="Белки, г" property={ingredientDetails?.proteins ?? 0} />
+                    <DescriptionItem name="Жиры, г" property={ingredientDetails?.fat ?? 0} />
+                    <DescriptionItem name="Углеводы, г" property={ingredientDetails?.proteins ?? 0} />
                 </div>
             </article>
         </section>

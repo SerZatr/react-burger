@@ -1,15 +1,15 @@
 import styles from "./order-details.module.css";
 import acceptImgPath from "../../images/accept-order.svg";
-import { useContext } from "react";
-import { OrderContext } from "../../services/order-context";
+import { useSelector } from "react-redux";
+import { IOrderState } from "../../services/reducers/order";
 
 export default function OrderDetails() {
-    const {order} = useContext(OrderContext);
+    const orderId = useSelector((state: IOrderState) => state.order.id);
     return (
         <section>
             <article className={`${styles.orderDetails} mb-20 mt-4`}>
                 <p className={`${styles.order} text text_type_digits-large mb-8`}>
-                    {order}
+                    {orderId}
                 </p>
                 <p className="text text_type_main-medium mb-15">
                     идентификатор заказа

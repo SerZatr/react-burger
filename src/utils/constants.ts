@@ -1,3 +1,5 @@
+export const BASE_URL = 'https://norma.nomoreparties.space/api';
+
 export interface IIngredient {
     _id: string;
     name: string;
@@ -12,4 +14,4 @@ export interface IIngredient {
     image_large: string;
     __v: number;
     index?: number;
-}
+};

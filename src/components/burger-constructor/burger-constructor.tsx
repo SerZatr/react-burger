@@ -1,10 +1,14 @@
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import { Items, itemType } from "./items";
+import { Items } from "./items";
 import subtractImgPath from "../../images/subtract.svg";
-import { Item } from "./item";
-import { IngredientsInCart } from "../../services/ingredients-in-cart-context";
-import { useContext } from "react";
+import { Item, itemType } from "./item";
+import { useDispatch, useSelector } from "react-redux";
+import { useDrop } from "react-dnd";
+import { ingredientDragType } from "../burger-ingredients/ingredient";
+import { addBun, addIngredient, replaceBun } from "../../services/actions/cart";
+import { IIngredient } from "../../utils/constants";
+import { ICartState } from "../../services/reducers/cart";
 
 interface IConstructorProps {
     totalPrice: number;
@@ -12,14 +16,13 @@ interface IConstructorProps {
 }
 
 export default function BurgerConstructor(props: IConstructorProps) {
-    const {ingredientsInCart} = useContext(IngredientsInCart);
-    const bunIngredients = ingredientsInCart?.bunIngredients;
-    const bunId = bunIngredients ? Object.keys(bunIngredients)[0] : "";
-    const bunsCount = bunIngredients?.[bunId];
-    const isBottomButton = bunsCount && bunsCount > 1;
+
+    const ingredientsInCart = useSelector((state: ICartState) => state.cart.ingredients);
+    const bunId = useSelector((state: ICartState) => state.cart.bun) ?? "";
+    const dispatch = useDispatch();
     const ingredientsIds: string[] = [];
-    Object.keys(ingredientsInCart?.ingredients ?? {}).forEach( i => {
-        ingredientsIds.push(i);
+    ingredientsInCart.forEach( i => {
+        ingredientsIds.push(i.ingredientId);
     });
     const bunTop = <Item
         ingredientId={bunId}
@@ -31,27 +34,46 @@ export default function BurgerConstructor(props: IConstructorProps) {
         isLast
     />;
 
-    const isListEmpty = Object.keys(ingredientsInCart?.ingredients ?? []).length === 0;
+    const [{isHover}, dropTarget] = useDrop({
+        accept: ingredientDragType,
+        drop(ingredient: IIngredient) {
+            if (ingredient.type === "bun" && !bunId) {
+                dispatch(addBun(ingredient._id));
+            } else if (ingredient.type === "bun" && bunId) {
+                dispatch(replaceBun(ingredient._id));
+            } else {
+                dispatch(addIngredient(ingredient._id));
+            }
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        })
+    });
+
+    const isListEmpty = ingredientsInCart.length === 0;
     let ingredientsContainerClass = "customScrollbar";
     ingredientsContainerClass += isListEmpty
         ? ` ${styles.ingredientsContainerEmpty}`
         : ` ${styles.ingredientsContainer}`;
         
-    if (isBottomButton && !isListEmpty) {
+    if (bunId && !isListEmpty) {
         ingredientsContainerClass += " mb-4";
     }
 
+    let className = `mb-10 ${styles.ingredientsAndBunsContainer}`;
+    className = isHover ? styles.constructorHover + " " + className : className;
+
     return (
         <section className={`mt-25 ${styles.constructorSection} section`}>
-            <article className={`mb-10 ${styles.ingredientsAndBunsContainer}` }>
+            <article className={className} ref={dropTarget}>
                 <div className={styles.bun}>
-                    {bunsCount && bunTop}
+                    {bunId && bunTop}
                 </div>
                 <div className={ingredientsContainerClass}>
-                    <Items ingredientsIds={ingredientsIds} />
+                    <Items />
                 </div>
                 <div className={styles.bun}>
-                    {isBottomButton && bunBottom}
+                    {bunId && bunBottom}
                 </div>
             </article>
             <article className={`pr-4 pl-4 ${styles.buyContainer}`}>

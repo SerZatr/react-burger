@@ -1,49 +1,28 @@
 import { Item } from "./item";
-import styles from "./burger-constructor.module.css"
-import { IngredientsInCart } from "../../services/ingredients-in-cart-context";
-import { useContext } from "react";
+import styles from "./burger-constructor.module.css";
+import { useSelector } from "react-redux";
+import { ICartState } from "../../services/reducers/cart";
 
-interface IItemsProps {
-    ingredientsIds: string[];
-};
-
- export enum itemType {
-    top = "top",
-    bottom = "bottom"
-};
-
-export function Items(props: IItemsProps) {
-    const {ingredientsInCart} = useContext(IngredientsInCart);
-    const getItemsByType = (
-        id: string,
-        count: number,
-        type?: itemType,
-        isLast?: boolean
-    ) => {
-        let itemElements: JSX.Element[] = [];
-        for (let i=0; i<count; i++) {
-            itemElements.push(
-                <li key={i + id}>
-                    <Item
-                        ingredientId={id}
-                        type={type}
-                        isLast={isLast && i+1 === count}
-                    />
-                </li>
-            );
-        }
-        return itemElements;
-    };
+export function Items() {
+    const ingredientsInCart = useSelector((state: ICartState) => state.cart.ingredients);
 
     const getAllItems = () => {
         let itemElements: JSX.Element[] = [];
-        const ingredientsIds = props.ingredientsIds;
-        for (let i=0; i<Object.keys(ingredientsIds).length; i++) {
-            const id = ingredientsIds[i];
-            const count = ingredientsInCart?.ingredients?.[id] ?? 0;
-            const isLast = i+1 === Object.keys(ingredientsIds).length;
-            const categorieItems = getItemsByType(id, count, undefined, isLast);
-            itemElements = itemElements.concat(categorieItems);
+        const length = ingredientsInCart.length;
+        for (let i=0; i<length; i++) {
+            const id = ingredientsInCart[i].ingredientId;
+            const uuid = ingredientsInCart[i].uuid;
+            const isLast = i+1 === length;
+            itemElements.push(
+                <li key={uuid}>
+                    <Item
+                        ingredientId={id}
+                        type={undefined}
+                        isLast={isLast}
+                        index={i}
+                    />
+                </li>
+            );
         }
         return itemElements;
     };

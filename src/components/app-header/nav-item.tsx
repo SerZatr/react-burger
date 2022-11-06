@@ -1,12 +1,12 @@
 import styles from "./app-header.module.css";
 
-interface navItemProps {
+interface INavItemProps {
     icon: JSX.Element;
     text: string;
     isActive: boolean;
 }
 
-export default function NavItem(props: navItemProps) {
+export default function NavItem(props: INavItemProps) {
     let pClass = "text text_type_main-default m-1";
     pClass = props.isActive ? pClass : `${pClass} text_color_inactive`;
     return (

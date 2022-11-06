@@ -85,22 +85,6 @@ export default function LoginPage() {
                             </Button>
                         </div>
                     </div>
-
-                    <nav className="mb-4"> 
-                        <span className="text text_type_main-default text_color_inactive">Вы - новый пользователь? </span> 
-                        <Link
-                            to={{ pathname: "/register" }}
-                            className={`${mainStyles.linkText} text text_type_main-small`}
-                        >
-                            Заргеистрироваться
-                        </Link>
-                    </nav>
-                    <nav> 
-                        <span className="text text_type_main-default text_color_inactive">Забыли пароль? </span> 
-                        <Link to="/forgot-password" className={`${mainStyles.linkText} text text_type_main-small`}>
-                            Восстановить пароль
-                        </Link >
-                    </nav>
                 </div>
 
 

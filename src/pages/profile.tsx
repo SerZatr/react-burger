@@ -48,6 +48,7 @@ export default function LoginPage() {
                                 placeholder="Имя"
                                 value={name}
                                 onChange={ (e) => {setName(e.target.value)} }
+                                icon="EditIcon"
                             />
                         </div>
 
@@ -57,6 +58,7 @@ export default function LoginPage() {
                                 placeholder="Логин"
                                 value={login}
                                 onChange={ (e) => {setLogin(e.target.value)} }
+                                icon="EditIcon"
                             />
                         </div>
 
@@ -66,30 +68,32 @@ export default function LoginPage() {
                                 placeholder="Пароль"
                                 value={password}
                                 onChange={ (e) => {setPassword(e.target.value)} }
-                                icon="ShowIcon"
+                                icon="EditIcon"
                             />
                         </div>
-                        <div className={styles.buttonsSection}>
-                            <div className="mb-6">
-                                <Button
-                                        type="primary"
-                                        size="medium"
-                                        htmlType={"submit"}
-                                    >
-                                        Сохранить
-                                </Button>
+                        { (name !== defaultName || login !== defaultLogin || password) && 
+                            <div className={styles.buttonsSection}>
+                                <div className="mb-6">
+                                    <Button
+                                            type="primary"
+                                            size="medium"
+                                            htmlType={"submit"}
+                                        >
+                                            Сохранить
+                                    </Button>
+                                </div>
+                                <div className="mb-20">
+                                    <Button
+                                            type="primary"
+                                            size="medium"
+                                            onClick={dismissChanges}
+                                            htmlType={"button"}
+                                        >
+                                            Отменить
+                                    </Button>
+                                </div>
                             </div>
-                            <div className="mb-20">
-                                <Button
-                                        type="primary"
-                                        size="medium"
-                                        onClick={dismissChanges}
-                                        htmlType={"button"}
-                                    >
-                                        Отменить
-                                </Button>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </form>
 

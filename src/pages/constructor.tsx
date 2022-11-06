@@ -23,6 +23,7 @@ export default function ConstructorPage() {
   const bun = useSelector((state: ICartState) => state.cart.bun);
   const ingredientDetails = useSelector((state: IIngredientDetailsState) => state.ingredientDetails.ingredient);
   const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState(false);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -62,9 +63,11 @@ export default function ConstructorPage() {
   };
 
   useEffect( () => {
-    if(order.id) {
+    console.log(isPageLoaded);
+    if (order.id && isPageLoaded) {
       setIsOrderDetailsVisible(true);
     }
+    setIsPageLoaded(true);
   }, [order] );
 
    return (

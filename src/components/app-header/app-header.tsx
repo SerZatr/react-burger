@@ -16,7 +16,7 @@ export default function AppHeader () {
     const getActiveLink = () => {
         if (pathname === "/") {
             return links.constructor;
-        } else if (pathname === "/login" || pathname === "/forgot-password" || pathname === "/reset-password" || pathname === "/register") {
+        } else if (pathname === "/login" || pathname === "/forgot-password" || pathname === "/reset-password" || pathname === "/register" || pathname === "/profile") {
             return links.profile;
         } else {
             return 0;

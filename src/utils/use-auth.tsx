@@ -7,9 +7,6 @@ export default function useAuth() {
     const dispatch = useDispatch();
     const user = useSelector((state: IProfileState) => state.profile?.user);
     if (!user) {
-        const refreshToken = localStorage.getItem("refreshToken");
-        if (refreshToken) {
-            dispatch(getProfile(refreshToken));
-        }
+        dispatch(getProfile());
     }
 }

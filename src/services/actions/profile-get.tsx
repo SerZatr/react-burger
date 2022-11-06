@@ -7,13 +7,7 @@ interface IResponse {
     user: IUser
 }
 
-export const profileGetRequest = createAction("profileGet/post", (token: string) => {
-    return {
-        payload: {
-            token
-        }
-    }
-});
+export const profileGetRequest = createAction("profileGet/post");
 
 export const profileGetSuccess = createAction("profileGet/success", (user: IUser) => {
     return {
@@ -25,24 +19,26 @@ export const profileGetSuccess = createAction("profileGet/success", (user: IUser
 
 export const profileGetError = createAction("profileGet/failed");
 
-export function getProfile(token: string) {
+export function getProfile() {
     return async function(dispatch: Dispatch) {
-        dispatch(profileGetRequest(token));
+        dispatch(profileGetRequest());
         try {
-            const url = BASE_URL + "/auth/user";
-            const options = {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": token
-                },
-                body: JSON.stringify({authorization: token})
-            };
-            const response = await request(url, options) as IResponse;
-            const {user} = response;
-            if (user) {
-                dispatch(profileGetSuccess(user));
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+                const url = BASE_URL + "/auth/user";
+                const options = {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": token
+                    }
+                };
+                const response = (await request(url, options)) as IResponse;
+                const {user} = response;
+                if (user) {
+                    dispatch(profileGetSuccess(user));
+                }
             }
         } catch (error) {
             dispatch(profileGetError());

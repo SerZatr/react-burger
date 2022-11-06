@@ -19,6 +19,7 @@ import { ProtectedRoute } from '../protected-route/protected-route';
 
 export default function App() {
   const dispatch = useDispatch();
+  
   useAuth();
 
   React.useEffect(() => {

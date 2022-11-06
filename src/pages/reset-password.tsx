@@ -21,40 +21,46 @@ export default function LoginPage() {
     const [code, setCode] = useState("");
     const dispatch = useDispatch();
 
+    const resetPasswordHandler = (e: React.FormEvent) => {
+        e.preventDefault();
+        dispatch(resetPassword(password, code));
+    };
+
     return (
         <main className={`${styles.contentWrapper} ${styles.loginContainer}`}>
             <section className={styles.mainContainer}>
                 <h1 className="mb-6 text text_type_main-medium"> Восстановление пароля </h1>
+                <form onSubmit={resetPasswordHandler}>
+                    <div className="mb-6">
+                        <Input
+                            type="password"
+                            placeholder="Введите новый пароль"
+                            value={password}
+                            onChange={ (e) => {setPassword(e.target.value)} }
+                            icon={"ShowIcon"}
+                        />
+                    </div>
 
-                <div className="mb-6">
-                    <Input
-                        type="password"
-                        placeholder="Введите новый пароль"
-                        value={password}
-                        onChange={ (e) => {setPassword(e.target.value)} }
-                        icon={"ShowIcon"}
-                    />
-                </div>
+                    <div className="mb-6">
+                        <Input
+                            type="text"
+                            placeholder="Введите код из письма"
+                            value={code}
+                            onChange={ (e) => {setCode(e.target.value)} }
+                        />
+                    </div>
 
-                <div className="mb-6">
-                    <Input
-                        type="text"
-                        placeholder="Введите код из письма"
-                        value={code}
-                        onChange={ (e) => {setCode(e.target.value)} }
-                    />
-                </div>
+                    <div className="mb-20">
+                        <Button
+                            type="primary"
+                            size="medium"
+                            htmlType={"submit"}
+                        >
+                            Сохранить
+                        </Button>
+                    </div>
+                </form>
 
-                <div className="mb-20">
-                    <Button
-                        type="primary"
-                        size="medium"
-                        onClick={() => dispatch(resetPassword(password, code)) }
-                        htmlType={"button"}
-                    >
-                        Сохранить
-                    </Button>
-                </div>
 
                 <nav className="mb-4"> 
                     <span className="text text_type_main-default text_color_inactive">Вспомнили пароль? </span> 

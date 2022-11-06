@@ -20,11 +20,16 @@ export default function LoginPage() {
         }
     }, [restorePasswordState]);
 
+    const restorePasswordHandler = (e: React.FormEvent) => {
+        e.preventDefault();
+        dispatch(restorePassword(email));
+    }
+
     return (
         <main className={`${styles.contentWrapper} ${styles.loginContainer}`}>
             <section className={styles.mainContainer}>
                 <h1 className="mb-6 text text_type_main-medium"> Укажите e-mail </h1>
-
+                <form onSubmit={restorePasswordHandler}>
                     <div className="mb-6">
                         <Input
                             type="text"
@@ -36,14 +41,14 @@ export default function LoginPage() {
 
                     <div className="mb-20">
                         <Button
-                                type="primary"
-                                size="medium"
-                                onClick={() => dispatch(restorePassword(email)) }
-                                htmlType={"button"}
-                            >
-                                Восстановить
+                            type="primary"
+                            size="medium"
+                            htmlType={"submit"}
+                        >
+                            Восстановить
                         </Button>
                     </div>
+                </form>
 
                     <nav className="mb-4"> 
                         <span className="text text_type_main-default text_color_inactive">Вспомнили пароль? </span> 

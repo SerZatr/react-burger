@@ -13,12 +13,17 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
 
+    const registerUserHandler = (e: React.FormEvent) => {
+        e.preventDefault();
+        dispatch(registerUser(email, password, name));
+    };
+
     return (
         <main className={`${styles.contentWrapper} ${styles.loginContainer}`}>
             <section className={styles.mainContainer}>
                 <h1 className="mb-6 text text_type_main-medium"> Вход </h1>
-
-                <div className="mb-6">
+                <form onSubmit={registerUserHandler}>
+                    <div className="mb-6">
                         <Input
                             type="text"
                             placeholder="Имя"
@@ -49,12 +54,13 @@ export default function LoginPage() {
                         <Button
                                 type="primary"
                                 size="medium"
-                                onClick={() => {dispatch(registerUser(email, password, name))} }
-                                htmlType={"button"}
+                                htmlType={"submit"}
                             >
                                 Зарегистрироваться
                         </Button>
                     </div>
+                </form>
+
 
 
                     <nav className="mb-4"> 

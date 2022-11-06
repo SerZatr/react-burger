@@ -12,40 +12,44 @@ const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const dispatch = useDispatch();
 
+const loginHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    dispatch(login(email, password));
+}
+
     return (
         <main className={`${styles.contentWrapper} ${styles.loginContainer}`}>
             <section className={styles.mainContainer}>
                 <h1 className="mb-6 text text_type_main-medium"> Вход </h1>
+                    <form onSubmit={loginHandler}>
+                        <div className="mb-6">
+                            <Input
+                                type="text"
+                                placeholder="E-mail"
+                                value={email}
+                                onChange={ (e) => {setEmail(e.target.value)} }
+                            />
+                        </div>
 
-                    <div className="mb-6">
-                        <Input
-                            type="text"
-                            placeholder="E-mail"
-                            value={email}
-                            onChange={ (e) => {setEmail(e.target.value)} }
-                        />
-                    </div>
-
-                    <div className="mb-6">
-                        <Input
-                            type="password"
-                            placeholder="Пароль"
-                            value={password}
-                            onChange={ (e) => {setPassword(e.target.value)} }
-                            icon="ShowIcon"
-                        />
-                    </div>
-                    <div className="mb-20">
-                        <Button
-                                type="primary"
-                                size="medium"
-                                onClick={() => dispatch(login(email, password)) }
-                                htmlType={"button"}
-                            >
-                                Войти
-                        </Button>
-                    </div>
-
+                        <div className="mb-6">
+                            <Input
+                                type="password"
+                                placeholder="Пароль"
+                                value={password}
+                                onChange={ (e) => {setPassword(e.target.value)} }
+                                icon="ShowIcon"
+                            />
+                        </div>
+                        <div className="mb-20">
+                            <Button
+                                    type="primary"
+                                    size="medium"
+                                    htmlType={"submit"}
+                                >
+                                    Войти
+                            </Button>
+                        </div>
+                    </form>
 
                     <nav className="mb-4"> 
                         <span className="text text_type_main-default text_color_inactive">Вы - новый пользователь? </span> 

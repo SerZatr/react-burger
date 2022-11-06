@@ -4,7 +4,7 @@ import { Category } from "./category";
 import { IIngredient } from "../../utils/constants";
 import { Tabs } from "./tabs";
 import { useSelector } from 'react-redux';
-import { IIngredientsDataState } from "../../services/reducers/ingredientsData";
+import { IIngredientsDataState } from "../../services/reducers/ingredients-data";
 
 const categories: {[key: string]: string} = {
     bun: "Булки",

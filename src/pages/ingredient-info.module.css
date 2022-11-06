@@ -1,0 +1,7 @@
+.ingredientInfo {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 88px);
+    justify-content: center;
+    padding-top: 140px;
+}

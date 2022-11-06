@@ -2,25 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile.module.css";
 import mainStyles from "../components/app/app.module.css"
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { restoreClear } from "../services/actions/restore-password";
-import { IRestorePasswordState } from "../services/reducers/restore-password";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { resetPassword } from "../services/actions/reset-password";
 
 export default function LoginPage() {
 
+    const location = useLocation();
+    const prevPath = location.state && (location.state as any).prevPath;
+    const navigate  = useNavigate();
+    useEffect(() => {
+        if (prevPath !== "/forgot-password") {
+            navigate("/");
+        }
+    });
+
     const [password, setPassword] = useState("");
     const [code, setCode] = useState("");
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const restorePasswordState = useSelector((state: IRestorePasswordState) => state.restorePassword);
-    useEffect(() => {
-        if (!restorePasswordState?.error && !restorePasswordState?.request && restorePasswordState?.message) {
-            dispatch(restoreClear());
-            navigate("/reset-password");
-        }
-    }, [restorePasswordState]);
 
     return (
         <main className={`${styles.contentWrapper} ${styles.loginContainer}`}>

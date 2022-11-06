@@ -6,6 +6,7 @@ import ForgotPasswordPage from '../../pages/forgot-password';
 import IngredientInfoPage from '../../pages/ingredient-info';
 import LoginPage from '../../pages/login';
 import NotFoundPage from '../../pages/not-found';
+import OrderPage from '../../pages/order';
 import ProfilePage from '../../pages/profile';
 import RegisterPage from '../../pages/register';
 import ResetPasswordPage from '../../pages/reset-password';
@@ -71,9 +72,10 @@ export default function App() {
               <ResetPasswordPage />
             </ProtectedRoute>}
           />
+          <Route path={"/order"} element={<OrderPage />} />
           <Route path={"/*"} element={<NotFoundPage />} />
           </Routes>
-
+          
           {background && (
             <Routes>
               <Route

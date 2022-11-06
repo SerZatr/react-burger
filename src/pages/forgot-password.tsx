@@ -16,7 +16,7 @@ export default function LoginPage() {
     useEffect(() => {
         if (!restorePasswordState?.error && !restorePasswordState?.request && restorePasswordState?.message) {
             dispatch(restoreClear());
-            navigate("/reset-password");
+            navigate("/reset-password", {state: {prevPath: "/forgot-password"} as any});
         }
     }, [restorePasswordState]);
 

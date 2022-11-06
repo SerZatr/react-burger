@@ -74,6 +74,7 @@ export const profile = createReducer(initialState, builder => {
             state.error = false;
             state.accessToken = "";
             state.refreshToken = "";
+            localStorage.clear();
             state.user = initialState.user;
         })
         .addCase(logoutError, (state) => {

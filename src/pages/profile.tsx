@@ -32,7 +32,7 @@ export default function LoginPage() {
             <section className={`${styles.mainContainer} ${styles.profileMainContainer}`}>
                 <nav className={styles.mainNavigation} >
                     <NavLink to="/profile" className={`${styles.mainNavItem} text text_type_main-medium ${styles.active}`}> Профиль </NavLink>
-                    <NavLink to="/profile" className={`${styles.mainNavItem} text text_type_main-medium text_color_inactive`}> История заказов </NavLink>
+                    <NavLink to="/order" className={`${styles.mainNavItem} text text_type_main-medium text_color_inactive`}> История заказов </NavLink>
                     <div onClick={logoutHandler} className={`${styles.mainNavItem} text text_type_main-medium text_color_inactive`}> Выход </div>
                 </nav>
                 <div>

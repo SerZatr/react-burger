@@ -26,7 +26,7 @@ export async function request(url: string, options?: RequestInit) {
             console.log(error);
         }
     }
-    return await fetch(url, options).then(checkResponse)
+    return response;
   };
 
 function checkResponse(res: Response) {

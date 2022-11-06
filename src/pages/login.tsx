@@ -1,28 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile.module.css";
 import mainStyles from "../components/app/app.module.css"
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { login } from "../services/actions/login";
-import { IProfileState } from "../services/reducers/profile";
 
 export default function LoginPage() {
 
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const dispatch = useDispatch();
-let isLoaded = false;
-
-const profileState = useSelector((state: IProfileState) => state.profile);
-const navigate = useNavigate();
-
-useEffect(() => {
-    if (isLoaded && !profileState?.error && !profileState?.request && profileState) {
-        navigate("/reset-password");
-    }
-    isLoaded = true;
-}, [profileState]);
 
     return (
         <main className={`${styles.contentWrapper} ${styles.loginContainer}`}>

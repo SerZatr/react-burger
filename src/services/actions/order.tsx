@@ -24,23 +24,29 @@ export function postOrder(ingredients: string[]) {
     return async function(dispatch: Dispatch) {
         dispatch(postOrderRequest(ingredients));
         try {
-            const url = BASE_URL + "/orders";
-            const options = {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ingredients: ingredients})
-            };
-            if (ingredients.length === 0) {
-                throw new Error("Заказ не может быть пустым");
-            } else {
-                const response = (await request(url, options)).order;
-                if(response) {
-                    const orderId = response.number as number;
-                    dispatch(postOrderSuccess(orderId));
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+                const url = BASE_URL + "/orders";
+                const options = {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": token
+                    },
+                    body: JSON.stringify({ingredients: ingredients})
+                };
+                if (ingredients.length === 0) {
+                    throw new Error("Заказ не может быть пустым");
+                } else {
+                    const response = (await request(url, options)).order;
+                    if (response) {
+                        const orderId = response.number as number;
+                        dispatch(postOrderSuccess(orderId));
+                    }
                 }
+            } else {
+                window.location.pathname = "/login";
             }
         } catch (error) {
             dispatch(postOrderError());

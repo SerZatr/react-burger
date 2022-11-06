@@ -18,6 +18,8 @@ export default function AppHeader () {
             return links.constructor;
         } else if (pathname === "/login" || pathname === "/forgot-password" || pathname === "/reset-password" || pathname === "/register" || pathname === "/profile") {
             return links.profile;
+        } else if (pathname === "/order") {
+            return links.list;
         } else {
             return 0;
         }

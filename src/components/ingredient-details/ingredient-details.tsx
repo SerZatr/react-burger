@@ -24,7 +24,7 @@ export default function IngredientDetails() {
             const newIngredient = ingredientsData.filter( i => i._id === ingredientId)[0];
             setIngredient(newIngredient);
         }
-    }, [ingredientsData]);
+    }, [ingredientsData, ingredientDetails.ingredient, ingredientId]);
 
     if(!ingredient) {
         return null;

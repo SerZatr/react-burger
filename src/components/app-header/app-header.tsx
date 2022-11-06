@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css"
@@ -13,7 +13,9 @@ enum links {
 }
 
 export default function AppHeader () {
-    const getActiveLink = () => {
+    const pathname = window.location.pathname;
+
+    const getActiveLink = useCallback(() => {
         if (pathname === "/") {
             return links.constructor;
         } else if (pathname === "/login" || pathname === "/forgot-password" || pathname === "/reset-password" || pathname === "/register" || pathname === "/profile") {
@@ -23,15 +25,14 @@ export default function AppHeader () {
         } else {
             return 0;
         }
-    }
-    const pathname = window.location.pathname;
+    }, [pathname])
     const [activeLink, setActiveLink] = useState(getActiveLink());
     const activeClassName = styles.activeLink;
     const inactiveClassName = `text_color_inactive ${styles.inactiveLink}`;
 
     useEffect(() => {
         setActiveLink(getActiveLink());
-    });
+    }, [getActiveLink]);
 
     const isConstrorActive = activeLink === links.constructor;
     const isListActive = activeLink === links.list;

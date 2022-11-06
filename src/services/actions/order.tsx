@@ -1,5 +1,5 @@
 import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
-import { BASE_URL, IIngredient } from "../../utils/constants";
+import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 
 export const postOrderRequest = createAction("order/post", (ingredients: string[]) => {

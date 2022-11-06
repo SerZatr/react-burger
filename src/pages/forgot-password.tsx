@@ -18,7 +18,7 @@ export default function LoginPage() {
             dispatch(restoreClear());
             navigate("/reset-password", {state: {prevPath: "/forgot-password"} as any});
         }
-    }, [restorePasswordState]);
+    }, [restorePasswordState, dispatch, navigate]);
 
     const restorePasswordHandler = (e: React.FormEvent) => {
         e.preventDefault();

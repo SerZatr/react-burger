@@ -21,8 +21,10 @@ export default function LoginPage() {
     }, [restorePasswordState, dispatch, navigate]);
 
     const restorePasswordHandler = (e: React.FormEvent) => {
-        e.preventDefault();
-        dispatch(restorePassword(email));
+        if (email) {
+            e.preventDefault();
+            dispatch(restorePassword(email));
+        }
     }
 
     return (

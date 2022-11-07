@@ -15,6 +15,7 @@ import { IIngredientsDataState } from "../services/reducers/ingredients-data";
 import { IOrderState } from "../services/reducers/order";
 import styles from "../components/app/app.module.css";
 import { useNavigate } from "react-router-dom";
+import { setIngredientsFromStorage } from "../services/actions/cart";
 
 export default function ConstructorPage() {
   const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
@@ -44,6 +45,12 @@ export default function ConstructorPage() {
       return price;
   }, [ingredientsInCart, bun, ingredientsData]);
 
+  useEffect(() => {
+    if (localStorage.getItem("ingredientsInCart") && !ingredientsInCart.length && !bun) {
+      dispatch(setIngredientsFromStorage());
+    }
+  }, [])
+
   const closeIngredientDetailsModal = () => {
     navigate(-1);
     dispatch(clearIngredientDetails());
@@ -63,7 +70,6 @@ export default function ConstructorPage() {
   };
 
   useEffect( () => {
-    console.log(isPageLoaded);
     if (order.id && isPageLoaded) {
       setIsOrderDetailsVisible(true);
     }

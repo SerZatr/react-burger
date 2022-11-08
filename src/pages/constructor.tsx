@@ -16,6 +16,7 @@ import { IOrderState } from "../services/reducers/order";
 import styles from "../components/app/app.module.css";
 import { useNavigate } from "react-router-dom";
 import { setIngredientsFromStorage } from "../services/actions/cart";
+import { IProfileState } from "../services/reducers/profile";
 
 export default function ConstructorPage() {
   const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
@@ -25,6 +26,7 @@ export default function ConstructorPage() {
   const ingredientDetails = useSelector((state: IIngredientDetailsState) => state.ingredientDetails.ingredient);
   const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState(false);
   const [isPageLoaded, setIsPageLoaded] = useState(false);
+  const user = useSelector((state: IProfileState) => state.profile.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -66,7 +68,11 @@ export default function ConstructorPage() {
       ingredients.push(bun);
       ingredients.push(bun);
     }
-    dispatch(postOrder(ingredients));
+    if (user) {
+      dispatch(postOrder(ingredients));
+    } else {
+      navigate("/login");
+    }
   };
 
   useEffect( () => {

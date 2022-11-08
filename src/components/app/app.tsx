@@ -31,7 +31,7 @@ export default function App() {
   const ModalSwitch = () => {
     const location = useLocation();
     const navigate  = useNavigate();
-    let background = location.state && (location.state as any).background;
+    const background = location.state && (location.state as any).background;
 
     const handleModalClose = () => {
       dispatch(clearIngredientDetails());

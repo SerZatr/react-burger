@@ -25,28 +25,24 @@ export function postOrder(ingredients: string[]) {
         dispatch(postOrderRequest(ingredients));
         try {
             const token = localStorage.getItem("accessToken");
-            if (token) {
-                const url = BASE_URL + "/orders";
-                const options = {
-                    method: "POST",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": token
-                    },
-                    body: JSON.stringify({ingredients: ingredients})
-                };
-                if (ingredients.length === 0) {
-                    throw new Error("Заказ не может быть пустым");
-                } else {
-                    const response = (await request(url, options)).order;
-                    if (response) {
-                        const orderId = response.number as number;
-                        dispatch(postOrderSuccess(orderId));
-                    }
-                }
+            const url = BASE_URL + "/orders";
+            const options = {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": token ?? ""
+                },
+                body: JSON.stringify({ingredients: ingredients})
+            };
+            if (ingredients.length === 0) {
+                throw new Error("Заказ не может быть пустым");
             } else {
-                window.location.pathname = "/login";
+                const response = (await request(url, options)).order;
+                if (response) {
+                    const orderId = response.number as number;
+                    dispatch(postOrderSuccess(orderId));
+                }
             }
         } catch (error) {
             dispatch(postOrderError());

@@ -3,7 +3,7 @@ import styles from "./burger-constructor.module.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { changeIngredientPosition, removeIngredient } from "../../services/actions/cart";
 import { useDrag, useDrop } from "react-dnd";
-import { IIngredientsDataState } from "../../services/reducers/ingredientsData";
+import { IIngredientsDataState } from "../../services/reducers/ingredients-data";
 
 export enum itemType {
     top = "top",

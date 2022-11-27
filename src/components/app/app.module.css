@@ -11,3 +11,8 @@
     align-items: flex-start;
     gap: 40px;
 }
+
+.linkText {
+    color: #4C4CFF;
+    text-decoration: none;
+}

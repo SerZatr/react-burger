@@ -26,7 +26,7 @@ export const order = createReducer(initialState, builder => {
         })
         .addCase(postOrderError, (state, action) => {
             state.request = false;
-            state.error = false;
+            state.error = true;
             state.id = initialState.id;
         });
 });

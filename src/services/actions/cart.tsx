@@ -42,3 +42,5 @@ export const changeIngredientPosition = createAction("cart/changeIngrefientPosit
         }
     }
 });
+
+export const setIngredientsFromStorage = createAction("cart/setIngredientsFromStorage");

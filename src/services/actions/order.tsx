@@ -1,5 +1,5 @@
 import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
-import { BASE_URL, IIngredient } from "../../utils/constants";
+import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 
 export const postOrderRequest = createAction("order/post", (ingredients: string[]) => {
@@ -24,12 +24,14 @@ export function postOrder(ingredients: string[]) {
     return async function(dispatch: Dispatch) {
         dispatch(postOrderRequest(ingredients));
         try {
+            const token = localStorage.getItem("accessToken");
             const url = BASE_URL + "/orders";
             const options = {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": token ?? ""
                 },
                 body: JSON.stringify({ingredients: ingredients})
             };
@@ -37,7 +39,7 @@ export function postOrder(ingredients: string[]) {
                 throw new Error("Заказ не может быть пустым");
             } else {
                 const response = (await request(url, options)).order;
-                if(response) {
+                if (response) {
                     const orderId = response.number as number;
                     dispatch(postOrderSuccess(orderId));
                 }

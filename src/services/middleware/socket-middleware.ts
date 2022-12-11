@@ -9,11 +9,9 @@ export const socketMiddleware = () => {
         const { dispatch } = store;
         const { type, payload } = action;
         if (type === "orderFeed/WS_CONNECTION_START") {
-          console.log("start");
           socket = new WebSocket(`${BASE_WS}${payload.url}`);
         }
         if (type === "orderFeed/WS_CONNECTION_CLOSE") {
-          console.log("close");
           socket?.close();
         }
         if (socket) {

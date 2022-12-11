@@ -12,7 +12,6 @@ export default function FeedDetailsPage() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-      console.log("dispatch");
       if (!connection.wsConnected) {
           dispatch(wsInit(`/orders/all`));
       }

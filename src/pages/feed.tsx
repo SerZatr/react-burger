@@ -13,7 +13,6 @@ export default function FeedPage() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-      console.log("dispatch");
       if (!connection.wsConnected) {
           dispatch(wsInit(`/orders/all`));
       }

@@ -12,7 +12,6 @@ export default function OrderPage() {
     const dispatch = useDispatch();
     const token = localStorage.getItem("accessToken")?.replace("Bearer", "");
     useEffect(() => {
-        console.log("dispatch");
         if (!connection.wsConnected) {
             dispatch(wsInit(`/orders?token=${token}`));
         }

@@ -12,14 +12,14 @@ export function ProtectedRoute({ children, onlyNotLoggedAccess }: {children: JSX
         return (!user
             ? children
             : <Navigate
-                to={(location.state?.from as any) ?? "/"}
+                to={(location.state?.from as string) ?? "/"}
                 state={{from: pathname}}
             />);
     } else {
         return (user 
             ? children
             : <Navigate
-                to={(location.state?.from as any) ?? "/login"}
+                to={(location.state?.from as string) ?? "/login"}
                 state={{from: pathname}}
             />);
     }

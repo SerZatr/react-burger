@@ -1,0 +1,12 @@
+.mainNavigation {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+}
+
+.mainNavItem {
+    height: 64px;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -20,8 +20,9 @@ export default function AppHeader () {
             return links.constructor;
         } else if (pathname === "/login" || pathname === "/forgot-password" || pathname === "/reset-password" || pathname === "/register" || pathname === "/profile") {
             return links.profile;
-        } else if (pathname === "/order") {
+        } else if (pathname === "/order" || pathname.match(/feed|orders/)) {
             return links.list;
+            
         } else {
             return 0;
         }
@@ -37,6 +38,7 @@ export default function AppHeader () {
     const isConstrorActive = activeLink === links.constructor;
     const isListActive = activeLink === links.list;
     const isProfileActive = activeLink === links.profile;
+
     return (
         <header className={`${styles.panel}`}>
             <div className={styles.content}>
@@ -52,12 +54,17 @@ export default function AppHeader () {
                             isActive={isConstrorActive}
                         />
                     </NavLink>
-
-                    <NavItem
-                        icon={<ListIcon type={isListActive ? "primary" : "secondary"} />}
-                        text="Лента заказов"
-                        isActive={isListActive}
-                    />
+                    <NavLink
+                        to="/feed"
+                        className={isListActive ? activeClassName : inactiveClassName
+                      }
+                    >
+                        <NavItem
+                            icon={<ListIcon type={isListActive ? "primary" : "secondary"} />}
+                            text="Лента заказов"
+                            isActive={isListActive}
+                        />
+                    </NavLink>
                 </nav>
 
                 <div className={styles.logoWrapper}>

@@ -1,0 +1,157 @@
+.card {
+    width: 100%;
+    background: #1C1C21;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+    padding: 24px;
+    box-sizing: border-box;
+    text-align: start;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ingredientIconBackground {
+    background-color: #131316;
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    border: 0px;
+}
+
+.ingredientIconWrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    min-width: 64px;
+    height: 64px;
+    border-radius: 64px;
+    background: linear-gradient(90deg, #801AB2, #4C4CFF);
+}
+
+.overlaying {
+    margin-right: -16px;
+}
+
+.itemsContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.ingredientIcon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.iconText {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dim{
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    opacity: 0.6;
+    background: #1C1C21;
+}
+
+.cardFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.orderStatusContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.orderStatusContainer li, .orderStatusContainer ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.listsWrapper {
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px 36px;
+}
+
+.listBlock {
+    width: 272px;
+}
+
+.doneStatus {
+    color: #00CCCC
+}
+
+.totalWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.totalNum {
+    text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+
+}
+
+.feedOrderDetails {
+    width: 640px;
+    display: flex;
+    flex-direction: column;
+}
+
+.feedOrderDetailsTitle {
+    text-align: center;
+}
+
+.feedOrderDetailsIngredient {
+    width: 608px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.titleAndPrice {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.IngredientsContainer{
+    max-height: 312px;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}

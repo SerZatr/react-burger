@@ -25,7 +25,7 @@ export function postOrder(ingredients: string[]) {
         dispatch(postOrderRequest(ingredients));
         try {
             const token = localStorage.getItem("accessToken");
-            const url = BASE_URL + "/orders";
+            const url = BASE_URL + "/orders?token=" + token;
             const options = {
                 method: "POST",
                 headers: {

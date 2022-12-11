@@ -7,14 +7,15 @@ import { rootReducer } from './services/reducers';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { IIngredient } from './utils/constants';
+import { IIngredient, orderFeed } from './utils/constants';
+import { socketMiddleware } from './services/middleware/socket-middleware';
 
 const composeEnhancers =
   typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware()));
 
 const initialState = {
   ingredients: {
@@ -32,6 +33,9 @@ const initialState = {
   },
   ingredientDetails: {
     ingredient: undefined
+  },
+  orderFeed: {
+    data: {} as orderFeed
   }
 }
 

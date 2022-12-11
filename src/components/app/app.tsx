@@ -2,18 +2,22 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate  } from 'react-router-dom';
 import ConstructorPage from '../../pages/constructor';
+import FeedPage from '../../pages/feed';
+import FeedDetailsPage from '../../pages/feed-details';
 import ForgotPasswordPage from '../../pages/forgot-password';
 import IngredientInfoPage from '../../pages/ingredient-info';
 import LoginPage from '../../pages/login';
 import NotFoundPage from '../../pages/not-found';
 import OrderPage from '../../pages/order';
 import ProfilePage from '../../pages/profile';
+import ProfileOrdersPage from '../../pages/profile-orders';
 import RegisterPage from '../../pages/register';
 import ResetPasswordPage from '../../pages/reset-password';
 import { clearIngredientDetails } from '../../services/actions/ingredient-details';
 import { getIngredients } from '../../services/actions/ingredients-data';
 import useAuth from '../../utils/use-auth';
 import AppHeader from '../app-header/app-header';
+import { FeedOrderDetails } from '../feed/feed-order-details/feed-order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { ProtectedRoute } from '../protected-route/protected-route';
@@ -26,7 +30,7 @@ export default function App() {
   React.useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
-  const [ingredientDetailsModalOpen, setIngredientsDetailsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   const ModalSwitch = () => {
     const location = useLocation();
@@ -35,7 +39,7 @@ export default function App() {
 
     const handleModalClose = () => {
       dispatch(clearIngredientDetails());
-      setIngredientsDetailsModalOpen(false);
+      setIsModalOpen(false);
       navigate(-1);
     };
   
@@ -72,17 +76,42 @@ export default function App() {
               <ResetPasswordPage />
             </ProtectedRoute>}
           />
-          <Route path={"/order"} element={<OrderPage />} />
+          <Route path={"/feed"} element={<FeedPage />} />
+          <Route path={"/feed/:id"} element={<FeedDetailsPage />} />
+          <Route path={"/profile/orders/:id"} element={<FeedDetailsPage />} />
+          <Route path={"/profile/orders"} element={
+            <ProtectedRoute>
+              <OrderPage />
+            </ProtectedRoute>
+          } />
           <Route path={"/*"} element={<NotFoundPage />} />
           </Routes>
           
           {background && (
+            
             <Routes>
               <Route
                 path="/ingredients/:ingredientId"
-                element={ ingredientDetailsModalOpen &&
+                element={ isModalOpen &&
                   <Modal title="Детали ингредиента" closeHandler={ () => handleModalClose() }>
                     <IngredientDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/profile/orders/:id"
+                element={ 
+                  <Modal title={ (location.state as any).oderNum ?? ""} closeHandler={ () => handleModalClose() }>
+                    <FeedOrderDetails />
+                  </Modal>
+                }
+              />
+              <Route path="/" element={null} />
+              <Route
+                path="/feed/:id"
+                element={ 
+                  <Modal title={ (location.state as any).oderNum ?? ""} closeHandler={ () => handleModalClose() }>
+                    <FeedOrderDetails />
                   </Modal>
                 }
               />

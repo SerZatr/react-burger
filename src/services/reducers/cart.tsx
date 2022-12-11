@@ -44,7 +44,6 @@ export const cart = createReducer(initialState, builder => {
             
             
             const data = JSON.parse(localStorage.getItem("ingredientsInCart") ?? "") as typeof initialState;
-            console.log(data);
             if (data) {
                 
                 state.ingredients = data.ingredients ?? [];

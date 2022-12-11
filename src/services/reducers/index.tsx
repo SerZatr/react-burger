@@ -8,6 +8,7 @@ import { refreshToken } from "./refresh-token";
 import { profile } from "./profile";
 import { restorePassword } from "./restore-password";
 import { resetPassword } from "./reset-password";
+import { orderFeedReducer } from "./order-feed";
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsData,
@@ -17,5 +18,6 @@ export const rootReducer = combineReducers({
     refreshToken: refreshToken,
     profile: profile,
     restorePassword: restorePassword,
-    resetPassword: resetPassword
+    resetPassword: resetPassword,
+    orderFeed: orderFeedReducer
 });

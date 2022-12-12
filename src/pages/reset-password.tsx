@@ -3,8 +3,8 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import styles from "./profile.module.css";
 import mainStyles from "../components/app/app.module.css"
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { resetPassword } from "../services/actions/reset-password";
+import { useAppDispatch } from "../services/hooks";
 
 export default function LoginPage() {
 
@@ -19,7 +19,7 @@ export default function LoginPage() {
 
     const [password, setPassword] = useState("");
     const [code, setCode] = useState("");
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const resetPasswordHandler = (e: React.FormEvent) => {
         e.preventDefault();

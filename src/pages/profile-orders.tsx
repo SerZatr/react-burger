@@ -3,15 +3,14 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import styles from "./profile.module.css";
 import mainStyles from "../components/app/app.module.css"
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { restoreClear, restorePassword } from "../services/actions/restore-password";
-import { IRestorePasswordState } from "../services/reducers/restore-password";
+import { useAppDispatch, useAppSelector } from "../services/hooks";
 export default function ProfileOrdersPage() {
 
     const [email, setEmail] = useState("");
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const restorePasswordState = useSelector((state: IRestorePasswordState) => state.restorePassword);
+    const restorePasswordState = useAppSelector((state) => state.restorePassword);
     useEffect(() => {
         if (!restorePasswordState?.error && !restorePasswordState?.request && restorePasswordState?.message) {
             dispatch(restoreClear());

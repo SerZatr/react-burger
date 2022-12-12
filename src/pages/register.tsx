@@ -4,14 +4,14 @@ import styles from "./profile.module.css";
 import mainStyles from "../components/app/app.module.css"
 import { Link } from "react-router-dom";
 import { registerUser } from "../services/actions/register";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../services/hooks";
 
 export default function LoginPage() {
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const registerUserHandler = (e: React.FormEvent) => {
         e.preventDefault();

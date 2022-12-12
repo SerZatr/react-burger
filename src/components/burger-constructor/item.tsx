@@ -1,9 +1,8 @@
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css"
-import { useDispatch, useSelector } from 'react-redux';
 import { changeIngredientPosition, removeIngredient } from "../../services/actions/cart";
 import { useDrag, useDrop } from "react-dnd";
-import { IIngredientsDataState } from "../../services/reducers/ingredients-data";
+import { useAppDispatch, useAppSelector } from "../../services/hooks";
 
 export enum itemType {
     top = "top",
@@ -20,9 +19,9 @@ interface IItemProps {
 }
 
 export function Item(props: IItemProps) {
-    const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
+    const ingredientsData = useAppSelector((state) => state.ingredients.data);
     const ingredient = ingredientsData?.filter( (i) => i._id === props.ingredientId)[0];
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [{isDrag}, dragRef] = useDrag({
         type: cartItemDragType,

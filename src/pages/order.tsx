@@ -3,13 +3,13 @@ import { Navigation } from "../components/profile/navigation";
 import OrderFeed from "../components/feed/order-feed";
 import { useEffect } from "react";
 import { wsClose, wsInit } from "../services/actions/order-feed";
-import { useDispatch, useSelector } from "react-redux";
-import { IOrderFeedDataState } from "../services/reducers/order-feed";
+import { BASE_WS } from "../utils/constants";
+import { useAppSelector, useAppDispatch } from "../services/hooks";
 
 export default function OrderPage() {
-    const connection = useSelector((state: IOrderFeedDataState) => state.orderFeed);
+    const connection = useAppSelector((state) => state.orderFeed);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const token = localStorage.getItem("accessToken")?.replace("Bearer ", "");
     useEffect(() => {
         if (!connection.wsConnected) {

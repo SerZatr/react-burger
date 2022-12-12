@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { IIngredientsDataState } from "../../services/reducers/ingredients-data";
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { orderFeedData, orderStatusRu } from "../../utils/constants";
@@ -6,13 +5,14 @@ import subtractImgPath from "../../images/subtract.svg";
 import styles from "./feed.module.css";
 import { IngredientIcon } from "./ingredient-icon";
 import { Link, useLocation } from "react-router-dom";
+import { useAppSelector } from "../../services/hooks";
 interface ICardProps {
     orderFeedData: orderFeedData;
     large?: boolean;
 }
 
 export default function Card(props: ICardProps) {
-    const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
+    const ingredientsData = useAppSelector((state: IIngredientsDataState) => state.ingredients.data);
     const location = useLocation();
 
     const getPrice = () => {
@@ -23,7 +23,7 @@ export default function Card(props: ICardProps) {
         };
         return totalPrice
     }
-    
+
     const getIngredientIcons = () => {
         const element = [];
         for (const id of props.orderFeedData.ingredients) {
@@ -53,9 +53,9 @@ export default function Card(props: ICardProps) {
             <Link
                 to={{
                     pathname: `${props.orderFeedData._id}`,
-                    state: {background: location, oderNum: props.orderFeedData.number }
+                    state: {background: location, oderNum: props.orderFeedData.number}
                 } as any}
-                state={{background: location, oderNum: props.orderFeedData.number }}
+                state={{background: location, oderNum: props.orderFeedData.number}}
             >
                 <div className={`${styles.header} mb-6`}>
                     <span className="text text_type_digits-default">

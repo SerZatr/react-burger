@@ -3,12 +3,11 @@ import styles from "./burger-constructor.module.css";
 import { Items } from "./items";
 import subtractImgPath from "../../images/subtract.svg";
 import { Item, itemType } from "./item";
-import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { ingredientDragType } from "../burger-ingredients/ingredient";
 import { addBun, addIngredient, replaceBun } from "../../services/actions/cart";
 import { IIngredient } from "../../utils/constants";
-import { ICartState } from "../../services/reducers/cart";
+import { useAppSelector, useAppDispatch } from "../../services/hooks";
 
 interface IConstructorProps {
     totalPrice: number;
@@ -17,9 +16,9 @@ interface IConstructorProps {
 
 export default function BurgerConstructor(props: IConstructorProps) {
 
-    const ingredientsInCart = useSelector((state: ICartState) => state.cart.ingredients);
-    const bunId = useSelector((state: ICartState) => state.cart.bun) ?? "";
-    const dispatch = useDispatch();
+    const ingredientsInCart = useAppSelector((state) => state.cart.ingredients);
+    const bunId = useAppSelector((state) => state.cart.bun) ?? "";
+    const dispatch = useAppDispatch();
     const ingredientsIds: string[] = [];
     ingredientsInCart.forEach( i => {
         ingredientsIds.push(i.ingredientId);

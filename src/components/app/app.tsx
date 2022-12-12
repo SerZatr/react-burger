@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate  } from 'react-router-dom';
 import ConstructorPage from '../../pages/constructor';
 import FeedPage from '../../pages/feed';
@@ -10,11 +9,11 @@ import LoginPage from '../../pages/login';
 import NotFoundPage from '../../pages/not-found';
 import OrderPage from '../../pages/order';
 import ProfilePage from '../../pages/profile';
-import ProfileOrdersPage from '../../pages/profile-orders';
 import RegisterPage from '../../pages/register';
 import ResetPasswordPage from '../../pages/reset-password';
 import { clearIngredientDetails } from '../../services/actions/ingredient-details';
 import { getIngredients } from '../../services/actions/ingredients-data';
+import { useAppDispatch } from '../../services/hooks';
 import useAuth from '../../utils/use-auth';
 import AppHeader from '../app-header/app-header';
 import { FeedOrderDetails } from '../feed/feed-order-details/feed-order-details';
@@ -23,7 +22,7 @@ import Modal from '../modal/modal';
 import { ProtectedRoute } from '../protected-route/protected-route';
 
 export default function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
   useAuth();
 
@@ -36,7 +35,6 @@ export default function App() {
     const location = useLocation();
     const navigate  = useNavigate();
     const background = location.state && (location.state as any).background;
-    console.log(background);
 
     const handleModalClose = () => {
       dispatch(clearIngredientDetails());
@@ -96,6 +94,23 @@ export default function App() {
                 element={ isModalOpen &&
                   <Modal title="Детали ингредиента" closeHandler={ () => handleModalClose() }>
                     <IngredientDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/profile/orders/:id"
+                element={ 
+                  <Modal title={ (location.state as any).oderNum ?? ""} closeHandler={ () => handleModalClose() }>
+                    <FeedOrderDetails />
+                  </Modal>
+                }
+              />
+              <Route path="/" element={null} />
+              <Route
+                path="/feed/:id"
+                element={ 
+                  <Modal title={ (location.state as any).oderNum ?? ""} closeHandler={ () => handleModalClose() }>
+                    <FeedOrderDetails />
                   </Modal>
                 }
               />

@@ -1,17 +1,18 @@
-import { BASE_WS } from "../../utils/constants";
-import { onClose, onError, onMessage, onOpen, wsInit } from "../actions/order-feed";
+import { Middleware } from "redux";
+import { TWsActions } from "../..";
 
-export const socketMiddleware = () => {
+export const socketMiddleware = (wsActions: TWsActions, baseUrl: string): Middleware => {
     return (store: any) => {
       let socket: WebSocket | null = null;
   
-      return (next: (arg0: any) => void) => (action: { type: string; payload: {url: string}; }) => {
+      return (next) => (action) => {
+        const { wsInit, onOpen, onClose, onError, onMessage, wsClose } = wsActions;
         const { dispatch } = store;
         const { type, payload } = action;
-        if (type === "orderFeed/WS_CONNECTION_START") {
-          socket = new WebSocket(`${BASE_WS}${payload.url}`);
+        if (type === wsInit.type) {
+          socket = new WebSocket(baseUrl + payload.url);
         }
-        if (type === "orderFeed/WS_CONNECTION_CLOSE") {
+        if (type === wsClose.type) {
           socket?.close();
         }
         if (socket) {

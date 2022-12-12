@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { IProfileState } from "../services/reducers/profile";
 import { updateProfile } from "../services/actions/profile-update";
 import { Navigation } from "../components/profile/navigation";
+import { useAppSelector, useAppDispatch } from "../services/hooks";
 
 export default function LoginPage() {
 
-    const defaultName = useSelector((state: IProfileState) => state.profile.user?.name) ?? "";
-    const defaultLogin = useSelector((state: IProfileState) => state.profile.user?.email) ?? "";
+    const defaultName = useAppSelector((state) => state.profile.user?.name) ?? "";
+    const defaultLogin = useAppSelector((state) => state.profile.user?.email) ?? "";
     const [name, setName] = useState(defaultName);
     const [login, setLogin] = useState(defaultLogin);
     const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const dismissChanges = () => {
         setName(defaultName);
         setLogin(defaultLogin);

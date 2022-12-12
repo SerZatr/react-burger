@@ -1,13 +1,11 @@
-import { useSelector } from "react-redux";
-import { IIngredientsDataState } from "../../../services/reducers/ingredients-data";
-import { IIngredient, orderFeedData, orderStatusRu } from "../../../utils/constants"
+import { IIngredient, orderStatusRu } from "../../../utils/constants"
 import { IngredientIcon } from "../ingredient-icon";
 import subtractImgPath from "../../../images/subtract.svg";
 import styles from "../feed.module.css";
-import { IOrderFeedDataState } from "../../../services/reducers/order-feed";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../../../services/hooks";
 
 interface ingredientsByType {
     [id: string]: {
@@ -17,8 +15,20 @@ interface ingredientsByType {
 }
 
 export function FeedOrderDetails(props: {showTitle?: boolean}) {
-    const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
-    const orderFeed = useSelector((state: IOrderFeedDataState) => state.orderFeed.data);
+    const navigate = useNavigate();
+    const location = useLocation();
+    useEffect(() => {
+        const clearLocationState = () => {
+            navigate(location.pathname, { background: undefined } as any); 
+        }
+        window.addEventListener("beforeunload", clearLocationState);
+        return ( () =>
+            window.removeEventListener("beforeunload", clearLocationState)
+        );
+      }, [navigate]);
+      
+    const ingredientsData = useAppSelector((state) => state.ingredients.data);
+    const orderFeed = useAppSelector((state) => state.orderFeed.data);
     const { id } = useParams() as {id: string};
     const orderFeedData = Object.values(orderFeed.orders ?? {}).find( order => order._id === id);
     const [ingredientsByType, setIngredientsByType] = useState<ingredientsByType>({});

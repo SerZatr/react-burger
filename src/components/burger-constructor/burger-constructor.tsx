@@ -7,7 +7,7 @@ import { useDrop } from "react-dnd";
 import { ingredientDragType } from "../burger-ingredients/ingredient";
 import { addBun, addIngredient, replaceBun } from "../../services/actions/cart";
 import { IIngredient } from "../../utils/constants";
-import { useAppSelector, useAppDispatch } from "../../services/hooks";
+import { useAppSelector, useAppDispatch } from "../../utils/hooks";
 
 interface IConstructorProps {
     totalPrice: number;

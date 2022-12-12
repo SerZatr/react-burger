@@ -11,7 +11,7 @@ import { postOrder } from "../services/actions/order";
 import styles from "../components/app/app.module.css";
 import { useNavigate } from "react-router-dom";
 import { setIngredientsFromStorage } from "../services/actions/cart";
-import { useAppSelector, useAppDispatch } from "../services/hooks";
+import { useAppSelector, useAppDispatch } from "../utils/hooks";
 
 export default function ConstructorPage() {
   const ingredientsData = useAppSelector((state) => state.ingredients.data);

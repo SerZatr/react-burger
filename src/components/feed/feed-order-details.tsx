@@ -1,20 +1,25 @@
-import { IIngredient, orderStatusRu } from "../../../utils/constants"
-import { IngredientIcon } from "../ingredient-icon";
-import subtractImgPath from "../../../images/subtract.svg";
-import styles from "../feed.module.css";
+import { IIngredient, orderFeedData, orderStatusRu } from "../../utils/constants"
+import { IngredientIcon } from "./ingredient-icon";
+import subtractImgPath from "../../images/subtract.svg";
+import styles from "./feed.module.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../services/hooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import { getFeedOrderByNumber } from "../../services/actions/single-feed-order";
 
 interface ingredientsByType {
-    [id: string]: {
+    [number: string]: {
         ingredient: IIngredient;
         count: number;
-    }
+    };
 }
 
-export function FeedOrderDetails(props: {showTitle?: boolean}) {
+interface IFeedOrderDetails {
+    showTitle?: boolean;
+}
+
+export function FeedOrderDetails(props: IFeedOrderDetails) {
     const navigate = useNavigate();
     const location = useLocation();
     useEffect(() => {
@@ -25,17 +30,25 @@ export function FeedOrderDetails(props: {showTitle?: boolean}) {
         return ( () =>
             window.removeEventListener("beforeunload", clearLocationState)
         );
-      }, [navigate]);
-      
+    }, [navigate]);
+
     const ingredientsData = useAppSelector((state) => state.ingredients.data);
-    const orderFeed = useAppSelector((state) => state.orderFeed.data);
-    const { id } = useParams() as {id: string};
-    const orderFeedData = Object.values(orderFeed.orders ?? {}).find( order => order._id === id);
+    const orderFeedData = useAppSelector((state) => state.singleFeedOrder).data; 
+    
+    const { number } = useParams() as {number: string};
+    const dispatch = useAppDispatch();
+
+    useEffect( () => {
+        if (number) {
+            dispatch(getFeedOrderByNumber(number));
+        }
+    }, [number]);
+
     const [ingredientsByType, setIngredientsByType] = useState<ingredientsByType>({});
 
     const getIngredientsByType = () => {
         const ingredientsByType: ingredientsByType = {};
-        orderFeedData?.ingredients.forEach( id =>  {
+        (orderFeedData?.ingredients ?? []).forEach( id =>  {
             const ingredient = ingredientsData.find( ingredient => ingredient._id === id);
             if (!ingredient) {
                 return;
@@ -51,14 +64,13 @@ export function FeedOrderDetails(props: {showTitle?: boolean}) {
     };
 
     useEffect(() => {
+        console.log(orderFeedData);
         setIngredientsByType(getIngredientsByType());
     }, [orderFeedData]);
 
     if (!orderFeedData) {
         return null;
     }
-
-
 
     const getTotalPrice = () => {
         let price = 0;
@@ -98,7 +110,7 @@ export function FeedOrderDetails(props: {showTitle?: boolean}) {
         <article className={styles.feedOrderDetails}>
             { props.showTitle &&
                 <span className={`${styles.feedOrderDetailsTitle} text text_type_digits-default`}>
-                    {orderFeedData.number}
+                    {number}
                 </span>
             }
             <span className="text text_type_main-medium mb-3 mt-10">

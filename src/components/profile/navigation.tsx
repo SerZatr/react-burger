@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../services/actions/logout";
-import { useAppDispatch } from "../../services/hooks";
+import { useAppDispatch } from "../../utils/hooks";
 import styles from "./profile.module.css";
 
 interface INavigationProps {

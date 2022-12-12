@@ -5,7 +5,7 @@ import { useDrag } from "react-dnd";
 import { ICartState } from "../../services/reducers/cart";
 import { IIngredientsDataState } from "../../services/reducers/ingredients-data";
 import { Link, useLocation } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../services/hooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 
 interface IIngredientProps {
     ingredientId: string;

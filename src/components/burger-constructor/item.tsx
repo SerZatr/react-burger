@@ -2,7 +2,7 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 import styles from "./burger-constructor.module.css"
 import { changeIngredientPosition, removeIngredient } from "../../services/actions/cart";
 import { useDrag, useDrop } from "react-dnd";
-import { useAppDispatch, useAppSelector } from "../../services/hooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 
 export enum itemType {
     top = "top",

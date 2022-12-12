@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../services/hooks";
+import { useAppSelector } from "../../../utils/hooks";
 import { IOrderFeedDataState } from "../../../services/reducers/order-feed";
 import styles from "./info.module.css";
 import ListBlock from "./list-block";

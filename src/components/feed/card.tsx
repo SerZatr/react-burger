@@ -5,7 +5,7 @@ import subtractImgPath from "../../images/subtract.svg";
 import styles from "./feed.module.css";
 import { IngredientIcon } from "./ingredient-icon";
 import { Link, useLocation } from "react-router-dom";
-import { useAppSelector } from "../../services/hooks";
+import { useAppSelector } from "../../utils/hooks";
 interface ICardProps {
     orderFeedData: orderFeedData;
     large?: boolean;
@@ -52,7 +52,7 @@ export default function Card(props: ICardProps) {
         <article className={className}>
             <Link
                 to={{
-                    pathname: `${props.orderFeedData._id}`,
+                    pathname: `${props.orderFeedData.number}`,
                     state: {background: location, oderNum: props.orderFeedData.number}
                 } as any}
                 state={{background: location, oderNum: props.orderFeedData.number}}

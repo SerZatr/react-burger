@@ -1,7 +1,7 @@
 import { Item } from "./item";
 import styles from "./burger-constructor.module.css";
 import { ICartState } from "../../services/reducers/cart";
-import { useAppSelector } from "../../services/hooks";
+import { useAppSelector } from "../../utils/hooks";
 
 export function Items() {
     const ingredientsInCart = useAppSelector((state) => state.cart.ingredients);

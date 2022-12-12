@@ -13,10 +13,10 @@ import RegisterPage from '../../pages/register';
 import ResetPasswordPage from '../../pages/reset-password';
 import { clearIngredientDetails } from '../../services/actions/ingredient-details';
 import { getIngredients } from '../../services/actions/ingredients-data';
-import { useAppDispatch } from '../../services/hooks';
+import { useAppDispatch } from '../../utils/hooks';
 import useAuth from '../../utils/use-auth';
 import AppHeader from '../app-header/app-header';
-import { FeedOrderDetails } from '../feed/feed-order-details/feed-order-details';
+import { FeedOrderDetails } from '../feed/feed-order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { ProtectedRoute } from '../protected-route/protected-route';
@@ -36,9 +36,13 @@ export default function App() {
     const navigate  = useNavigate();
     const background = location.state && (location.state as any).background;
 
-    const handleModalClose = () => {
+    const handleModalCloseIngredients = () => {
       dispatch(clearIngredientDetails());
       setIsModalOpen(false);
+      navigate(-1);
+    };
+
+    const handleModalCloseFeedOrder = () => {
       navigate(-1);
     };
   
@@ -76,8 +80,8 @@ export default function App() {
             </ProtectedRoute>}
           />
           <Route path={"/feed"} element={<FeedPage />} />
-          <Route path={"/feed/:id"} element={<FeedDetailsPage />} />
-          <Route path={"/profile/orders/:id"} element={<FeedDetailsPage />} />
+          <Route path={"/feed/:number"} element={<FeedDetailsPage />} />
+          <Route path={"/profile/orders/:number"} element={<FeedDetailsPage />} />
           <Route path={"/profile/orders"} element={
             <ProtectedRoute>
               <OrderPage />
@@ -92,24 +96,24 @@ export default function App() {
               <Route
                 path="/ingredients/:ingredientId"
                 element={ isModalOpen &&
-                  <Modal title="Детали ингредиента" closeHandler={ () => handleModalClose() }>
+                  <Modal title="Детали ингредиента" closeHandler={ () => handleModalCloseIngredients() }>
                     <IngredientDetails />
                   </Modal>
                 }
               />
               <Route
-                path="/profile/orders/:id"
+                path="/profile/orders/:number"
                 element={ 
-                  <Modal title={ (location.state as any).oderNum ?? ""} closeHandler={ () => handleModalClose() }>
+                  <Modal title={ (location.state as any).oderNum ?? ""} closeHandler={ () => handleModalCloseFeedOrder() }>
                     <FeedOrderDetails />
                   </Modal>
                 }
               />
               <Route path="/" element={null} />
               <Route
-                path="/feed/:id"
+                path="/feed/:number"
                 element={ 
-                  <Modal title={ (location.state as any).oderNum ?? ""} closeHandler={ () => handleModalClose() }>
+                  <Modal title={ (location.state as any).oderNum ?? ""} closeHandler={ () => handleModalCloseFeedOrder() }>
                     <FeedOrderDetails />
                   </Modal>
                 }

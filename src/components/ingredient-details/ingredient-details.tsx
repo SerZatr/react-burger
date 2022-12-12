@@ -4,7 +4,7 @@ import DescriptionItem from "./description-item";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IIngredient } from "../../utils/constants";
-import { useAppSelector } from "../../services/hooks";
+import { useAppSelector } from "../../utils/hooks";
 
 export default function IngredientDetails() {
 

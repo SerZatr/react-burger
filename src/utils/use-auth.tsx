@@ -1,5 +1,5 @@
 import { getProfile } from "../services/actions/profile-get";
-import { useAppDispatch, useAppSelector } from "../services/hooks";
+import { useAppDispatch, useAppSelector } from "./hooks";
 
 export default function useAuth() {
     const dispatch = useAppDispatch();
@@ -8,6 +8,8 @@ export default function useAuth() {
     }
     );
     if (!user) {
-        dispatch(getProfile());
+        dispatch(getProfile()).then(() => {
+            
+        });
     }
 }

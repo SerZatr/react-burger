@@ -4,7 +4,7 @@ import { Category } from "./category";
 import { IIngredient } from "../../utils/constants";
 import { Tabs } from "./tabs";
 import { IIngredientsDataState } from "../../services/reducers/ingredients-data";
-import { useAppSelector } from "../../services/hooks";
+import { useAppSelector } from "../../utils/hooks";
 
 const categories: {[key: string]: string} = {
     bun: "Булки",

@@ -4,7 +4,7 @@ import styles from "../components/app/app.module.css";
 import feedStyles from "./feed.module.css";
 import { wsClose, wsInit } from "../services/actions/order-feed";
 import OrderFeedInfo from "../components/feed/feed-info/order-feed-info";
-import { useAppSelector, useAppDispatch } from "../services/hooks";
+import { useAppSelector, useAppDispatch } from "../utils/hooks";
 
 export default function FeedPage() {
     

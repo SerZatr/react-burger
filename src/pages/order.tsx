@@ -3,8 +3,7 @@ import { Navigation } from "../components/profile/navigation";
 import OrderFeed from "../components/feed/order-feed";
 import { useEffect } from "react";
 import { wsClose, wsInit } from "../services/actions/order-feed";
-import { BASE_WS } from "../utils/constants";
-import { useAppSelector, useAppDispatch } from "../services/hooks";
+import { useAppSelector, useAppDispatch } from "../utils/hooks";
 
 export default function OrderPage() {
     const connection = useAppSelector((state) => state.orderFeed);

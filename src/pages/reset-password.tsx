@@ -4,7 +4,7 @@ import styles from "./profile.module.css";
 import mainStyles from "../components/app/app.module.css"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { resetPassword } from "../services/actions/reset-password";
-import { useAppDispatch } from "../services/hooks";
+import { useAppDispatch } from "../utils/hooks";
 
 export default function LoginPage() {
 

@@ -1,6 +1,6 @@
 import styles from "./order-details.module.css";
 import acceptImgPath from "../../images/accept-order.svg";
-import { useAppSelector } from "../../services/hooks";
+import { useAppSelector } from "../../utils/hooks";
 
 export default function OrderDetails() {
     const orderId = useAppSelector((state) => state.order.id);

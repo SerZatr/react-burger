@@ -3,7 +3,7 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import styles from "./profile.module.css";
 import { updateProfile } from "../services/actions/profile-update";
 import { Navigation } from "../components/profile/navigation";
-import { useAppSelector, useAppDispatch } from "../services/hooks";
+import { useAppSelector, useAppDispatch } from "../utils/hooks";
 
 export default function LoginPage() {
 

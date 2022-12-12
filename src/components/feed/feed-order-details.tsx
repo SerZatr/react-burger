@@ -64,7 +64,6 @@ export function FeedOrderDetails(props: IFeedOrderDetails) {
     };
 
     useEffect(() => {
-        console.log(orderFeedData);
         setIngredientsByType(getIngredientsByType());
     }, [orderFeedData]);
 

@@ -35,7 +35,6 @@ export function getFeedOrderByNumber(number: string) {
                 };
                 const response = (await request(url, options)) as IResponse;
                 const {orders} = response;
-                console.log(orders);
                 if (orders[0]) {
                     dispatch(singleFeedOrderSuccess(orders[0]));
                 }

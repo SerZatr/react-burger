@@ -21,7 +21,6 @@ export const singleFeedOrder = createReducer(initialState, builder => {
         .addCase(singleFeedOrderSuccess, (state, action) => {
             state.request = false;
             state.error = false;
-            console.log(action.payload.data);
             state.data = action.payload.data;
         })
         .addCase(singleFeedOrderError, (state) => {

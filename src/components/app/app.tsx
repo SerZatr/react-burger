@@ -36,6 +36,7 @@ export default function App() {
     const location = useLocation();
     const navigate  = useNavigate();
     const background = location.state && (location.state as any).background;
+    console.log(background);
 
     const handleModalClose = () => {
       dispatch(clearIngredientDetails());
@@ -95,23 +96,6 @@ export default function App() {
                 element={ isModalOpen &&
                   <Modal title="Детали ингредиента" closeHandler={ () => handleModalClose() }>
                     <IngredientDetails />
-                  </Modal>
-                }
-              />
-              <Route
-                path="/profile/orders/:id"
-                element={ 
-                  <Modal title={ (location.state as any).oderNum ?? ""} closeHandler={ () => handleModalClose() }>
-                    <FeedOrderDetails />
-                  </Modal>
-                }
-              />
-              <Route path="/" element={null} />
-              <Route
-                path="/feed/:id"
-                element={ 
-                  <Modal title={ (location.state as any).oderNum ?? ""} closeHandler={ () => handleModalClose() }>
-                    <FeedOrderDetails />
                   </Modal>
                 }
               />

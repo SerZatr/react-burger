@@ -20,17 +20,17 @@ export const singleFeedOrderError = createAction("singleFeedOrder/failed");
 
 export function getFeedOrderByNumber(number: string) {
     return async function(dispatch: Dispatch) {
-        dispatch(singleFeedOrderRequest());
+        
         try {
+            dispatch(singleFeedOrderRequest());
             const token = localStorage.getItem("accessToken");
-            if (token) {
                 const url = `${BASE_URL}/orders/${number}`;
-                const options = {
+                const options: RequestInit = {
                     method: "GET",
                     headers: {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
-                        "Authorization": token
+                        "Authorization": token ?? ""
                     }
                 };
                 const response = (await request(url, options)) as IResponse;
@@ -38,7 +38,6 @@ export function getFeedOrderByNumber(number: string) {
                 if (orders[0]) {
                     dispatch(singleFeedOrderSuccess(orders[0]));
                 }
-            }
         } catch (error) {
             dispatch(singleFeedOrderError());
         }

@@ -1,5 +1,4 @@
 import { useAppSelector } from "../../../utils/hooks";
-import { IOrderFeedDataState } from "../../../services/reducers/order-feed";
 import styles from "./info.module.css";
 import ListBlock from "./list-block";
 
@@ -8,7 +7,7 @@ export interface ordersByStatus {
 };
 
 export default function OrderFeedInfo() {
-    const orderFeed = useAppSelector((state: IOrderFeedDataState) => state.orderFeed.data);
+    const orderFeed = useAppSelector((state) => state.orderFeed.data);
     const getLists = () => {
         const element: JSX.Element[] = [];
         const ordersByStatus: ordersByStatus  = {};

@@ -8,8 +8,6 @@ export default function useAuth() {
     }
     );
     if (!user) {
-        dispatch(getProfile()).then(() => {
-            
-        });
+        dispatch(getProfile());
     }
 }

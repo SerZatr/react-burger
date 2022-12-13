@@ -21,10 +21,10 @@ export const profileGetError = createAction("profileGet/failed");
 
 export function getProfile() {
     return async function(dispatch: Dispatch) {
-        dispatch(profileGetRequest());
         try {
             const token = localStorage.getItem("accessToken");
             if (token) {
+                dispatch(profileGetRequest());
                 const url = BASE_URL + "/auth/user";
                 const options = {
                     method: "GET",

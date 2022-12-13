@@ -1,4 +1,3 @@
-import { IIngredientsDataState } from "../../services/reducers/ingredients-data";
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { orderFeedData, orderStatusRu } from "../../utils/constants";
 import subtractImgPath from "../../images/subtract.svg";
@@ -12,7 +11,7 @@ interface ICardProps {
 }
 
 export default function Card(props: ICardProps) {
-    const ingredientsData = useAppSelector((state: IIngredientsDataState) => state.ingredients.data);
+    const ingredientsData = useAppSelector((state) => state.ingredients.data);
     const location = useLocation();
 
     const getPrice = () => {

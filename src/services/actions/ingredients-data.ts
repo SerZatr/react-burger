@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL, IIngredient } from "../../utils/constants";
 import { request } from "../../utils/request";
 
@@ -13,7 +14,7 @@ export const getIngredientsSuccess = createAction("ingredientsData/success", (in
 });
 
 export function getIngredients() {
-    return async function(dispatch: Dispatch) {
+    return async function(dispatch: AppDispatch ) {
         dispatch(getIngredientsRequest());
         const url = BASE_URL + "/ingredients";
         try {

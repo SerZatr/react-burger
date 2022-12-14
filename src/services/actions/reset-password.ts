@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 
@@ -22,7 +23,7 @@ export const resetSuccess = createAction("resetPassword/success", (message: stri
 export const resetError = createAction("resetPassword/failed");
 
 export function resetPassword(password: string, token: string) {
-    return async function(dispatch: Dispatch) {
+    return async function(dispatch: AppDispatch ) {
         dispatch(resetRequest(password, token));
         try {
             const url = BASE_URL + "/password-reset/reset";

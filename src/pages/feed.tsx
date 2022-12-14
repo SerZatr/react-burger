@@ -25,22 +25,20 @@ export default function FeedPage() {
     }, []);
 
     return (
-        <>
-            <main className={styles.contentWrapper}>
-              <section className={`${styles.mainContainer} ${feedStyles.mainContainer} `}>
-                <div className={feedStyles.feedContainer} >
-                <section className={`${feedStyles.orderFeed} mt-10`}>
-                    <h1 className="text text_type_main-large mb-5">
-                        Лента заказов
-                    </h1>
-                    <article className={`${feedStyles.contentWrapper} customScrollbar pr-2`} >
-                      <OrderFeed />
-                    </article>
-                </section>
-                </div>
-                <OrderFeedInfo />
-              </section>
-            </main>
-        </>
-      );
+      <main className={styles.contentWrapper}>
+        <section className={`${styles.mainContainer} ${feedStyles.mainContainer} `}>
+          <div className={feedStyles.feedContainer} >
+          <section className={`${feedStyles.orderFeed} mt-10`}>
+              <h1 className="text text_type_main-large mb-5">
+                  Лента заказов
+              </h1>
+              <article className={`${feedStyles.contentWrapper} customScrollbar pr-2`} >
+                <OrderFeed />
+              </article>
+          </section>
+          </div>
+          <OrderFeedInfo />
+        </section>
+      </main>
+    );
 }

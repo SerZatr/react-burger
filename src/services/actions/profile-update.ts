@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 import { IUser } from "./register";
@@ -27,7 +28,7 @@ export const profileUpdateSuccess = createAction("profileUpdate/success", (user:
 export const profileUpdateError = createAction("profileUpdate/failed");
 
 export function updateProfile(login: string, name: string, password: string) {
-    return async function(dispatch: Dispatch) {
+    return async function(dispatch: AppDispatch ) {
         dispatch(profileUpdateRequest(login, name, password));
         const token = localStorage.getItem("accessToken");
         if (token) {

@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 import { IUser } from "./register";
@@ -30,7 +31,7 @@ export const refreshTokenSuccess = createAction("refreshToken/success", (user: I
 export const refreshTokenError = createAction("refreshToken/failed");
 
 export function getRefreshToken(token: string) {
-    return async function(dispatch: Dispatch) {
+    return async function(dispatch: AppDispatch ) {
         dispatch(refreshTokenRequest(token));
         try {
             const url = BASE_URL + "/auth/refreshToken";

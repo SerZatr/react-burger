@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 import { IUser } from "./register";
@@ -31,7 +32,7 @@ export const loginSuccess = createAction("login/success", (user: IUser, accessTo
 export const loginError = createAction("login/failed");
 
 export function login(email: string, password: string) {
-    return async function(dispatch: Dispatch) {
+    return async function(dispatch: AppDispatch ) {
         dispatch(loginRequest(email, password));
         try {
             const url = BASE_URL + "/auth/login";

@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL, orderFeedData } from "../../utils/constants";
 import { request } from "../../utils/request";
 
@@ -19,7 +20,7 @@ export const singleFeedOrderSuccess = createAction("singleFeedOrder/success", (d
 export const singleFeedOrderError = createAction("singleFeedOrder/failed");
 
 export function getFeedOrderByNumber(number: string) {
-    return async function(dispatch: Dispatch) {
+    return async function(dispatch: AppDispatch ) {
         
         try {
             dispatch(singleFeedOrderRequest());

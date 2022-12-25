@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate  } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation, useNavigate  } from 'react-router-dom';
 import ConstructorPage from '../../pages/constructor';
 import FeedPage from '../../pages/feed';
 import FeedDetailsPage from '../../pages/feed-details';

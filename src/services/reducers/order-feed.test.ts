@@ -6,7 +6,7 @@ import {
   onError,
   onMessage,
 } from "../actions/order-feed";
-import { orderFeedReducer as reducer } from "./order-feed";
+import { orderFeedReducer as reducer, initialState } from "./order-feed";
 
 describe("order-feed reducer", () => {
 
@@ -15,11 +15,7 @@ describe("order-feed reducer", () => {
           reducer(undefined, {
               type: undefined,
           })
-      ).toEqual({ 
-        data: {},
-        wsConnected: false,
-        error: false,
-      });
+      ).toEqual(initialState);
   });
 
   it("Should successfully handle onOpen", async () => {
@@ -33,37 +29,24 @@ describe("order-feed reducer", () => {
 
   it("Should successfully handle onClose", async () => {
       const result = reducer(undefined, { type: onClose });
-      expect(result).toEqual({
-          wsConnected: false,
-          error: false,
-          data: {},
-      });
+      expect(result).toEqual(initialState);
   });
 
   it("Should successfully handle wsClose", async () => {
       const result = reducer(undefined, { type: wsClose });
-      expect(result).toEqual({
-          wsConnected: false,
-          error: false,
-          data: {},
-      });
+      expect(result).toEqual(initialState);
   });
 
   it("Should successfully handle wsInit", async () => {
       const result = reducer(undefined, { type: wsInit });
-      expect(result).toEqual({
-          wsConnected: false,
-          error: false,
-          data: {},
-      });
+      expect(result).toEqual(initialState);
   });
 
   it("Should successfully handle onError", async () => {
       const result = reducer(undefined, { type: onError });
       expect(result).toEqual({
-          wsConnected: false,
-          error: true,
-          data: {},
+        ...initialState,
+        error: true
       });
   });
 

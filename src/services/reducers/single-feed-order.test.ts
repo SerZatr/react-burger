@@ -3,7 +3,7 @@ import {
   singleFeedOrderSuccess,
   singleFeedOrderError,
 } from "../actions/single-feed-order";
-import { singleFeedOrder as reducer } from "./single-feed-order";
+import { singleFeedOrder as reducer, initialState } from "./single-feed-order";
 
 describe("single-feed-order reducer", () => {
   const testOrderFeedData = {
@@ -21,11 +21,7 @@ describe("single-feed-order reducer", () => {
           reducer(undefined, {
               type: undefined,
           })
-      ).toEqual({ 
-        data: undefined,
-        request: false,
-        error: false,
-      });
+      ).toEqual(initialState);
   });
 
   it("Should successfully handle singleFeedOrderRequest", async () => {

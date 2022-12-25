@@ -6,7 +6,7 @@ import { profileUpdateRequest, profileUpdateSuccess, profileUpdateError } from "
 import { loginRequest, loginSuccess, loginError } from "../actions/login";
 import { logoutRequest, logoutSuccess, logoutError } from "../actions/logout";
 
-const initialState = {
+export const initialState = {
     user: undefined as IUser | undefined,
     request: false,
     error: false,

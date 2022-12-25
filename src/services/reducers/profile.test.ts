@@ -15,7 +15,44 @@ import {
     registerSuccess,
     registerError,
 } from "../actions/register";
-import { profile as reducer } from "./profile";
+import { profile as reducer, initialState } from "./profile";
+
+const testUser = {
+    email: "some@some.ru",
+    name: "userName",
+};
+
+const errorObject = {
+    user: undefined,
+    request: false,
+    error: true,
+    accessToken: "",
+    refreshToken: "",
+}
+
+const requestObject = {
+    user: undefined,
+    request: true,
+    error: false,
+    accessToken: "",
+    refreshToken: "",
+}
+
+const userObject = {
+    user: testUser,
+    request: false,
+    error: false,
+    accessToken: "",
+    refreshToken: "",
+}
+
+const userAndTokensObject = {
+    user: testUser,
+    request: false,
+    error: false,
+    accessToken: "access",
+    refreshToken: "refresh",
+}
 
 describe("profile reducer", () => {
 
@@ -24,29 +61,14 @@ describe("profile reducer", () => {
           reducer(undefined, {
               type: undefined,
           })
-      ).toEqual({ 
-        user: undefined,
-        request: false,
-        error: false,
-        accessToken: "",
-        refreshToken: "",
-      });
+      ).toEqual(initialState);
   });
 
-    const testUser = {
-        email: "some@some.ru",
-        name: "userName",
-    };
+
 
     it("Should successfully handle profileGetRequest", async () => {
         const result = reducer(undefined, { type: profileGetRequest });
-        expect(result).toEqual({
-            user: undefined,
-            request: true,
-            error: false,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(requestObject);
     });
 
     it("Should successfully handle profileGetSuccess", async () => {
@@ -56,39 +78,21 @@ describe("profile reducer", () => {
                 user: testUser,
             },
         });
-        expect(result).toEqual({
-            user: testUser,
-            request: false,
-            error: false,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(userObject);
     });
 
     it("Should handle profileGetError", async () => {
         const result = reducer(undefined, {
             type: profileGetError,
         });
-        expect(result).toEqual({
-            user: undefined,
-            request: false,
-            error: true,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(errorObject);
     });
 
     it("Should handle profileUpdateRequest", async () => {
         const result = reducer(undefined, {
             type: profileUpdateRequest,
         });
-        expect(result).toEqual({
-            user: undefined,
-            request: true,
-            error: false,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(requestObject);
     });
 
     it("Should handle profileUpdateSuccess", async () => {
@@ -98,39 +102,21 @@ describe("profile reducer", () => {
                 user: testUser,
             },
         });
-        expect(result).toEqual({
-            user: testUser,
-            request: false,
-            error: false,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(userObject);
     });
 
     it("Should handle profileUpdateError", async () => {
         const result = reducer(undefined, {
             type: profileUpdateError,
         });
-        expect(result).toEqual({
-            user: undefined,
-            request: false,
-            error: true,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(errorObject);
     });
 
     it("Should handle loginRequest", async () => {
         const result = reducer(undefined, {
             type: loginRequest,
         });
-        expect(result).toEqual({
-            user: undefined,
-            request: true,
-            error: false,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(requestObject);
     });
 
     it("Should handle loginSuccess", async () => {
@@ -142,39 +128,21 @@ describe("profile reducer", () => {
                 refreshToken: "refresh",
             },
         });
-        expect(result).toEqual({
-            user: testUser,
-            request: false,
-            error: false,
-            accessToken: "access",
-            refreshToken: "refresh",
-        });
+        expect(result).toEqual(userAndTokensObject);
     });
 
     it("Should handle loginError", async () => {
         const result = reducer(undefined, {
             type: loginError,
         });
-        expect(result).toEqual({
-            user: undefined,
-            request: false,
-            error: true,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(errorObject);
     });
 
     it("Should handle logoutRequest", async () => {
         const result = reducer(undefined, {
             type: logoutRequest,
         });
-        expect(result).toEqual({
-            user: undefined,
-            request: true,
-            error: false,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(requestObject);
     });
 
     it("Should handle logoutSuccess", async () => {
@@ -194,26 +162,14 @@ describe("profile reducer", () => {
         const result = reducer(undefined, {
             type: logoutError,
         });
-        expect(result).toEqual({
-            user: undefined,
-            request: false,
-            error: true,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(errorObject);
     });
 
     it("Should handle registerRequest", async () => {
         const result = reducer(undefined, {
             type: registerRequest,
         });
-        expect(result).toEqual({
-            user: undefined,
-            request: true,
-            error: false,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(requestObject);
     });
 
     it("Should handle registerSuccess", async () => {
@@ -225,13 +181,7 @@ describe("profile reducer", () => {
                 refreshToken: "refresh",
             },
         });
-        expect(result).toEqual({
-            user: testUser,
-            request: false,
-            error: false,
-            accessToken: "access",
-            refreshToken: "refresh",
-        });
+        expect(result).toEqual(userAndTokensObject);
     });
 
     it("Should handle registerError", async () => {
@@ -243,12 +193,6 @@ describe("profile reducer", () => {
                 refreshToken: "refresh",
             },
         });
-        expect(result).toEqual({
-            user: undefined,
-            request: false,
-            error: true,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(errorObject);
     });
 });

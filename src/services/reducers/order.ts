@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 
 import { postOrderRequest, postOrderSuccess, postOrderError } from "../actions/order";
 
-const initialState = {
+export const initialState = {
     id: undefined as undefined | number,
     request: false,
     error: false

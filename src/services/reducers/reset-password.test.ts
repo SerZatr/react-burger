@@ -3,7 +3,7 @@ import {
   resetSuccess,
   resetError,
 } from "../actions/reset-password";
-import { resetPassword as reducer } from "./reset-password";
+import { resetPassword as reducer, initialState } from "./reset-password";
 
 describe("reset-password reducer", () => {
 
@@ -12,11 +12,7 @@ describe("reset-password reducer", () => {
           reducer(undefined, {
               type: undefined,
           })
-      ).toEqual({ 
-        message: "",
-        request: false,
-        error: false,
-      });
+      ).toEqual(initialState);
   });
 
   it("Should successfully handle resetRequest", async () => {

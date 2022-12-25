@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 
 import { resetRequest, resetSuccess, resetError } from "../actions/reset-password";
 
-const initialState = {
+export const initialState = {
     message: "",
     request: false,
     error: false

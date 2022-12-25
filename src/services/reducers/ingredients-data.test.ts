@@ -3,7 +3,7 @@ import {
   getIngredientsSuccess,
   getIngredientsError,
 } from "../actions/ingredients-data";
-import { ingredientsData as reducer } from "./ingredients-data";
+import { ingredientsData as reducer, initialState } from "./ingredients-data";
 
 describe("ingredients-data reducer", () => {
   const testIngredient = {
@@ -26,19 +26,14 @@ describe("ingredients-data reducer", () => {
           reducer(undefined, {
               type: undefined,
           })
-      ).toEqual({ 
-        data: [],
-        request: false,
-        error: false,
-      });
+      ).toEqual(initialState);
   });
 
   it("Should successfully handle getIngredientsRequest", async () => {
       const result = reducer(undefined, { type: getIngredientsRequest });
       expect(result).toEqual({
-          data: [],
-          request: true,
-          error: false,
+        ...initialState,
+        request: true
       });
   });
 
@@ -50,9 +45,8 @@ describe("ingredients-data reducer", () => {
           },
       });
       expect(result).toEqual({
+          ...initialState,
           data: [testIngredient],
-          request: false,
-          error: false,
       });
   });
 
@@ -61,8 +55,7 @@ describe("ingredients-data reducer", () => {
           type: getIngredientsError,
       });
       expect(result).toEqual({
-          data: [],
-          request: false,
+          ...initialState,
           error: true,
       });
   });

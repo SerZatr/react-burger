@@ -1,16 +1,13 @@
-const { wait } = require("@testing-library/user-event/dist/utils");
-
 describe('ingredient dragging is working', function() {
-  before(function() {
-
-  });
+  Cypress.config().baseUrl
 
   beforeEach(function() {
-    cy.visit('http://localhost:3000');
+    cy.visit(Cypress.config().baseUrl);
+    cy.get('[data-cy="ingredient"]').first().as('ingredient');
   });
 
   it('Should open and close ingredient description modal', function() {
-    cy.get('[data-cy="ingredient"]').first().as('ingredient');
+
     cy.get('@ingredient').click();
     cy.get('[data-cy="itemDescription"]').should('be.visible');
     cy.get('[data-cy="itemProperty"]').first().should('not.be.empty');
@@ -19,7 +16,6 @@ describe('ingredient dragging is working', function() {
   });
 
   it('Should make an order', function() {
-    cy.get('[data-cy="ingredient"]').first().as('ingredient')
     cy.get('[data-cy="ingredientsDropArea"]').first().as('dropArea')
     cy.get('[data-cy="constructorItem"]').should('not.exist');
 
@@ -29,10 +25,10 @@ describe('ingredient dragging is working', function() {
     cy.get('@dropArea').trigger('drop');
     cy.get('[data-cy="constructorItem"]').should('be.visible');
 
-    cy.visit('http://localhost:3000/login');
-    cy.get('[data-cy="emailInput').first().type('serensha@mail.ru');
-    cy.get('[data-cy="passwordInput').first().type('1');
-    cy.get('[data-cy="enterButton').first().click();
+    cy.visit(Cypress.config().baseUrl + '#/login');
+    cy.get('[data-cy="emailInput"').first().type('serensha@mail.ru');
+    cy.get('[data-cy="passwordInput"').first().type('1');
+    cy.get('[data-cy="enterButton"').first().click();
 
     cy.get('[data-cy="orderButton"]').click();
 

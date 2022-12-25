@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { orderFeed } from "../../utils/constants";
 import { onClose, onError, onMessage, onOpen, wsClose, wsInit } from "../actions/order-feed";
-const initialState = {
+export const initialState = {
     wsConnected: false,
     error: false,
     data: {} as orderFeed

@@ -4,7 +4,7 @@ import {
   restoreError,
   restoreClear,
 } from "../actions/restore-password";
-import { restorePassword as reducer } from "./restore-password";
+import { restorePassword as reducer, initialState } from "./restore-password";
 
 describe("restore-password reducer", () => {
 
@@ -13,11 +13,7 @@ describe("restore-password reducer", () => {
           reducer(undefined, {
               type: undefined,
           })
-      ).toEqual({ 
-        message: "",
-        request: false,
-        error: false,
-      });
+      ).toEqual(initialState);
   });
 
   it("Should successfully handle restoreRequest", async () => {

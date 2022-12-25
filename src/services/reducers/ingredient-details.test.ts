@@ -2,7 +2,7 @@ import {
     clearIngredientDetails,
     setIngredientDetails,
 } from "../actions/ingredient-details";
-import { ingredientDetails as reducer } from "./ingredient-details";
+import { ingredientDetails as reducer, initialState } from "./ingredient-details";
 
 describe("ingredient-details reducer", () => {
     it("should return the initial state", () => {
@@ -10,7 +10,7 @@ describe("ingredient-details reducer", () => {
             reducer(undefined, {
                 type: undefined,
             })
-        ).toEqual({ ingredient: undefined });
+        ).toEqual(initialState);
     });
 
     it("should handle setIngredientDetails", () => {
@@ -64,6 +64,6 @@ describe("ingredient-details reducer", () => {
                 type: clearIngredientDetails,
                 payload: testData,
             })
-        ).toEqual({ ingredient: undefined });
+        ).toEqual(initialState);
     });
 });

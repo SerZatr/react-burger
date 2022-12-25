@@ -3,7 +3,7 @@ import {
   postOrderSuccess,
   postOrderError,
 } from "../actions/order";
-import { order as reducer } from "./order";
+import { order as reducer, initialState } from "./order";
 
 describe("order reducer", () => {
 
@@ -12,19 +12,14 @@ describe("order reducer", () => {
           reducer(undefined, {
               type: undefined,
           })
-      ).toEqual({ 
-        id: undefined,
-        request: false,
-        error: false,
-      });
+      ).toEqual(initialState);
   });
 
   it("Should successfully handle postOrderRequest", async () => {
       const result = reducer(undefined, { type: postOrderRequest });
       expect(result).toEqual({
-          id: undefined,
-          request: true,
-          error: false,
+        ...initialState,
+        request: true
       });
   });
 
@@ -36,9 +31,8 @@ describe("order reducer", () => {
           },
       });
       expect(result).toEqual({
-          id: 123,
-          request: false,
-          error: false,
+        ...initialState,
+        id: 123
       });
   });
 
@@ -47,9 +41,8 @@ describe("order reducer", () => {
           type: postOrderError,
       });
       expect(result).toEqual({
-          id: undefined,
-          request: false,
-          error: true,
+        ...initialState,
+        error: true
       });
   });
 });

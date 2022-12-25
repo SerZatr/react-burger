@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { IIngredient } from "../../utils/constants";
 import { setIngredientDetails, clearIngredientDetails } from "../actions/ingredient-details";
 
-const initialState = {
+export const initialState = {
     ingredient: undefined as IIngredient | undefined
 };
 

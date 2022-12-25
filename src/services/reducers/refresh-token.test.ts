@@ -3,7 +3,7 @@ import {
   refreshTokenSuccess,
   refreshTokenError,
 } from "../actions/refresh-token";
-import { refreshToken as reducer } from "./refresh-token";
+import { refreshToken as reducer, initialState } from "./refresh-token";
 
 describe("refresh-token.test reducer", () => {
 
@@ -12,12 +12,7 @@ describe("refresh-token.test reducer", () => {
           reducer(undefined, {
               type: undefined,
           })
-      ).toEqual({ 
-        accessToken: "",
-        refreshTokenToken: "",
-        request: false,
-        error: false,
-      });
+      ).toEqual(initialState);
   });
 
   it("Should successfully handle refreshTokenRequest", async () => {

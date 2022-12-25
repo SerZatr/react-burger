@@ -1,4 +1,4 @@
-import { cart as reducer } from "./cart";
+import { cart as reducer, initialState } from "./cart";
 import {
     addIngredient,
     changeIngredientPosition,
@@ -10,10 +10,7 @@ import {
 
 describe("cart reducer", () => {
     it("should return the initial state", () => {
-        expect(reducer(undefined, {} as any)).toEqual({
-            ingredients: [],
-            bun: undefined,
-        });
+        expect(reducer(undefined, {} as any)).toEqual(initialState);
     });
 
     it("should handle addIngredient", () => {
@@ -50,10 +47,7 @@ describe("cart reducer", () => {
                 },
             ],
         };
-        const testResult = {
-            bun: undefined,
-            ingredients: [],
-        };
+
         expect(
             reducer(testState, {
                 type: removeIngredient,
@@ -61,10 +55,10 @@ describe("cart reducer", () => {
                     index: 0,
                 },
             })
-        ).toEqual(testResult),
+        ).toEqual(initialState),
             expect(
                 JSON.parse(localStorage.getItem("ingredientsInCart") ?? "")
-            ).toEqual(testResult);
+            ).toEqual(initialState);
     });
 
     it("should handle changeIngredientPosition", () => {

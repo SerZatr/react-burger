@@ -3,8 +3,7 @@ import styles from "./burger-ingredients.module.css"
 import { Category } from "./category";
 import { IIngredient } from "../../utils/constants";
 import { Tabs } from "./tabs";
-import { useSelector } from 'react-redux';
-import { IIngredientsDataState } from "../../services/reducers/ingredients-data";
+import { useAppSelector } from "../../utils/hooks";
 
 const categories: {[key: string]: string} = {
     bun: "Булки",
@@ -18,7 +17,7 @@ interface IHeights {
 
 export default function BurgerIngredients() {
     const [current, setCurrent] = useState(categories.bun);
-    const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
+    const ingredientsData = useAppSelector((state) => state.ingredients.data);
     const categorieElementsRefs: {element: HTMLDivElement , name: string}[] = [];
     const categoriesContainerRef = useRef(null);
     const [heights, setHeights] = useState<IHeights>();

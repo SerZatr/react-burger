@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 
@@ -35,7 +36,7 @@ export const registerSuccess = createAction("register/success", (user: IUser, ac
 export const registerError = createAction("register/failed");
 
 export function registerUser(email: string, password: string, name: string) {
-    return async function(dispatch: Dispatch) {
+    return async function(dispatch: AppDispatch ) {
         dispatch(registerRequest(email, password, name));
         try {
             const url = BASE_URL + "/auth/register";

@@ -1,0 +1,18 @@
+.mainContainer {
+    min-width: 1256px !important;
+    gap: 60px !important;
+}
+
+.feedContainer {
+    width: 608px;
+}
+
+.orderFeed {
+    max-height: calc(100vh - 160px);
+    width: 100%;
+}
+
+.contentWrapper {
+    height: calc(100vh - 220px);
+    width: 100%;
+}

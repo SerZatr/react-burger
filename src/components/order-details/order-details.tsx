@@ -1,10 +1,9 @@
 import styles from "./order-details.module.css";
 import acceptImgPath from "../../images/accept-order.svg";
-import { useSelector } from "react-redux";
-import { IOrderState } from "../../services/reducers/order";
+import { useAppSelector } from "../../utils/hooks";
 
 export default function OrderDetails() {
-    const orderId = useSelector((state: IOrderState) => state.order.id);
+    const orderId = useAppSelector((state) => state.order.id);
     return (
         <section>
             <article className={`${styles.orderDetails} mb-20 mt-4`}>

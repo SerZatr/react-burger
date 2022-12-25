@@ -3,14 +3,14 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import styles from "./profile.module.css";
 import mainStyles from "../components/app/app.module.css"
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { login } from "../services/actions/login";
+import { useAppDispatch } from "../utils/hooks";
 
 export default function LoginPage() {
 
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
-const dispatch = useDispatch();
+const dispatch = useAppDispatch();
 
 const loginHandler = (e: React.FormEvent) => {
     e.preventDefault();

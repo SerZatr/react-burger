@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 
@@ -21,11 +22,11 @@ export const postOrderSuccess = createAction("order/success", (orderId: number) 
 export const postOrderError = createAction("order/failed");
 
 export function postOrder(ingredients: string[]) {
-    return async function(dispatch: Dispatch) {
+    return async function(dispatch: AppDispatch) {
         dispatch(postOrderRequest(ingredients));
         try {
             const token = localStorage.getItem("accessToken");
-            const url = BASE_URL + "/orders";
+            const url = BASE_URL + "/orders?token=" + token;
             const options = {
                 method: "POST",
                 headers: {

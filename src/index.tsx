@@ -7,14 +7,27 @@ import { rootReducer } from './services/reducers';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { IIngredient } from './utils/constants';
+import { BASE_WS, IIngredient, orderFeed } from './utils/constants';
+import { socketMiddleware } from './services/middleware/socket-middleware';
+import { onClose, onError, onMessage, onOpen, wsClose, wsInit } from './services/actions/order-feed';
 
 const composeEnhancers =
   typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const wsActions = {
+  wsInit: wsInit,
+  onOpen: onOpen,
+  onClose: onClose,
+  onError: onError,
+  onMessage: onMessage,
+  wsClose: wsClose
+};
+
+export type TWsActions = typeof wsActions;
+
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsActions, BASE_WS)));
 
 const initialState = {
   ingredients: {
@@ -32,6 +45,9 @@ const initialState = {
   },
   ingredientDetails: {
     ingredient: undefined
+  },
+  orderFeed: {
+    data: {} as orderFeed
   }
 }
 
@@ -40,6 +56,9 @@ const store = createStore(
   initialState as any,
   enhancer
 ); 
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

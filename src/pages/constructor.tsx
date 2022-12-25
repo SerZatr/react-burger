@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useSelector, useDispatch } from "react-redux";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
 import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
@@ -9,25 +8,21 @@ import Modal from "../components/modal/modal";
 import OrderDetails from "../components/order-details/order-details";
 import { clearIngredientDetails } from "../services/actions/ingredient-details";
 import { postOrder } from "../services/actions/order";
-import { ICartState } from "../services/reducers/cart";
-import { IIngredientDetailsState } from "../services/reducers/ingredient-details";
-import { IIngredientsDataState } from "../services/reducers/ingredients-data";
-import { IOrderState } from "../services/reducers/order";
 import styles from "../components/app/app.module.css";
 import { useNavigate } from "react-router-dom";
 import { setIngredientsFromStorage } from "../services/actions/cart";
-import { IProfileState } from "../services/reducers/profile";
+import { useAppSelector, useAppDispatch } from "../utils/hooks";
 
 export default function ConstructorPage() {
-  const ingredientsData = useSelector((state: IIngredientsDataState) => state.ingredients.data);
-  const ingredientsInCart = useSelector((state: ICartState) => state.cart.ingredients);
-  const order = useSelector((state: IOrderState) => state.order);
-  const bun = useSelector((state: ICartState) => state.cart.bun);
-  const ingredientDetails = useSelector((state: IIngredientDetailsState) => state.ingredientDetails.ingredient);
+  const ingredientsData = useAppSelector((state) => state.ingredients.data);
+  const ingredientsInCart = useAppSelector((state) => state.cart.ingredients);
+  const order = useAppSelector((state) => state.order);
+  const bun = useAppSelector((state) => state.cart.bun);
+  const ingredientDetails = useAppSelector((state) => state.ingredientDetails.ingredient);
   const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState(false);
   const [isPageLoaded, setIsPageLoaded] = useState(false);
-  const user = useSelector((state: IProfileState) => state.profile.user);
-  const dispatch = useDispatch();
+  const user = useAppSelector((state) => state.profile.user);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const getTotalPrice = useCallback(() => {

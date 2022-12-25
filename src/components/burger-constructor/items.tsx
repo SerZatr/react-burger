@@ -1,10 +1,10 @@
 import { Item } from "./item";
 import styles from "./burger-constructor.module.css";
-import { useSelector } from "react-redux";
 import { ICartState } from "../../services/reducers/cart";
+import { useAppSelector } from "../../utils/hooks";
 
 export function Items() {
-    const ingredientsInCart = useSelector((state: ICartState) => state.cart.ingredients);
+    const ingredientsInCart = useAppSelector((state) => state.cart.ingredients);
 
     const getAllItems = () => {
         let itemElements: JSX.Element[] = [];

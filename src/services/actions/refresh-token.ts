@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 import { IUser } from "./register";
@@ -8,17 +9,16 @@ interface IResponse {
     accessToken: string,
     refreshToken: string
 }
-
-export const loginRequest = createAction("login/post", (email: string, password: string) => {
+// use refreshToken
+export const refreshTokenRequest = createAction("refreshToken/post", (token: string) => {
     return {
         payload: {
-            email,
-            password
+            token
         }
     }
 });
 
-export const loginSuccess = createAction("login/success", (user: IUser, accessToken: string, refreshToken: string) => {
+export const refreshTokenSuccess = createAction("refreshToken/success", (user: IUser, accessToken: string, refreshToken: string) => {
     return {
         payload: {
             user,
@@ -28,28 +28,28 @@ export const loginSuccess = createAction("login/success", (user: IUser, accessTo
     }
 });
 
-export const loginError = createAction("login/failed");
+export const refreshTokenError = createAction("refreshToken/failed");
 
-export function login(email: string, password: string) {
-    return async function(dispatch: Dispatch) {
-        dispatch(loginRequest(email, password));
+export function getRefreshToken(token: string) {
+    return async function(dispatch: AppDispatch ) {
+        dispatch(refreshTokenRequest(token));
         try {
-            const url = BASE_URL + "/auth/login";
+            const url = BASE_URL + "/auth/refreshToken";
             const options = {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({email, password})
+                body: JSON.stringify({token})
             };
             const response = (await request(url, options)) as IResponse;
             const {user, accessToken, refreshToken} = response;
             if (user && accessToken && refreshToken) {
-                dispatch(loginSuccess(user, accessToken, refreshToken));
+                dispatch(refreshTokenSuccess(user, accessToken, refreshToken));
             }
         } catch (error) {
-            dispatch(loginError());
+            dispatch(refreshTokenError());
         }
     } as unknown as AnyAction;
 };

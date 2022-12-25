@@ -1,0 +1,27 @@
+.contentWrapper {
+    min-width: 1240px !important;
+    width: 100%;
+    min-width: 760px;
+    display: flex;
+    justify-content: center;
+}
+
+.mainContainer {
+    width: 1240px;
+    justify-content: flex-start;
+    text-align: center;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 60px;
+}
+
+.navigation {
+    margin-top: 140px;
+}
+
+.feedContainer {
+    width: 868px;
+    height: calc(100vh - 160px);
+}

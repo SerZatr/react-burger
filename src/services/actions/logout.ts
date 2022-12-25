@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 
@@ -19,7 +20,7 @@ export const logoutSuccess = createAction("logout/success", (message: string) =>
 export const logoutError = createAction("logout/failed");
 
 export function logout() {
-    return async function(dispatch: Dispatch) {
+    return async function(dispatch: AppDispatch ) {
         dispatch(logoutRequest());
         try {
             const url = BASE_URL + "/auth/logout";

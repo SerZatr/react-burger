@@ -5,8 +5,7 @@ import mainStyles from "../components/app/app.module.css"
 import { Link, useNavigate } from "react-router-dom";
 import { restoreClear, restorePassword } from "../services/actions/restore-password";
 import { useAppDispatch, useAppSelector } from "../utils/hooks";
-
-export default function LoginPage() {
+export default function ProfileOrdersPage() {
 
     const [email, setEmail] = useState("");
     const dispatch = useAppDispatch();

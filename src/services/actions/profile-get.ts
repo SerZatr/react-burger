@@ -1,4 +1,5 @@
-import { AnyAction, createAction, Dispatch } from "@reduxjs/toolkit";
+import { AnyAction, createAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../..";
 import { BASE_URL } from "../../utils/constants";
 import { request } from "../../utils/request";
 import { IUser } from "./register";
@@ -20,11 +21,11 @@ export const profileGetSuccess = createAction("profileGet/success", (user: IUser
 export const profileGetError = createAction("profileGet/failed");
 
 export function getProfile() {
-    return async function(dispatch: Dispatch) {
-        dispatch(profileGetRequest());
+    return async function(dispatch: AppDispatch ) {
         try {
             const token = localStorage.getItem("accessToken");
             if (token) {
+                dispatch(profileGetRequest());
                 const url = BASE_URL + "/auth/user";
                 const options = {
                     method: "GET",

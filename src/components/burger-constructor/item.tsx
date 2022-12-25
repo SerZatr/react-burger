@@ -51,7 +51,11 @@ export function Item(props: IItemProps) {
 
     if (ingredient) {
         return (
-            <article className={className}  { ...ingredient.type !== "bun" && {ref: dropTarget}  }>
+            <article
+                className={className}
+                data-cy="constructorItem"
+                { ...ingredient.type !== "bun" && {ref: dropTarget}  }
+                >
                 <div className={ingredienBoxclassName}>
                     <ConstructorElement
                         type={props.type}

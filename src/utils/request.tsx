@@ -10,7 +10,7 @@ export async function request(url: string, options?: RequestInit) {
     return response;
   };
 
-async function checkResponse(res: Response) {
+export async function checkResponse(res: Response) {
     if (res.ok) {
         return res.json();
     } else {

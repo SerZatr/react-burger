@@ -39,7 +39,7 @@ export const orderFeedReducer = createReducer(initialState, builder => {
         })
         .addCase(onMessage, (state, action) => {
             state.wsConnected = true;
-            state.error = true;
+            state.error = false;
             state.data = action.payload.orderFeedData;
         });
 });

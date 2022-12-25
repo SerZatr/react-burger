@@ -13,6 +13,7 @@ export interface IIngredientDetailsState {
 export const ingredientDetails = createReducer(initialState, builder => {
     builder
         .addCase(setIngredientDetails, (state, action) => {
+            console.log(action.payload.ingredient);
             state.ingredient = action.payload.ingredient
         })
         .addCase(clearIngredientDetails, (state, action) => {

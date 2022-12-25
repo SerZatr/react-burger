@@ -19,7 +19,7 @@ export interface ICartState {
 export const cart = createReducer(initialState, builder => {
     builder
         .addCase(addIngredient, (state, action) => {
-            state.ingredients = [...state.ingredients, {ingredientId: action.payload.id, uuid: action.payload.uuid}];
+            state.ingredients = [...state?.ingredients, {ingredientId: action.payload?.id, uuid: action.payload?.uuid}];
             localStorage.setItem("ingredientsInCart", JSON.stringify(state));
         })
         .addCase(removeIngredient, (state, action) => {
@@ -41,11 +41,8 @@ export const cart = createReducer(initialState, builder => {
             localStorage.setItem("ingredientsInCart", JSON.stringify(state));
         })
         .addCase(setIngredientsFromStorage, (state, action) => {
-            
-            
             const data = JSON.parse(localStorage.getItem("ingredientsInCart") ?? "") as typeof initialState;
             if (data) {
-                
                 state.ingredients = data.ingredients ?? [];
                 state.bun = data.bun;
             }

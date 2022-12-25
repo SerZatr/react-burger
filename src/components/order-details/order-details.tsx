@@ -7,7 +7,10 @@ export default function OrderDetails() {
     return (
         <section>
             <article className={`${styles.orderDetails} mb-20 mt-4`}>
-                <p className={`${styles.order} text text_type_digits-large mb-8`}>
+                <p
+                    className={`${styles.order} text text_type_digits-large mb-8`}
+                    data-cy="orderId"
+                >
                     {orderId}
                 </p>
                 <p className="text text_type_main-medium mb-15">

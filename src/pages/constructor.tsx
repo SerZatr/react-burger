@@ -63,7 +63,7 @@ export default function ConstructorPage() {
       ingredients.push(bun);
       ingredients.push(bun);
     }
-    if (user) {
+    if (user?.name) {
       dispatch(postOrder(ingredients));
     } else {
       navigate("/login");

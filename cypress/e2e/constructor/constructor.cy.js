@@ -2,7 +2,7 @@ describe('ingredient dragging is working', function() {
   Cypress.config().baseUrl
 
   beforeEach(function() {
-    cy.visit(Cypress.config().baseUrl);
+    cy.visit('');
     cy.get('[data-cy="ingredient"]').first().as('ingredient');
   });
 
@@ -25,7 +25,7 @@ describe('ingredient dragging is working', function() {
     cy.get('@dropArea').trigger('drop');
     cy.get('[data-cy="constructorItem"]').should('be.visible');
 
-    cy.visit(Cypress.config().baseUrl + '#/login');
+    cy.visit('#/login');
     cy.get('[data-cy="emailInput"').first().type('serensha@mail.ru');
     cy.get('[data-cy="passwordInput"').first().type('1');
     cy.get('[data-cy="enterButton"').first().click();

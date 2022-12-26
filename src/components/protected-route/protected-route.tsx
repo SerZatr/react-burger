@@ -16,19 +16,19 @@ export function ProtectedRoute({ children, onlyNotLoggedAccess }: {children: JSX
         }
     }, [profile]);
 
-    if (!profile || profile.request) {
+    if (!profile || profile.request || user === undefined) {
         return null;
     }
 
     if (onlyNotLoggedAccess) {
-        return (!user
+        return (!user?.name
             ? children
             : <Navigate
                 to={(location.state?.from as string) ?? "/"}
                 state={{from: pathname}}
             />);
     } else {
-        return (user 
+        return (user?.name
             ? children
             : <Navigate
                 to={(location.state?.from as string) ?? "/login"}

@@ -23,33 +23,23 @@ const testUser = {
 };
 
 const errorObject = {
-    user: undefined,
-    request: false,
-    error: true,
-    accessToken: "",
-    refreshToken: "",
+    ...initialState,
+    error: true
 }
 
 const requestObject = {
-    user: undefined,
-    request: true,
-    error: false,
-    accessToken: "",
-    refreshToken: "",
+    ...initialState,
+    request: true
 }
 
 const userObject = {
-    user: testUser,
-    request: false,
-    error: false,
-    accessToken: "",
-    refreshToken: "",
+    ...initialState,
+    user: testUser
 }
 
 const userAndTokensObject = {
+    ...initialState,
     user: testUser,
-    request: false,
-    error: false,
     accessToken: "access",
     refreshToken: "refresh",
 }
@@ -149,13 +139,7 @@ describe("profile reducer", () => {
         const result = reducer(undefined, {
             type: logoutSuccess,
         });
-        expect(result).toEqual({
-            user: undefined,
-            request: false,
-            error: false,
-            accessToken: "",
-            refreshToken: "",
-        });
+        expect(result).toEqual(initialState);
     });
 
     it("Should handle logoutError", async () => {

@@ -7,7 +7,7 @@ import { loginRequest, loginSuccess, loginError } from "../actions/login";
 import { logoutRequest, logoutSuccess, logoutError } from "../actions/logout";
 
 export const initialState = {
-    user: undefined as IUser | undefined,
+    user: {name: '', email: ''},
     request: false,
     error: false,
     accessToken: "",

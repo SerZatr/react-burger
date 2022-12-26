@@ -28,6 +28,7 @@ const loginHandler = (e: React.FormEvent) => {
                                 placeholder="E-mail"
                                 value={email}
                                 onChange={ (e) => {setEmail(e.target.value)} }
+                                data-cy="emailInput"
                             />
                         </div>
 
@@ -38,6 +39,7 @@ const loginHandler = (e: React.FormEvent) => {
                                 value={password}
                                 onChange={ (e) => {setPassword(e.target.value)} }
                                 icon="ShowIcon"
+                                data-cy="passwordInput"
                             />
                         </div>
                         <div className="mb-20">
@@ -45,6 +47,7 @@ const loginHandler = (e: React.FormEvent) => {
                                     type="primary"
                                     size="medium"
                                     htmlType={"submit"}
+                                    data-cy="enterButton"
                                 >
                                     Войти
                             </Button>

@@ -34,7 +34,10 @@ export default function IngredientDetails() {
                     <p className={`${styles.title} mb-8 text text_type_main-medium`}>
                         {ingredient.name}
                     </p>
-                    <div className={`${styles.description} ${mainStyles.secondaryTxt}`}>
+                    <div
+                        className={`${styles.description} ${mainStyles.secondaryTxt}`}
+                        data-cy="itemDescription"
+                    >
                         <DescriptionItem name="Калории, ккал" property={ingredient.calories ?? 0} />
                         <DescriptionItem name="Белки, г" property={ingredient.proteins ?? 0} />
                         <DescriptionItem name="Жиры, г" property={ingredient.fat ?? 0} />

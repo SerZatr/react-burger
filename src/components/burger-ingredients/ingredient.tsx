@@ -53,6 +53,7 @@ export function Ingredient(props: IIngredientProps) {
                 className={`mb-2 ${styles.card}`}
                 onClick={openIngredientModal}
                 ref = {dragRef}
+                data-cy="ingredient"
             >
                 {count > 0 &&
                     <div className={styles.count}> {count} </div>

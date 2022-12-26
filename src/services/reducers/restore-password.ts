@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 
 import { restoreRequest, restoreSuccess, restoreError, restoreClear } from "../actions/restore-password";
 
-const initialState = {
+export const initialState = {
     message: "",
     request: false,
     error: false

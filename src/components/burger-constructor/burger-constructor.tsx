@@ -64,7 +64,7 @@ export default function BurgerConstructor(props: IConstructorProps) {
 
     return (
         <section className={`mt-25 ${styles.constructorSection} section`}>
-            <article className={className} ref={dropTarget}>
+            <article className={className} ref={dropTarget} data-cy="ingredientsDropArea">
                 <div className={styles.bun}>
                     {bunId && bunTop}
                 </div>
@@ -82,7 +82,13 @@ export default function BurgerConstructor(props: IConstructorProps) {
                         </p>
                         <img src={subtractImgPath} className={styles.priceIcon} alt="Кристаллы" />
                 </div> 
-                    <Button type="primary" size="large" htmlType={"button"} onClick={props.buyHandler}>
+                    <Button
+                        type="primary"
+                        size="large"
+                        htmlType={"button"}
+                        onClick={props.buyHandler}
+                        data-cy="orderButton"
+                    >
                         Оформить заказ
                     </Button>
             </article>

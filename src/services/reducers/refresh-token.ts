@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 
 import { refreshTokenRequest, refreshTokenSuccess, refreshTokenError } from "../actions/refresh-token";
 
-const initialState = {
+export const initialState = {
     accessToken: "",
     refreshTokenToken: "",
     request: false,

@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { orderFeedData } from "../../utils/constants";
 import { singleFeedOrderError, singleFeedOrderRequest, singleFeedOrderSuccess } from "../actions/single-feed-order";
 
-const initialState = {
+export const initialState = {
     data: undefined as orderFeedData | undefined,
     request: false,
     error: false

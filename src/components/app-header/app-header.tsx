@@ -13,18 +13,16 @@ enum links {
 }
 
 export default function AppHeader () {
-    const pathname = window.location.pathname;
+    const pathname = window.location.hash;
 
     const getActiveLink = useCallback(() => {
-        if (pathname === "/") {
-            return links.constructor;
-        } else if (pathname === "/login" || pathname === "/forgot-password" || pathname === "/reset-password" || pathname === "/register" || pathname === "/profile") {
+        console.log(window.location);
+        if (pathname.match(/login|forgot-password|reset-password|register|profile/)) {
             return links.profile;
-        } else if (pathname === "/order" || pathname.match(/feed|orders/)) {
+        } else if (pathname.match(/feed|order/)) {
             return links.list;
-            
         } else {
-            return 0;
+            return links.constructor;
         }
     }, [pathname])
     const [activeLink, setActiveLink] = useState(getActiveLink());

@@ -10,25 +10,24 @@ export function ProtectedRoute({ children, onlyNotLoggedAccess }: {children: JSX
     const [user, setUser] = useState<IUser | undefined>(undefined);
 
     useEffect(() => {
-
         if (profile) {
             setUser(profile.user);
         }
     }, [profile]);
 
-    if (!profile || profile.request) {
+    if (!profile || profile.request || user === undefined) {
         return null;
     }
 
     if (onlyNotLoggedAccess) {
-        return (!user
+        return (!user?.name
             ? children
             : <Navigate
-                to={(location.state?.from as string) ?? "/"}
+                to={(location.state?.from?.hash as string) ?? "/"}
                 state={{from: pathname}}
             />);
     } else {
-        return (user 
+        return (user?.name
             ? children
             : <Navigate
                 to={(location.state?.from as string) ?? "/login"}

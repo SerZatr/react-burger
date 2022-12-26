@@ -32,7 +32,11 @@ export default function Modal(props: IModalProps) {
                     <p>
                         {props.title ?? ""}
                     </p>
-                    <div className={styles.closeIcon} onClick={props.closeHandler}>
+                    <div
+                        className={styles.closeIcon}
+                        onClick={props.closeHandler}
+                        data-cy="closeModalIcon"
+                    >
                         <CloseIcon type={"primary"} />
                     </div>
                 </div>

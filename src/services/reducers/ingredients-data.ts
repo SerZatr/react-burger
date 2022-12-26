@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { IIngredient } from "../../utils/constants";
 import { getIngredientsRequest, getIngredientsError, getIngredientsSuccess  } from "../actions/ingredients-data";
 
-const initialState = {
+export const initialState = {
     data: [] as IIngredient[],
     request: false,
     error: false
